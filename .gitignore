@@ -141,3 +141,6 @@ vite.config.ts.timestamp-*
 # Docusaurus build output
 .docusaurus/
 build/
+
+docusaurus.config.ts
+sidebar.ts
