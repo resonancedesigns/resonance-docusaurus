@@ -145,3 +145,4 @@ build/
 docusaurus.config.ts
 sidebar.ts
 docs/
+static/CNAME
