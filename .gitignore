@@ -143,6 +143,7 @@ vite.config.ts.timestamp-*
 build/
 
 docusaurus.config.ts
-sidebar.ts
+sidebars.ts
 docs/
+blog/
 static/CNAME

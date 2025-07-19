@@ -1,24 +1,33 @@
-#!/usr/bin/env pwsh
 
+#!/usr/bin/env pwsh
 <#
 .SYNOPSIS
-    Copies configuration files from parent directory to local workspace with fallback to .example files.
+    Copies documentation and configuration files from a parent project directory into the docs-ui workspace, with fallback to .example files for config.
 
 .DESCRIPTION
-    This script defines an array of files and directories to copy. For each file, it checks 
-    the parent directory. If the file exists in the parent, it copies it locally, overwriting 
-    the local one. If no files exist in the parent and a local .example exists, it uses that.
+    This script is intended to set up the docs-ui workspace for Docusaurus or similar documentation builds. It copies the entire documentation directory (by default, 'documentation') from the parent project into the docs-ui directory, preserving all subdirectories and files. It also ensures that required configuration files (sidebars.ts, docusaurus.config.ts) exist, copying from their .example versions if needed.
+
+    - If a config file does not exist in docs-ui, but a .example version does, the .example is copied and then removed.
+    - The script is parameterized for project and documentation directory locations.
+
+.PARAMETER projectDirectory
+    The root directory of the project. Defaults to the parent of the docs-ui directory.
+
+.PARAMETER documentationDirectory
+    The name of the documentation directory in the project root to copy. Defaults to 'documentation'.
 
 .EXAMPLE
-    .\setup.ps1
+    ./setup.ps1
+    # Copies ../documentation into ./docs-ui, and ensures config files exist.
+
+.EXAMPLE
+    ./setup.ps1 -projectDirectory "C:\MyProject" -documentationDirectory "docs"
+    # Copies C:\MyProject\docs into ./docs-ui
 #>
-
 [CmdletBinding()]
-param()
-
-# Define the array of files to copy
-$directoriesToCopy = @(
-    "documentation"
+param(
+    [Parameter()][string]$projectDirectory = $(Split-Path $PSScriptRoot -Parent),
+    [Parameter()][string]$docsDirectory = 'documentation'
 )
 
 # Files to check for .example fallback
@@ -27,33 +36,32 @@ $filesWithExample = @(
     "docusaurus.config.ts"
 )
 
-# Get the current directory (workspace root)
-$workspaceRoot = $PSScriptRoot
-$projectDirectory = Split-Path $workspaceRoot -Parent
+$docsUIDir = $PSScriptRoot
 
-Write-Host "Project Dir: $workspaceRoot" -ForegroundColor Green
+Write-Host "Project Dir: $projectDirectory" -ForegroundColor Green
+Write-Host "Docs Dir: $docsDirectory" -ForegroundColor Green
+Write-Host "Docs UI Dir: $docsUIDir" -ForegroundColor Green
 Write-Host ""
 
 function Copy-Directory {
     param(
-        [string]$directoryName
+        [string]$sourceDir,
+        [string]$destinationDir
     )
-    $parentPath = Join-Path $projectDirectory $directoryName
 
-    if (Test-Path $parentPath -PathType Container) {
-        Write-Host "Processing: '$directoryName' Directory" -ForegroundColor Yellow
-        Write-Host "  Found: $parentPath" -ForegroundColor Green
+    if (Test-Path $sourceDir -PathType Container) {
+        Write-Host "Processing: $sourceDir -> $destinationDir" -ForegroundColor Yellow
 
         try {
-            # Recursively copy all files and subdirectories from parent/$DirectoryName to local,
+            # Recursively copy all files and subdirectories from $sourceDir to $destinationDir,
             # preserving structure, only overwriting existing files
-            Get-ChildItem -Path $parentPath -Recurse | ForEach-Object {
+            Get-ChildItem -Path $sourceDir -Recurse | ForEach-Object {
                 if (-not $_.PSIsContainer) {
-                    $relativePath = $_.FullName.Substring($parentPath.Length).TrimStart('\','/')
-                    $destPath = Join-Path $workspaceRoot $relativePath
+                    $relativePath = $_.FullName.Substring($sourceDir.Length).TrimStart('\','/')
+                    $destPath = Join-Path $destinationDir $relativePath
                     $destDir = Split-Path $destPath -Parent
 
-                    if (!(Test-Path $destDir)) {
+                    if (-not (Test-Path $destDir)) {
                         New-Item -ItemType Directory -Path $destDir -Force | Out-Null
                     }
 
@@ -63,33 +71,35 @@ function Copy-Directory {
             }
         }
         catch {
-            Write-Error "  ✗ Failed to Copy $DirectoryName Directory: $($_.Exception.Message)"
+            Write-Error ("  ✗ Failed to Copy {0}: {1}" -f $sourceDir, $_.Exception.Message)
         }
 
         Write-Host ""
     }
     else {
-        Write-Host "$DirectoryName Directory not Found...Skipping." -ForegroundColor Yellow
+        Write-Host "$sourceDir not Found...Skipping." -ForegroundColor Yellow
         Write-Host ""
     }
 }
 
-# Iterate over all directories to copy
-foreach ($dir in $directoriesToCopy) {
-    Copy-Directory -DirectoryName $dir
-}
+
+Copy-Directory `
+    -SourceDir (Join-Path $projectDirectory $docsDirectory) `
+    -DestinationDir $docsUIDir
 
 # Handle files with .example fallback
 foreach ($file in $filesWithExample) {
     Write-Host "Processing: $file" -ForegroundColor Yellow
 
-    $localPath = Join-Path $workspaceRoot $file
+    $localPath = Join-Path $docsUIDir $file
     $localExamplePath = "$localPath.example"
 
     if (-not (Test-Path $localPath)) {
         try {
             Copy-Item -Path $localExamplePath -Destination $localPath -Force
+
             Write-Host "  ✓ Copied from .example" -ForegroundColor Green
+            
             Remove-Item -Path $localExamplePath -Force
         }
         catch {
