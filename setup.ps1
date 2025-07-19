@@ -18,8 +18,7 @@ param()
 
 # Define the array of files to copy
 $directoriesToCopy = @(
-    "docs",
-    "docs-ui.customizations"
+    "documentation"
 )
 
 # Files to check for .example fallback
@@ -29,22 +28,20 @@ $filesWithExample = @(
 )
 
 # Get the current directory (workspace root)
-$workspaceRoot = Get-Location
-$parentDirectory = Split-Path $workspaceRoot -Parent
-$parentDocsPath = Join-Path $parentDirectory "docs"
+$workspaceRoot = $PSScriptRoot
+$projectDirectory = Split-Path $workspaceRoot -Parent
 
-Write-Host "Workspace Root: $workspaceRoot" -ForegroundColor Green
-Write-Host "Docs Directory: $parentDocsPath" -ForegroundColor Green
+Write-Host "Project Dir: $workspaceRoot" -ForegroundColor Green
 Write-Host ""
 
 function Copy-Directory {
     param(
         [string]$directoryName
     )
-    $parentPath = Join-Path $parentDirectory $directoryName
+    $parentPath = Join-Path $projectDirectory $directoryName
 
     if (Test-Path $parentPath -PathType Container) {
-        Write-Host "Processing: $directoryName Directory" -ForegroundColor Yellow
+        Write-Host "Processing: '$directoryName' Directory" -ForegroundColor Yellow
         Write-Host "  Found: $parentPath" -ForegroundColor Green
 
         try {
