@@ -106,6 +106,17 @@ foreach ($file in $filesWithExample) {
             Write-Error "  ✗ Failed to Copy from .example: $($_.Exception.Message)"
         }
     }
+
+    if (Test-Path $localExamplePath) {
+        try {
+            Remove-Item -Path $localExamplePath -Force
+
+            Write-Host "  ✓ Removed .example File" -ForegroundColor Green
+        }
+        catch {
+            Write-Error "  ✗ Failed to Remove .example File: $($_.Exception.Message)"
+        }
+    }
 }
 
 Write-Host "Setup Completed!" -ForegroundColor Green
