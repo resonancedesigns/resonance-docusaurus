@@ -1,3 +1,4 @@
+#!/usr/bin/env pwsh
 [CmdletBinding()]
 param(
     [Parameter()][string]$projectDir = $PSScriptRoot
@@ -8,7 +9,7 @@ param(
     "sidebars.ts",
     "docusaurus.config.ts"
 ) | ForEach-Object {
-    Write-Host "Processing: $_" -ForegroundColor Yellow
+    Write-Host "⚙️ Processing: $_" -ForegroundColor Yellow
 
     $localPath = Join-Path $projectDir $_
     $localExamplePath = "$localPath.example"
