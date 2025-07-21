@@ -1,7 +1,6 @@
 [CmdletBinding()]
 param(
-    [Parameter()][string]$projectDirectory = $(Split-Path $PSScriptRoot -Parent),
-    [Parameter()][string]$docsDirectory = 'documentation'
+    [Parameter()][string]$projectDir = $PSScriptRoot
 )
 
 # Handle files with .example fallback
@@ -11,7 +10,7 @@ param(
 ) | ForEach-Object {
     Write-Host "Processing: $_" -ForegroundColor Yellow
 
-    $localPath = Join-Path $docsUIDir $_
+    $localPath = Join-Path $projectDir $_
     $localExamplePath = "$localPath.example"
 
     if (-not (Test-Path $localPath)) {

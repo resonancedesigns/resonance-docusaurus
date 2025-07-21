@@ -2,4 +2,7 @@ LICENSE
 README.md
 custom.nuke.css
 vscode.code-workspace
+.copy.ignore
+.copy.ignore.example
 .gitignore
+template-setup.ps1
