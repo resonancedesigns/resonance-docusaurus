@@ -26,7 +26,7 @@ cd my-docs-site
 npm install
 
 # Run setup script (PowerShell)
-.\setup.ps1
+.\template-setup.ps1
 ```
 
 ### 2. Configure Your Site
@@ -54,7 +54,9 @@ npm start
 ```text
 ├── docusaurus.config.ts.example    # Configuration template
 ├── sidebars.ts.example             # Sidebar navigation template
-├── setup.ps1                      # Automated setup script
+├── .copy.ignore.example            # File ignore patterns for copying
+├── template-setup.ps1              # Initial configuration script
+├── template-build.ps1              # Development server launcher (with full docs)
 ├── scripts/
 │   ├── write-version.js           # Generates VERSION.txt on build
 │   └── get-version.js             # Utility to read version
@@ -72,10 +74,82 @@ npm start
 ## Available Scripts
 
 - `npm start` - Start development server
-- `npm run build` - Build for production (auto-runs versioning)
+- `npm run prebuild:prod` - Generate version file (runs automatically before build)
+- `npm run build:prod` - Build for production (includes prebuild step)
 - `npm run serve` - Serve built site locally
 - `npm run clear` - Clear Docusaurus cache
 - `npm run typecheck` - TypeScript validation
+
+## Template Automation Scripts
+
+The template includes two PowerShell scripts to streamline the development workflow:
+
+### `template-setup.ps1` - Initial Configuration
+
+Converts example configuration files to working Docusaurus configuration files.
+
+**Usage:**
+
+```powershell
+# Run from template directory
+.\template-setup.ps1
+
+# Or specify a different project directory
+.\template-setup.ps1 -projectDir "C:\path\to\project"
+```
+
+**What it does:**
+
+- Processes `sidebars.ts.example` → `sidebars.ts`
+- Processes `docusaurus.config.ts.example` → `docusaurus.config.ts`
+- Only copies from `.example` if the target file doesn't exist
+- Automatically removes `.example` files after successful copying
+- Provides colored console output for progress tracking
+
+**Perfect for:**
+
+- Initial project setup from template
+- Converting template to working Docusaurus site
+- One-time configuration file setup
+
+### `template-build.ps1` - Development Server Launcher
+
+**⚠️ Note:** This script has been simplified and now runs the development server directly in the current terminal rather than a separate window.
+
+Automates the development workflow with comprehensive PowerShell documentation.
+
+**Usage:**
+
+```powershell
+# Run from template directory (uses current directory)
+.\template-build.ps1
+
+# Or specify a different app directory
+.\template-build.ps1 -appDir ".\my-docs-site"
+```
+
+**What it does:**
+
+- Resolves full path to the documentation directory
+- Installs dependencies using `pnpm install`
+- Runs prebuild steps (`pnpm run prebuild:prod` - version generation)
+- Starts Docusaurus development server (`pnpm start`)
+- Includes comprehensive PowerShell help documentation
+
+**Features:**
+
+- 📖 **Full PowerShell Help** - Run `Get-Help .\template-build.ps1 -Full` for complete documentation
+- 🔧 **Parameter Validation** - Validates directory paths and provides helpful errors
+- � **pnpm Integration** - Uses pnpm for faster dependency management
+- ⚙️ **Pre-build Integration** - Automatically runs version generation
+- 🎨 **Visual Feedback** - Colored progress indicators and status messages
+
+**Requirements:**
+
+- `pnpm` package manager installed and available in PATH
+- PowerShell execution policy allowing script execution
+- Valid `package.json` with required scripts (`prebuild:prod`, `start`)
+- PowerShell 5.0 or higher
 
 ## Configuration
 
@@ -84,8 +158,9 @@ npm start
 The template includes automatic date-based versioning:
 
 - Version format: `YYYY.MM.DD`
-- Generated automatically before each build
+- Generated automatically by `prebuild:prod` script before each build
 - Stored in `VERSION.txt` for use in your config
+- Triggered automatically by `template-build.ps1` script
 
 ### CSS Themes
 
@@ -171,4 +246,4 @@ Build the site with `npm run build` and deploy the `build/` directory to your ho
 
 ## License
 
-This template is provided as-is for creating documentation sites.
+This template is provided as-is for creating documentation sites. Check the LICENSE file for specific terms.
