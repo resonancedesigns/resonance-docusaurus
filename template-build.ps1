@@ -73,7 +73,7 @@ $appDirPath = Join-Path . $appDir -Resolve
 
 Write-Host "🚀 Phase 2: Starting Development Server..." -ForegroundColor Green
 Write-Host "📁 Changing to App Directory: $appDirPath" -ForegroundColor Yellow
-Set-Location '$appDirPath'
+Set-Location $appDirPath
 
 Write-Host "📦 Installing Dependencies with pnpm..." -ForegroundColor Yellow
 & pnpm install
