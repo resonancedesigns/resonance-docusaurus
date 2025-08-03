@@ -9,7 +9,7 @@ import {
   faChartLine
 } from '@fortawesome/free-solid-svg-icons';
 import { BadgeConfig } from '../../config/badge-config';
-import { UseBadgeConfigProps } from './models';
+import { UseBadgeConfigProps, UseBadgeConfigResult } from './models';
 
 export default function useConfig({ user, repository, groups }: UseBadgeConfigProps): UseBadgeConfigResult {
 

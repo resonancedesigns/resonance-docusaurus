@@ -1,8 +1,9 @@
 import React, {type ReactNode} from 'react';
-import DocItem from '@theme-original/DocItem';
+import DocItem from '@theme/DocItem';
+import type Props from '@theme/DocItem';
 import type DocItemType from '@theme/DocItem';
-
 import type {WrapperProps} from '@docusaurus/types';
+
 import GiscusWrapper from '../../components/GiscusWrapper';
 
 type Props = WrapperProps<typeof DocItemType>;

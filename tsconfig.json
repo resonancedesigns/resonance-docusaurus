@@ -1,5 +1,4 @@
 {
-  "extends": "@tsconfig/node18/tsconfig.json",
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
@@ -10,6 +9,7 @@
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
+    "skipLibCheck": true,
     "jsx": "react-jsx",
     "lib": ["ES2017", "DOM", "DOM.Iterable"]
   },
