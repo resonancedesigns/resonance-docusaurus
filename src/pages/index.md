@@ -1,28 +1,19 @@
 # Docusaurus Template
 
-A comprehensive, reusable Docusaurus template for creating professional documentation sites. This template includes pre-configured styling, automated versioning, dynamic GitHub badge system, streamlined content preparation, and Giscus comment integration.
-
-## Latest Updates
-
-🎯 **Modernized Architecture**: The template now uses static TypeScript classes for configuration, eliminating JSON config files and providing better type safety:
-
-- **Badge System**: `BadgeConfig` static class replaces `badge-config.json`
-- **Comments**: `GiscusConfig` static class replaces `giscus-config.json`  
-- **Pre-Build**: Unified `PreBuild` class handles content preparation, navbar generation, and versioning
-- **Hooks**: Simplified hooks using static configuration (`useConfig` for badges, direct class access for Giscus)
+A comprehensive, reusable Docusaurus template for creating professional documentation sites. This template includes pre-configured styling, automated versioning, dynamic GitHub badge system, configurable README processing, and Giscus comment integration.
 
 ## GitHub Dynamic Badge System
 
 The template includes a configurable badge system for displaying GitHub project status and metrics:
 
-**Configuration File:** `src/config/badge-config.ts`
+**Configuration File:** `src/data/badge-config.json`
 
-- **GitHub Integration** - Designed for GitHub repositories with `{user}` and `{repository}` placeholders
-- **Static TypeScript Config** - All badge configuration is now in a static TS class, not JSON
-- **Simplified API** - Only requires user and repository, all URLs configured in TS
-- **Default Values** - Configure defaults in the `BadgeConfig` class
+- **GitHub Integration** - Designed specifically for GitHub repositories with `{user}` and `{repository}` placeholders
+- **Template Variables** - All customization done through JSON configuration file
+- **Simplified API** - Only requires user and repository, all URLs configured in JSON
+- **Default Values** - Configure default values for template variables in the JSON file
 - **Category Organization** - Badges grouped by: Build & Release, Distribution, Documentation, Quality, Community, Metrics
-- **Runtime Loading** - Configuration loaded via static class and hook
+- **Runtime Loading** - Configuration loaded dynamically at component render time
 
 **Usage in Components:**
 
@@ -54,7 +45,12 @@ import GitHubProjectBadges from '../components/ProjectBadges';
 
 **Customization:**
 
-Edit `src/config/badge-config.ts` to change badge categories, template variables, or add new badges. Use `{user}`, `{repository}`, and other template variables in badge URLs and links. No JSON config needed.
+1. Copy `src/data/badge-config.json.example` to `src/data/badge-config.json`
+2. Configure template variables with your default values
+3. Use `{variableName}` placeholders in badge URLs and links
+4. Add or remove badge categories and individual badges
+
+Template and setup scripts to streamline documentation site creation.
 
 ## Examples
 
@@ -79,8 +75,8 @@ These examples demonstrate:
 - 🌙 **Dark Mode Support** - Built-in theme switching
 - 📊 **Mermaid Diagrams** - Integrated diagram support
 - ⚡ **Performance Optimized** - Modern React 19 and optimized builds
-- 🏷️ **GitHub Badge System** - Configurable GitHub project badges via static TypeScript classes
-- 📄 **Automated README Processing** - Dynamic README integration via pre-build script
+- 🏷️ **GitHub Badge System** - Configurable GitHub project badges via external JSON
+- 📄 **Configurable README Processing** - Dynamic README integration for homepage or docs
 - 💬 **Giscus Comments** - GitHub Discussions-based comment system
 - 🎯 **CI/CD Ready** - GitHub Actions workflows for automated deployment
 - 🎪 **TypeScript Architecture** - Class-based build scripts with proper type safety
@@ -99,74 +95,75 @@ This template includes a sophisticated theme switching system with 10 profession
 
 **Theme files are located in `static/themes/` and are directly accessible without build processes.**
 
-### 📄 Pre-Build Content Preparation
+### 📄 README Processing System
 
-Before starting Docusaurus, the `PreBuild` script (`scripts/pre-build.ts`) performs:
+The template includes a configurable README processing system that allows you to automatically integrate your project's README content into your documentation site.
 
-- Copies all Markdown files from the project root into `src/pages`, renaming `README.md` to `index.md` and skipping files that already exist.
-- Generates `src/navbarLinks.ts` by scanning the `src/pages` directory and constructing navbar entries (excluding `index.md`).
-- Provides date-based versioning via `PreBuild.getVersion()` (format: YYYY.MM.DD).
+**Configuration File:** `readme-config.json`
 
-This process runs automatically as part of `npm start` and `npm run build`. To run it manually:
-
-```bash
-pnpm prebuild
-# or
-tsx scripts/pre-build.ts
+```json
+{
+  "source": "../README.md",
+  "destinations": {
+    "homepage": true,
+    "docs": false
+  },
+  "processing": {
+    "removeTitle": true,
+    "removeToc": true,
+    "addDocusaurusMetadata": true
+  }
+}
 ```
+
+**Features:**
+- **Flexible Source** - Configure README location relative to your project
+- **Multiple Destinations** - Display on homepage, docs section, or both
+- **Content Processing** - Remove titles, TOCs, and add Docusaurus frontmatter
+- **Build Integration** - Automatically processes during build
 
 ### 💬 Giscus Comment System
 
 Integrated comment system powered by GitHub Discussions for community engagement.
 
-**Configuration File:** `src/config/giscus-config.ts`
+**Configuration File:** `giscus-config.json`
 
-```typescript
-// Example configuration structure (edit src/config/giscus-config.ts)
-export class GiscusConfig {
-  static repo = 'username/repository';
-  static repoId = 'your-repo-id';
-  static category = 'General';
-  static categoryId = 'your-category-id';
-  static mapping = 'pathname';
-  static reactionsEnabled = true;
-  static emitMetadata = false;
-  static inputPosition = 'bottom';
-  static lang = 'en';
-  static loading = 'lazy';
-  static theme = { light: 'light', dark: 'dark' };
+```json
+{
+  "repo": "username/repository",
+  "repoId": "your-repo-id", 
+  "category": "General",
+  "categoryId": "your-category-id",
+  "mapping": "pathname",
+  "strict": "0",
+  "reactionsEnabled": "1",
+  "emitMetadata": "0",
+  "inputPosition": "top",
+  "lang": "en",
+  "loading": "lazy"
 }
 ```
 
 **Features:**
-
 - **GitHub Integration** - Uses GitHub Discussions for comments
 - **Theme Aware** - Automatically adapts to light/dark mode
-- **Static TypeScript Config** - All Giscus configuration is now in a static TS class, not JSON
+- **Configuration Based** - Easy setup through JSON configuration
 - **Component System** - `<GiscusWrapper />` component for easy integration
 - **Automatic Fallback** - Shows setup instructions when not configured
 
-## Implementation Summary
+### 🎪 TypeScript Architecture
 
-This section consolidates key enhancements and the current technical architecture:
+All build scripts are implemented as TypeScript classes for better maintainability:
 
-1. **Enhancements**
-   - **Automatic Versioning**: Eliminated `VERSION.txt`, now uses `PreBuild.getVersion()` for on-the-fly YYYY.MM.DD versions.
-   - **README Integration**: Markdown files from project root are copied to `src/pages` and indexed for navigation via pre-build.
-   - **Navbar Autogeneration**: Scans root `.md` files and emits `src/navbarLinks.ts` before each build.
-   - **Badge System**: `BadgeConfig` static class + `useConfig` hook for dynamic GitHub badges.
-   - **Comments**: `GiscusConfig` static class for Giscus-powered discussions.
-   - **Theme System**: Ten built-in themes in `static/themes/` with live light/dark switching.
+**VersionGenerator Class** (`scripts/get-version.ts`):
+- In-memory version generation (YYYY.MM.DD format)
+- Error handling and validation
+- Static methods for easy integration
 
-2. **Architecture**
-   - **Scripts**: TypeScript class `PreBuild` handles both content preparation and versioning.
-   - **Components**: Modular React hooks and components for badges and comments.
-   - **Config Classes**: Strongly-typed classes (`BadgeConfig`, `GiscusConfig`) replace JSON imports for static access.
-
-3. **Workflow**
-   - **Development**: `npm start` runs pre-build tasks then starts `docusaurus start`.
-   - **Production Build**: `npm run build` triggers pre-build, then `docusaurus build`.
-   - **Type Checking**: `npm run typecheck` ensures all TS scripts and components validate.
+**ReadmeProcessor Class** (`scripts/copy-readme.ts`):
+- Configurable README processing
+- Multiple destination support
+- Content transformation and metadata injection
 
 
 ## Quick Start
@@ -192,10 +189,9 @@ Edit the following files to customize your documentation:
 - **`docusaurus.config.ts`** - Main configuration (site title, URL, etc.)
 - **`sidebars.ts`** - Navigation structure  
 - **`src/css/custom.css`** - Custom styling and colors
-- **`src/config/badge-config.ts`** - GitHub badge system configuration
-- **`src/config/giscus-config.ts`** - Comment system configuration
-
-Note: Configuration is now done via TypeScript classes, not JSON files.
+- **`badge-config.json`** - GitHub badge system configuration
+- **`readme-config.json`** - README processing settings
+- **`giscus-config.json`** - Comment system configuration
 
 ### 3. Add Your Content
 
@@ -214,22 +210,24 @@ npm start
 ```text
 ├── docusaurus.config.ts            # Main Docusaurus configuration
 ├── sidebars.ts                     # Sidebar navigation structure
-├── readme-config.json              # (Optional) README processing configuration for advanced setups
+├── readme-config.json              # README processing configuration  
 ├── .copy.ignore.example            # File ignore patterns for copying
 ├── template-setup.ps1              # Initial configuration script
 ├── template-build.ps1              # Development server launcher (with full docs)
 ├── scripts/
-│   └── pre-build.ts               # Pre-build tasks: markdown copy, navbar generation, versioning
+│   ├── get-version.js             # Class-based version generator (JavaScript)
+│   ├── get-version.ts             # Class-based version generator (TypeScript)
+│   ├── copy-readme.js             # Class-based README processor (JavaScript)
+│   └── copy-readme.ts             # Class-based README processor (TypeScript)
 ├── src/
 │   ├── components/
 │   │   ├── ProjectBadges/         # GitHub dynamic badge component
-│   │   │   ├── index.tsx          # GitHub project badges component
-│   │   │   └── useConfig.ts       # Badge config hook (uses static TS config)
+│   │   │   └── index.tsx          # GitHub project badges component
 │   │   └── ReadmeContent/         # Auto-generated README component
 │   │       └── index.tsx          # Generated from main README.md
-│   ├── config/
-│   │   ├── badge-config.ts        # Static badge configuration (TypeScript)
-│   │   └── giscus-config.ts       # Static Giscus configuration (TypeScript)
+│   ├── data/
+│   │   ├── badge-config.json      # Active badge configuration
+│   │   └── badge-config.json.example # Badge configuration template
 │   ├── examples/
 │   │   ├── GitHubProjectBadges-Examples.tsx    # Basic badge examples
 │   │   └── GitHubProjectBadges-Advanced.tsx    # Advanced badge examples
@@ -246,9 +244,9 @@ npm start
 
 ## Available Scripts
 
-- `npm start` - Start development server (includes pre-build step)
-- `npm run prebuild` - Run pre-build tasks manually (markdown copy, navbar generation, versioning)
-- `npm run build:prod` - Build for production (includes pre-build step)
+- `npm start` - Start development server
+- `npm run prebuild:prod` - Generate version file (runs automatically before build)
+- `npm run build:prod` - Build for production (includes prebuild step)
 - `npm run serve` - Serve built site locally
 - `npm run clear` - Clear Docusaurus cache
 - `npm run typecheck` - TypeScript validation
@@ -273,16 +271,16 @@ Sets up badge configuration and handles any remaining template files.
 
 **What it does:**
 
-- Sets up static configuration files for badges and Giscus comments
+- Copies `badge-config.json.example` to `badge-config.json` if needed
 - Processes any remaining `.example` files in the project
 - Cleans up template files after successful setup
 - Provides colored console output for progress tracking
 
 **Perfect for:**
 
-- Setting up static configuration for your project
+- Setting up badge configuration for your project
 - Final template cleanup after customization
-- Ensuring all configuration files are properly set up
+- Ensuring all example files are properly configured
 
 ### `template-build.ps1` - Development Server Launcher
 
@@ -304,7 +302,7 @@ Automates the development workflow with comprehensive PowerShell documentation.
 
 - Resolves full path to the documentation directory
 - Installs dependencies using `pnpm install`
-- Runs pre-build steps (`pnpm run prebuild` - content preparation and versioning)
+- Runs prebuild steps (`pnpm run prebuild:prod` - version generation)
 - Starts Docusaurus development server (`pnpm start`)
 - Includes comprehensive PowerShell help documentation
 
@@ -320,7 +318,7 @@ Automates the development workflow with comprehensive PowerShell documentation.
 
 - `pnpm` package manager installed and available in PATH
 - PowerShell execution policy allowing script execution
-- Valid `package.json` with required scripts (`prebuild`, `start`)
+- Valid `package.json` with required scripts (`prebuild:prod`, `start`)
 - PowerShell 5.0 or higher
 
 ## Key Components
@@ -329,7 +327,7 @@ Automates the development workflow with comprehensive PowerShell documentation.
 
 The template includes a sophisticated badge system specifically designed for GitHub projects:
 
-- **Static TypeScript Config**: Badges configured via static TS classes, not external JSON
+- **Dynamic Loading**: Badges configured via external JSON file
 - **Template Variables**: Support for `{user}`, `{repository}`, and custom variables
 - **Group Filtering**: Show only specific badge categories
 - **FontAwesome Icons**: Beautiful icons for each badge section
@@ -337,33 +335,68 @@ The template includes a sophisticated badge system specifically designed for Git
 
 ### ReadmeContent System
 
-The homepage content is auto-generated from your root `README.md` (copied to `src/pages/index.md` by the pre-build script). For advanced setups, you can use `readme-config.json` to customize source, destination, and processing options.
+Configurable README integration system that can display your README content either on the homepage or in the docs section:
+
+**Configuration File**: `readme-config.json`
+
+- **Flexible Source**: Configure README location relative to project root
+- **Multiple Destinations**: Use as homepage content or docs page
+- **Content Processing**: Optional heading removal and link processing
+- **Auto-Generation**: Creates React component or markdown file as needed
+
+**Configuration Options**:
+
+```json
+{
+  "source": {
+    "path": "README.md"  // Path to README relative to project root
+  },
+  "destination": {
+    "type": "homepage"   // "homepage" or "docs"
+  },
+  "processing": {
+    "removeFirstHeading": true  // Remove first heading when processing
+  },
+  "output": {
+    "componentPath": "src/components/ReadmeContent/index.tsx",  // For homepage
+    "docsPath": "docs/readme.md"  // For docs
+  }
+}
+```
+
+**Usage Examples**:
+- Copy `readme-config.json.example` to `readme-config.json` for homepage display
+- Copy `readme-config-docs.json.example` to `readme-config.json` for docs display  
+- Copy `readme-config-external.json.example` for external README files
 
 ### Automation Scripts
 
 - **Version Generation**: Automatic date-based versioning (YYYY.MM.DD)
-- **Content Preparation**: Copies markdown files and generates navigation
+- **README Processing**: Converts README to documentation component
 - **Development Server**: PowerShell scripts for streamlined development
 
 ## Configuration
 
 ### Class-Based Script Architecture
 
-The template uses a modern unified `PreBuild` class for all pre-build automation:
+The template uses modern class-based architecture for all utility scripts:
 
-**PreBuild Class (`scripts/pre-build.ts`)**:
+**Version Generator (`VersionGenerator` class)**:
+- `VersionGenerator.generate()` - Generate current date-based version
+- `VersionGenerator.getVersion()` - Alias for generate method
+- Available in both JavaScript and TypeScript versions
+- Backward compatible CommonJS export
 
-- `PreBuild.getVersion()` - Generate current date-based version (YYYY.MM.DD)
-- `PreBuild.copyMarkdownFiles()` - Copy markdown files from root to `src/pages`
-- `PreBuild.generateNavbarLinks()` - Generate navigation links from markdown files
-- Static methods for all content preparation tasks
-- TypeScript implementation with proper error handling
+**README Processor (`ReadmeProcessor` class)**:
+- `ReadmeProcessor.processReadme(configPath?)` - Static method for direct usage
+- Configurable source, destination, and processing options
+- Support for both homepage and docs destinations
+- Available in both JavaScript and TypeScript versions
 
-**Build Integration**:
-
-- `npm run prebuild` - Runs pre-build tasks manually
-- `npm start` - Includes pre-build step automatically
-- `npm run build` - Includes pre-build step for production
+**Build Scripts**:
+- `npm run prebuild:prod` - Uses JavaScript version (default)
+- `npm run prebuild:ts` - Uses TypeScript version
+- `npm run start` and `npm run start:ts` - Development with different script versions
 
 ### Automatic Versioning
 
@@ -410,7 +443,7 @@ static/themes/
 { name: 'mytheme', displayName: 'My Theme', cssFile: '/themes/custom.mytheme.css' }
 ```
 
-1. Add color preview styles to `src/components/ThemeSwitcher/ThemeSwitcher.css`
+3. Add color preview styles to `src/components/ThemeSwitcher/ThemeSwitcher.css`
 
 ### Colors and Branding
 

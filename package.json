@@ -4,9 +4,17 @@
   "private": true,
   "scripts": {
     "docusaurus": "docusaurus",
+    "prestart": "tsx ./scripts/pre-build.ts",
     "start": "docusaurus start",
-    "prebuild:prod": "node ./scripts/write-version.js",
+    
+    "prebuild": "tsx ./scripts/pre-build.ts",
+    "prebuild:prod": "tsx ./scripts/pre-build.ts",
     "build:prod": "docusaurus build",
+    
+    "generate:navbar": "tsx scripts/generateNavbarLinks.ts",
+    
+    "build:scripts": "tsc scripts/*.ts --outDir scripts/dist --target es2020 --module commonjs --skipLibCheck",
+    
     "swizzle": "docusaurus swizzle",
     "deploy": "docusaurus deploy",
     "clear": "docusaurus clear",
@@ -18,17 +26,30 @@
   "dependencies": {
     "@docusaurus/core": "3.8.1",
     "@docusaurus/preset-classic": "3.8.1",
+    "@docusaurus/theme-classic": "^3.8.1",
+    "@docusaurus/theme-common": "^3.8.1",
     "@docusaurus/theme-mermaid": "^3.8.1",
+    "@fortawesome/fontawesome-svg-core": "^7.0.0",
+    "@fortawesome/free-solid-svg-icons": "^7.0.0",
+    "@fortawesome/react-fontawesome": "^0.2.3",
+    "@giscus/react": "^3.1.0",
     "@mdx-js/react": "^3.0.0",
     "clsx": "^2.0.0",
+    "markdown-to-jsx": "^7.7.12",
     "prism-react-renderer": "^2.3.0",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "react-markdown": "^10.1.0"
   },
   "devDependencies": {
     "@docusaurus/module-type-aliases": "3.8.1",
     "@docusaurus/tsconfig": "3.8.1",
     "@docusaurus/types": "3.8.1",
+    "@types/node": "^24.1.0",
+    "@types/react": "^19.1.9",
+    "@types/react-dom": "^19.1.7",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.20.3",
     "typescript": "~5.6.2"
   },
   "browserslist": {

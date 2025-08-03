@@ -142,8 +142,6 @@ vite.config.ts.timestamp-*
 .docusaurus/
 build/
 
-docusaurus.config.ts
-sidebars.ts
-docs/
-blog/
 static/CNAME
+src/**/*.js
+scripts/**/*.js

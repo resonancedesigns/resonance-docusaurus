@@ -2,8 +2,16 @@
   "extends": "@tsconfig/node18/tsconfig.json",
   "compilerOptions": {
     "baseUrl": ".",
-    "paths": {},
-    "types": ["node"]
+    "paths": {
+      "@theme/*": ["node_modules/@docusaurus/theme-classic/lib/theme/*"],
+      "@docusaurus/*": ["node_modules/@docusaurus/*"]
+    },
+    "types": ["node"],
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "jsx": "react-jsx",
+    "lib": ["ES2017", "DOM", "DOM.Iterable"]
   },
-  "include": ["src", "docs"]
+  "include": ["src", "docs", "scripts"]
 }
