@@ -94,7 +94,7 @@ export const navbarLinks = ${JSON.stringify(links, null, 2)} as const;
 
     fs.writeFileSync(outPath, tsOutput, 'utf-8');
 
-    console.log(`✅ Navbar Created with ${numberOfLinks} Entries`);
+    console.log(`✅ Navbar Created with ${numberOfLinks} Entry(s)`);
   }
 
   /**
