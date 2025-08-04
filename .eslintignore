@@ -1,0 +1,17 @@
+# Build directories
+build/
+dist/
+node_modules/
+
+# Generated files
+.docusaurus/
+
+# Configuration files
+docusaurus.config.ts
+sidebars.ts
+
+# Scripts (these can have different linting rules)
+scripts/
+
+# TypeScript definition files
+*.d.ts

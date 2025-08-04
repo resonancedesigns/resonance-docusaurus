@@ -6,7 +6,7 @@ This directory contains the color theme CSS files for the Docusaurus site.
 
 - **custom.blue.css** - Ocean Blue theme
 - **custom.sunset.css** - Warm sunset colors
-- **custom.purple.css** - Purple night theme  
+- **custom.purple.css** - Purple night theme
 - **custom.forest.css** - Forest green theme
 - **custom.material-red.css** - Material Design red
 - **custom.material-indigo.css** - Material Design indigo

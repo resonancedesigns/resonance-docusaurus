@@ -1,14 +1,14 @@
-import {themes as prismThemes} from 'prism-react-renderer';
+import { themes as prismThemes } from 'prism-react-renderer';
 
 import { PreBuild } from './scripts/pre-build';
 import { navbarLinks } from './src/navbarLinks';
 
-import type {Config} from '@docusaurus/types';
+import type { Config } from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
 const version = PreBuild.getVersion();
 const config: Config = {
-   title: 'Your Docs Site',
+  title: 'Your Docs Site',
   tagline: 'Reusable Docusaurus Template',
   url: 'https://your-site.com',
   baseUrl: '/',

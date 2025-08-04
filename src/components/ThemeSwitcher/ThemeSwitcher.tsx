@@ -16,10 +16,26 @@ const themes: Theme[] = [
   { name: 'purple', displayName: 'Purple Night', cssFile: '/themes/custom.purple.css' },
   { name: 'forest', displayName: 'Forest', cssFile: '/themes/custom.forest.css' },
   { name: 'material-red', displayName: 'Material Red', cssFile: '/themes/custom.material-red.css' },
-  { name: 'material-indigo', displayName: 'Material Indigo', cssFile: '/themes/custom.material-indigo.css' },
-  { name: 'material-teal', displayName: 'Material Teal', cssFile: '/themes/custom.material-teal.css' },
-  { name: 'material-amber', displayName: 'Material Amber', cssFile: '/themes/custom.material-amber.css' },
-  { name: 'material-pink', displayName: 'Material Pink', cssFile: '/themes/custom.material-pink.css' },
+  {
+    name: 'material-indigo',
+    displayName: 'Material Indigo',
+    cssFile: '/themes/custom.material-indigo.css',
+  },
+  {
+    name: 'material-teal',
+    displayName: 'Material Teal',
+    cssFile: '/themes/custom.material-teal.css',
+  },
+  {
+    name: 'material-amber',
+    displayName: 'Material Amber',
+    cssFile: '/themes/custom.material-amber.css',
+  },
+  {
+    name: 'material-pink',
+    displayName: 'Material Pink',
+    cssFile: '/themes/custom.material-pink.css',
+  },
 ];
 
 const ThemeSwitcher: React.FC = () => {
@@ -36,10 +52,10 @@ const ThemeSwitcher: React.FC = () => {
   const applyTheme = (themeName: string) => {
     // Remove existing theme links
     const existingLinks = document.querySelectorAll('link[data-theme-switcher]');
-    existingLinks.forEach(link => link.remove());
+    existingLinks.forEach((link) => link.remove());
 
     // Find the theme
-    const theme = themes.find(t => t.name === themeName);
+    const theme = themes.find((t) => t.name === themeName);
     if (!theme) return;
 
     // If it's the default theme, don't add any additional CSS (use built-in)
@@ -66,7 +82,8 @@ const ThemeSwitcher: React.FC = () => {
     setIsOpen(false);
   };
 
-  const currentThemeDisplayName = themes.find(t => t.name === currentTheme)?.displayName || 'Default';
+  const currentThemeDisplayName =
+    themes.find((t) => t.name === currentTheme)?.displayName || 'Default';
 
   return (
     <div className="theme-switcher">
@@ -78,12 +95,10 @@ const ThemeSwitcher: React.FC = () => {
       >
         <FontAwesomeIcon icon={faPalette} />
       </button>
-      
+
       {isOpen && (
         <div className="theme-switcher__dropdown">
-          <div className="theme-switcher__header">
-            Color Themes
-          </div>
+          <div className="theme-switcher__header">Color Themes</div>
           {themes.map((theme) => (
             <button
               key={theme.name}
@@ -92,19 +107,16 @@ const ThemeSwitcher: React.FC = () => {
               }`}
               onClick={() => handleThemeChange(theme.name)}
             >
-              <span className={`theme-switcher__color-preview theme-switcher__color-preview--${theme.name}`}></span>
+              <span
+                className={`theme-switcher__color-preview theme-switcher__color-preview--${theme.name}`}
+              ></span>
               {theme.displayName}
             </button>
           ))}
         </div>
       )}
-      
-      {isOpen && (
-        <div 
-          className="theme-switcher__backdrop" 
-          onClick={() => setIsOpen(false)}
-        />
-      )}
+
+      {isOpen && <div className="theme-switcher__backdrop" onClick={() => setIsOpen(false)} />}
     </div>
   );
 };

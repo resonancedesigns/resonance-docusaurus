@@ -1,21 +1,24 @@
-import React, {type ReactNode} from 'react';
-import DocItem from '@theme/DocItem';
-import type Props from '@theme/DocItem';
-import type DocItemType from '@theme/DocItem';
-import type {WrapperProps} from '@docusaurus/types';
-
+import { type ReactNode } from 'react';
+// @ts-ignore: @theme-original/* is a Docusaurus runtime alias
+import DocItem from '@theme-original/DocItem';
 import GiscusWrapper from '../../components/GiscusWrapper';
 
-type Props = WrapperProps<typeof DocItemType>;
+interface DocItemProps {
+  content: {
+    frontMatter: Record<string, any>;
+    metadata: Record<string, any>;
+    contentTitle?: string;
+  };
+}
 
-export default function DocItemWrapper(props: Props): ReactNode {
-  const {frontMatter} = props.content;
+export default function DocItemWrapper(props: DocItemProps): ReactNode {
+  const { frontMatter } = props.content;
   const showComments = frontMatter.comments ?? true;
 
   return (
     <>
       <DocItem {...props} />
-      
+
       {/* Conditionally render GiscusWrapper based on frontmatter */}
       {showComments && <GiscusWrapper />}
     </>

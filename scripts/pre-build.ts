@@ -44,10 +44,10 @@ export class PreBuild {
       const dstPath = path.join(this.pagesDir, destFile);
 
       this.ensureDirectoryExists(dstPath);
-    
+
       if (!fs.existsSync(dstPath)) {
         fs.copyFileSync(srcPath, dstPath);
-        
+
         console.log(`✅ Copied ${file} --> src/pages/${destFile}`);
       } else {
         console.log(`ℹ️ Skipped ${file} --> src/pages/${destFile}`);
@@ -57,7 +57,8 @@ export class PreBuild {
 
   private filenameToLabel(filename: string): string {
     // Remove extension, replace -/_ with space, capitalize first letter
-    return filename.replace(/\.(md|mdx)$/, '')
+    return filename
+      .replace(/\.(md|mdx)$/, '')
       .replace(/[-_]/g, ' ')
       .replace(/\b\w/g, (c) => c.toUpperCase());
   }
@@ -70,6 +71,7 @@ export class PreBuild {
    */
   private generateNavbar(mdFiles: string[]): void {
     const outPath = path.join(__dirname, '../src/navbarLinks.ts');
+    let numberOfLinks = 0;
 
     // Exclude index.md (homepage) from navbar links
     const links: NavbarLink[] = mdFiles
@@ -77,6 +79,9 @@ export class PreBuild {
       .map((file) => {
         const name = path.parse(file).name;
         const toPath = `/${name}`;
+
+        numberOfLinks++;
+
         return {
           label: this.filenameToLabel(file),
           to: toPath,
@@ -89,7 +94,7 @@ export const navbarLinks = ${JSON.stringify(links, null, 2)} as const;
 
     fs.writeFileSync(outPath, tsOutput, 'utf-8');
 
-    console.log(`✅ Navbar Updated with ${mdFiles.length} Entries`);
+    console.log(`✅ Navbar Created with ${numberOfLinks} Entries`);
   }
 
   /**
@@ -98,12 +103,11 @@ export const navbarLinks = ${JSON.stringify(links, null, 2)} as const;
   public process(): void {
     this.copyAllRootMarkdown();
     const mdFiles = fs.readdirSync(this.pagesDir).filter((f) => f.endsWith('.md'));
-    
+
     this.generateNavbar(mdFiles);
 
     console.log('🚀 Pre Build Process Completed');
   }
-
 
   public static getVersion(): string {
     try {
@@ -111,11 +115,11 @@ export const navbarLinks = ${JSON.stringify(links, null, 2)} as const;
       const year = now.getFullYear();
       const month = String(now.getMonth() + 1).padStart(2, '0');
       const day = String(now.getDate()).padStart(2, '0');
-      
+
       return `${year}.${month}.${day}`;
     } catch (error) {
       console.error('Error Generating Version:', error);
-      
+
       return 'unknown';
     }
   }

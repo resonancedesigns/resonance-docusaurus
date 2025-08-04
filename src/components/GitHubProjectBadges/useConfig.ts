@@ -6,20 +6,23 @@ import {
   faBook,
   faShieldAlt,
   faUsers,
-  faChartLine
+  faChartLine,
 } from '@fortawesome/free-solid-svg-icons';
 import { BadgeConfig } from '../../config/badge-config';
 import { UseBadgeConfigProps, UseBadgeConfigResult } from './models';
 
-export default function useConfig({ user, repository, groups }: UseBadgeConfigProps): UseBadgeConfigResult {
-
+export default function useConfig({
+  user,
+  repository,
+  groups,
+}: UseBadgeConfigProps): UseBadgeConfigResult {
   const iconMap: Record<string, IconDefinition> = {
     faCogs,
     faBoxOpen,
     faBook,
     faShieldAlt,
     faUsers,
-    faChartLine
+    faChartLine,
   };
 
   // Compute badge sections based on config and props

@@ -5,8 +5,8 @@ import GitHubProjectBadges from '../components/GitHubProjectBadges';
 
 // Example 1: Using default template variables from badge-config.json
 const DefaultTemplateExample = () => (
-  <GitHubProjectBadges 
-    user="facebook" 
+  <GitHubProjectBadges
+    user="facebook"
     repository="docusaurus"
     // Uses all templateVariables from config file
   />
@@ -14,20 +14,16 @@ const DefaultTemplateExample = () => (
 
 // Example 2: Selective groups with specific repository
 const SelectiveGroupsExample = () => (
-  <GitHubProjectBadges 
-    user="microsoft" 
+  <GitHubProjectBadges
+    user="microsoft"
     repository="vscode"
-    groups={["buildRelease", "documentation"]}
+    groups={['buildRelease', 'documentation']}
   />
 );
 
 // Example 3: Community-focused badges
 const CommunityFocusExample = () => (
-  <GitHubProjectBadges 
-    user="facebook" 
-    repository="react"
-    groups={["community", "quality"]}
-  />
+  <GitHubProjectBadges user="facebook" repository="react" groups={['community', 'quality']} />
 );
 
 /*
@@ -64,8 +60,4 @@ Examples of template variables you can add:
 - {environment} - Environment name (prod, staging, dev)
 */
 
-export { 
-  DefaultTemplateExample, 
-  SelectiveGroupsExample, 
-  CommunityFocusExample 
-};
+export { DefaultTemplateExample, SelectiveGroupsExample, CommunityFocusExample };

@@ -130,31 +130,44 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       # ================================================================
-      # STEP 3: TYPESCRIPT TYPE CHECKING
+      # STEP 3: CODE FORMATTING CHECK (PRETTIER)
+      # ================================================================
+      - name: Check Code Formatting
+        run: pnpm run format:check
+
+      # ================================================================
+      # STEP 4: LINT CODE (ESLINT)
+      # ================================================================
+      - name: Lint Code
+        run: pnpm run lint
+
+      # ================================================================
+      # STEP 5: TYPESCRIPT TYPE CHECKING
       # ================================================================
       - name: TypeScript Type Check
         run: pnpm run typecheck
 
       # ================================================================
-      # STEP 4: BUILD DOCUSAURUS SITE
+      # STEP 6: BUILD DOCUSAURUS SITE
       # ================================================================
       - name: Build Docusaurus Site
         run: pnpm run build:prod
         env:
           # Ensure proper environment for build
           NODE_ENV: production
-          NODE_OPTIONS: --max-old-space-size=8192
 
 # ====================================================================
 # VALIDATION PROCESS
 # ====================================================================
 #
 # The build and lint process performs the following validations:
-# 1. TypeScript compilation for all components and configuration
-# 2. Docusaurus build process validation (including MDX processing)
-# 3. React component validation (GitHubProjectBadges, ReadmeContent)
-# 4. JSON configuration validation (badge-config.json)
-# 5. Version generation and README processing scripts
+# 1. Code formatting validation using Prettier
+# 2. Code quality validation using ESLint with TypeScript support
+# 3. TypeScript compilation for all components and configuration
+# 4. Docusaurus build process validation (including MDX processing)
+# 5. React component validation (GitHubProjectBadges, ReadmeContent)
+# 6. JSON configuration validation (badge-config.json)
+# 7. Version generation and README processing scripts
 #
 # Success Criteria:
 # - All dependencies install correctly via pnpm

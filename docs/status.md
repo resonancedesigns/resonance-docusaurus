@@ -58,4 +58,4 @@ This page displays real-time status information for the Docker BuildAgent projec
 
 ---
 
-*All badges are automatically updated in real-time and provide direct links to detailed information. This unified status system ensures consistency between the README and documentation.*
+_All badges are automatically updated in real-time and provide direct links to detailed information. This unified status system ensures consistency between the README and documentation._

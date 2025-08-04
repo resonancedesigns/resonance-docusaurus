@@ -195,14 +195,31 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       # ================================================================
-      # STEP 3: BUILD DOCUSAURUS SITE
+      # STEP 3: CODE FORMATTING CHECK (PRETTIER)
+      # ================================================================
+      - name: Check Code Formatting
+        run: pnpm run format:check
+
+      # ================================================================
+      # STEP 4: LINT CODE (ESLINT)
+      # ================================================================
+      - name: Lint Code
+        run: pnpm run lint
+
+      # ================================================================
+      # STEP 5: TYPESCRIPT TYPE CHECKING
+      # ================================================================
+      - name: TypeScript Type Check
+        run: pnpm run typecheck
+
+      # ================================================================
+      # STEP 6: BUILD DOCUSAURUS SITE
       # ================================================================
       - name: Build Docusaurus Site
         run: pnpm run build:prod
         env:
           # Ensure proper environment for build
           NODE_ENV: production
-          NODE_OPTIONS: --max-old-space-size=8192
 
       # ================================================================
       # STEP 4: UPLOAD PAGES ARTIFACT

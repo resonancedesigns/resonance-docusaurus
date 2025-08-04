@@ -4,10 +4,18 @@ A comprehensive, reusable Docusaurus template for creating professional document
 
 ## Latest Updates
 
-🎯 **Modernized Architecture**: The template now uses static TypeScript classes for configuration, eliminating JSON config files and providing better type safety:
+🎯 **Code Quality & Development Workflow**: The template now includes comprehensive code quality tooling and enhanced development workflow:
+
+- **ESLint Integration**: Modern ESLint v9 with TypeScript support and flat config format
+- **Prettier Formatting**: Automated code formatting with configurable rules
+- **Quality Gates**: CI/CD workflows now include formatting and linting checks
+- **Developer Scripts**: New scripts for `lint`, `format`, and `check-all` operations
+- **Type Safety**: Enhanced TypeScript configuration and error resolution for Docusaurus runtime aliases
+
+🏗️ **Modernized Architecture**: The template uses static TypeScript classes for configuration, eliminating JSON config files and providing better type safety:
 
 - **Badge System**: `BadgeConfig` static class replaces `badge-config.json`
-- **Comments**: `GiscusConfig` static class replaces `giscus-config.json`  
+- **Comments**: `GiscusConfig` static class replaces `giscus-config.json`
 - **Pre-Build**: Unified `PreBuild` class handles content preparation, navbar generation, and versioning
 - **Hooks**: Simplified hooks using static configuration (`useConfig` for badges, direct class access for Giscus)
 
@@ -30,13 +38,13 @@ The template includes a configurable badge system for displaying GitHub project 
 import GitHubProjectBadges from '../components/ProjectBadges';
 
 // Show all badge groups (default)
-<GitHubProjectBadges 
+<GitHubProjectBadges
   user="your-github-username"
   repository="your-repo-name"
 />
 
 // Show only specific badge groups
-<GitHubProjectBadges 
+<GitHubProjectBadges
   user="your-github-username"
   repository="your-repo-name"
   groups={["buildRelease", "quality"]}  // Optional, show only these groups
@@ -84,6 +92,8 @@ These examples demonstrate:
 - 💬 **Giscus Comments** - GitHub Discussions-based comment system
 - 🎯 **CI/CD Ready** - GitHub Actions workflows for automated deployment
 - 🎪 **TypeScript Architecture** - Class-based build scripts with proper type safety
+- ✨ **Code Quality Tooling** - ESLint, Prettier, and automated quality gates
+- 🔍 **Developer Experience** - Modern tooling with type checking, linting, and formatting
 
 ### 🎨 Theme System
 
@@ -91,7 +101,7 @@ This template includes a sophisticated theme switching system with 10 profession
 
 - **Default Green** - Elegant green with refined typography and glassmorphism effects
 - **Ocean Blue** - Professional blue tones
-- **Sunset** - Warm orange and red gradients  
+- **Sunset** - Warm orange and red gradients
 - **Purple Night** - Deep purple with excellent contrast
 - **Forest** - Natural green shades
 - **Material Design Themes** - Red, Indigo, Teal, Amber, Pink variants
@@ -168,7 +178,6 @@ This section consolidates key enhancements and the current technical architectur
    - **Production Build**: `npm run build` triggers pre-build, then `docusaurus build`.
    - **Type Checking**: `npm run typecheck` ensures all TS scripts and components validate.
 
-
 ## Quick Start
 
 ### 1. Copy and Setup
@@ -190,7 +199,7 @@ npm install
 Edit the following files to customize your documentation:
 
 - **`docusaurus.config.ts`** - Main configuration (site title, URL, etc.)
-- **`sidebars.ts`** - Navigation structure  
+- **`sidebars.ts`** - Navigation structure
 - **`src/css/custom.css`** - Custom styling and colors
 - **`src/config/badge-config.ts`** - GitHub badge system configuration
 - **`src/config/giscus-config.ts`** - Comment system configuration
@@ -252,6 +261,11 @@ npm start
 - `npm run serve` - Serve built site locally
 - `npm run clear` - Clear Docusaurus cache
 - `npm run typecheck` - TypeScript validation
+- `npm run lint` - Lint code with ESLint
+- `npm run lint:fix` - Auto-fix linting issues
+- `npm run format` - Format code with Prettier
+- `npm run format:check` - Check if code is properly formatted
+- `npm run check-all` - Run all quality checks (format, lint, typecheck)
 
 ## Template Automation Scripts
 
@@ -418,8 +432,8 @@ Edit `src/css/custom.css` to customize the default theme:
 
 ```css
 :root {
-  --ifm-color-primary: #2d7d54;      /* Primary brand color */
-  --ifm-color-primary-dark: #256749;  /* Darker variant */
+  --ifm-color-primary: #2d7d54; /* Primary brand color */
+  --ifm-color-primary-dark: #256749; /* Darker variant */
   --ifm-color-primary-light: #359962; /* Lighter variant */
 }
 ```
@@ -472,6 +486,9 @@ Build the site with `npm run build` and deploy the `build/` directory to your ho
 - **TypeScript 5.6.2** - Type safety and modern JavaScript features
 - **@docusaurus/types** - TypeScript definitions for Docusaurus
 - **@types/react & @types/react-dom** - React TypeScript definitions
+- **ESLint 9.x** - Modern code quality and linting with flat config format
+- **Prettier 3.x** - Automated code formatting and style consistency
+- **@typescript-eslint** - TypeScript-specific linting rules and parser
 
 ## Browser Support
 

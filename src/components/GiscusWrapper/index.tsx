@@ -13,9 +13,9 @@ const GiscusWrapper: React.FC = () => {
           Create <code>src/config/giscus-config.json</code> to enable comments.
         </p>
         <p>
-          <a 
-            href="https://giscus.app" 
-            target="_blank" 
+          <a
+            href="https://giscus.app"
+            target="_blank"
             rel="noopener noreferrer"
             style={{ color: '#0969da' }}
           >
@@ -32,12 +32,12 @@ const GiscusWrapper: React.FC = () => {
       repoId={config.repoId}
       category={config.category}
       categoryId={config.categoryId}
-      mapping={config.mapping as "number" | "pathname" | "url" | "title" | "og:title" | "specific"}
+      mapping={config.mapping as 'number' | 'pathname' | 'url' | 'title' | 'og:title' | 'specific'}
       reactionsEnabled={config.reactionsEnabled}
       emitMetadata={config.emitMetadata}
-      inputPosition={config.inputPosition as "bottom" | "top"}
+      inputPosition={config.inputPosition as 'bottom' | 'top'}
       lang={config.lang}
-      loading={config.loading as "lazy" | "eager"}
+      loading={config.loading as 'lazy' | 'eager'}
     />
   );
 };

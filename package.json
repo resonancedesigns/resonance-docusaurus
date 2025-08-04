@@ -6,22 +6,20 @@
     "docusaurus": "docusaurus",
     "prestart": "tsx ./scripts/pre-build.ts",
     "start": "docusaurus start",
-    
-    "prebuild": "tsx ./scripts/pre-build.ts",
     "prebuild:prod": "tsx ./scripts/pre-build.ts",
     "build:prod": "docusaurus build",
-    
-    "generate:navbar": "tsx scripts/generateNavbarLinks.ts",
-    
-    "build:scripts": "tsc scripts/*.ts --outDir scripts/dist --target es2020 --module commonjs --skipLibCheck",
-    
     "swizzle": "docusaurus swizzle",
     "deploy": "docusaurus deploy",
     "clear": "docusaurus clear",
     "serve": "docusaurus serve",
     "write-translations": "docusaurus write-translations",
     "write-heading-ids": "docusaurus write-heading-ids",
-    "typecheck": "tsc"
+    "typecheck": "tsc",
+    "lint": "eslint \"src/**/*.{ts,tsx}\"",
+    "lint:fix": "eslint \"src/**/*.{ts,tsx}\" --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "check-all": "pnpm run format:check && pnpm run lint && pnpm run typecheck"
   },
   "dependencies": {
     "@docusaurus/core": "3.8.1",
@@ -45,9 +43,20 @@
     "@docusaurus/module-type-aliases": "3.8.1",
     "@docusaurus/tsconfig": "3.8.1",
     "@docusaurus/types": "3.8.1",
+    "@eslint/js": "^9.32.0",
     "@types/node": "^24.1.0",
     "@types/react": "^19.1.9",
     "@types/react-dom": "^19.1.7",
+    "@typescript-eslint/eslint-plugin": "^8.0.0",
+    "@typescript-eslint/parser": "^8.0.0",
+    "eslint": "^9.0.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-jsx-a11y": "^6.0.0",
+    "eslint-plugin-prettier": "^5.0.0",
+    "eslint-plugin-react": "^7.0.0",
+    "eslint-plugin-react-hooks": "^4.0.0",
+    "globals": "^16.3.0",
+    "prettier": "^3.0.0",
     "ts-node": "^10.9.2",
     "tsx": "^4.20.3",
     "typescript": "~5.6.2"
