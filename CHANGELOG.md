@@ -16,7 +16,7 @@ All notable changes to this project will be documented in this file.
 - **10 Professional Color Themes** with live switching capability:
   - **Default Green** - Elegant green with refined typography and glassmorphism effects
   - **Ocean Blue** - Professional blue tones
-  - **Sunset** - Warm orange and red gradients  
+  - **Sunset** - Warm orange and red gradients
   - **Purple Night** - Deep purple with excellent contrast
   - **Forest** - Natural green shades
   - **Material Design Themes** - Red, Indigo, Teal, Amber, Pink variants
