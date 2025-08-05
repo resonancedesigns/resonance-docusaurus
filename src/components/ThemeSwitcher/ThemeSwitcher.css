@@ -80,7 +80,7 @@
 
 /* Theme color previews */
 .theme-switcher__color-preview--default {
-  background: linear-gradient(45deg, #2e8555, #25c2a0);
+  background: linear-gradient(45deg, #1e5a3a, #2f7a4f);
 }
 
 .theme-switcher__color-preview--blue {
@@ -117,6 +117,10 @@
 
 .theme-switcher__color-preview--material-pink {
   background: linear-gradient(45deg, #c2185b, #f48fb1);
+}
+
+.theme-switcher__color-preview--nuke {
+  background: linear-gradient(45deg, #3578e5, #72a1ed);
 }
 
 .theme-switcher__backdrop {

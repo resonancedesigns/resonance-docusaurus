@@ -1,6 +1,6 @@
 ---
-title: 📊 Status
-sidebar_position: 999
+title: Status
+sidebar_position: 19
 ---
 
 import GitHubProjectBadges from '@site/src/components/GitHubProjectBadges';

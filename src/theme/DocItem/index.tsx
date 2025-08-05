@@ -1,7 +1,7 @@
 import { type ReactNode } from 'react';
 // @ts-ignore: @theme-original/* is a Docusaurus runtime alias
 import DocItem from '@theme-original/DocItem';
-import GiscusWrapper from '../../components/GiscusWrapper';
+import GiscusComments from '../../components/GiscusComments';
 
 interface DocItemProps {
   content: {
@@ -19,8 +19,8 @@ export default function DocItemWrapper(props: DocItemProps): ReactNode {
     <>
       <DocItem {...props} />
 
-      {/* Conditionally render GiscusWrapper based on frontmatter */}
-      {showComments && <GiscusWrapper />}
+      {/* Conditionally render GiscusComments based on frontmatter */}
+      {showComments && <GiscusComments />}
     </>
   );
 }

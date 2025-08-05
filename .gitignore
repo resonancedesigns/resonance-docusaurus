@@ -148,3 +148,5 @@ scripts/**/*.js
 src/navbarLinks.ts
 
 src/pages/
+
+artifacts/

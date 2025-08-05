@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "baseUrl": ".",
+    "outDir": "./artifacts",
     "paths": {
       "@theme/*": ["node_modules/@docusaurus/theme-classic/lib/theme/*"],
       "@docusaurus/*": ["node_modules/@docusaurus/*"]
@@ -14,5 +15,5 @@
     "lib": ["ES2017", "DOM", "DOM.Iterable"],
     "typeRoots": ["./node_modules/@types", "./src/types"]
   },
-  "include": ["src", "docs", "scripts"]
+  "include": ["src", "docs"]
 }

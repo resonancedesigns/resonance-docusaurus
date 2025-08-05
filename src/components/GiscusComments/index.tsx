@@ -1,12 +1,13 @@
 import React from 'react';
 import Giscus from '@giscus/react';
 import { useColorMode } from '@docusaurus/theme-common';
+import { GiscusConfig } from '../../config/giscus-config';
 
 export interface GiscusCommentsProps {
-  repo: `${string}/${string}`;
-  repoId: string;
-  category: string;
-  categoryId: string;
+  repo?: `${string}/${string}`;
+  repoId?: string;
+  category?: string;
+  categoryId?: string;
   mapping?: 'pathname' | 'url' | 'title' | 'og:title' | 'specific' | 'number';
   term?: string;
   reactionsEnabled?: boolean;
@@ -17,19 +18,47 @@ export interface GiscusCommentsProps {
 }
 
 const GiscusComments: React.FC<GiscusCommentsProps> = ({
-  repo,
-  repoId,
-  category,
-  categoryId,
-  mapping = 'pathname',
+  repo = GiscusConfig.repo as `${string}/${string}`,
+  repoId = GiscusConfig.repoId,
+  category = GiscusConfig.category,
+  categoryId = GiscusConfig.categoryId,
+  mapping = GiscusConfig.mapping as
+    | 'pathname'
+    | 'url'
+    | 'title'
+    | 'og:title'
+    | 'specific'
+    | 'number',
   term,
-  reactionsEnabled = true,
-  emitMetadata = false,
-  inputPosition = 'bottom',
-  lang = 'en',
-  loading = 'lazy',
+  reactionsEnabled = GiscusConfig.reactionsEnabled,
+  emitMetadata = GiscusConfig.emitMetadata,
+  inputPosition = GiscusConfig.inputPosition as 'top' | 'bottom',
+  lang = GiscusConfig.lang,
+  loading = GiscusConfig.loading as 'lazy' | 'eager',
 }) => {
   const { colorMode } = useColorMode();
+
+  // Check if configuration is available
+  if (!repo || !repoId || !category || !categoryId) {
+    return (
+      <div style={{ padding: '20px', textAlign: 'center', color: '#666' }}>
+        <p>💬 Comments are not configured yet.</p>
+        <p>
+          Configure Giscus settings in <code>src/config/giscus-config.ts</code> to enable comments.
+        </p>
+        <p>
+          <a
+            href="https://giscus.app"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ color: '#0969da' }}
+          >
+            Configure Giscus →
+          </a>
+        </p>
+      </div>
+    );
+  }
 
   return (
     <Giscus

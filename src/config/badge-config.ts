@@ -21,8 +21,8 @@ export interface BadgeCategory {
 
 export class BadgeConfig {
   static templateVariables: TemplateVariables = {
-    demoUrl: 'https://barstrad.com',
-    docsUrl: 'https://build-agent.subzerodev.com',
+    demoUrl: 'https://docs-template.subzerodev.com',
+    docsUrl: 'https://docs-template.subzerodev.com',
     user: 'the-running-dev',
     repository: 'Docusaurus-Template',
   };
@@ -38,11 +38,11 @@ export class BadgeConfig {
           url: 'https://github.com/{user}/{repository}/actions/workflows/ci.yml/badge.svg?branch=main',
           link: 'https://github.com/{user}/{repository}/actions/workflows/ci.yml',
         },
-        {
-          name: 'Release',
-          url: 'https://github.com/{user}/{repository}/actions/workflows/release.yml/badge.svg?branch=main',
-          link: 'https://github.com/{user}/{repository}/actions/workflows/release.yml',
-        },
+        // {
+        //   name: 'Release',
+        //   url: 'https://github.com/{user}/{repository}/actions/workflows/release.yml/badge.svg?branch=main',
+        //   link: 'https://github.com/{user}/{repository}/actions/workflows/release.yml',
+        // },
         {
           name: 'Tests',
           url: 'https://img.shields.io/badge/Tests-Passing-brightgreen?logo=github-actions&logoColor=white',

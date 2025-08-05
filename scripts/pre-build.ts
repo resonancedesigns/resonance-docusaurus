@@ -1,6 +1,10 @@
 import * as fs from 'fs';
 import * as path from 'path';
 
+// Configuration options
+let PROJECT_ROOT_LEVELS_UP: number = 1; // 1 = '../', 2 = '../../', etc.
+let OVERWRITE_EXISTING_FILES: boolean = true;
+
 interface NavbarLink {
   label: string;
   to: string;
@@ -15,8 +19,9 @@ export class PreBuild {
   private pagesDir: string;
 
   constructor() {
-    // Project root is the parent directory of this scripts folder
-    this.projectRoot = path.resolve(__dirname, '..');
+    // Project root is determined by levels up from this scripts folder
+    const levelsUp = '../'.repeat(PROJECT_ROOT_LEVELS_UP);
+    this.projectRoot = path.resolve(__dirname, levelsUp);
     this.pagesDir = path.join(this.projectRoot, 'src', 'pages');
   }
 
@@ -32,7 +37,7 @@ export class PreBuild {
   }
 
   /**
-   * Copy all markdown files from project root into src/pages, overwriting if present.
+   * Copy all markdown files from project root into src/pages, overwriting based on configuration.
    */
   private copyAllRootMarkdown(): void {
     const mdFiles = fs.readdirSync(this.projectRoot).filter((f) => f.endsWith('.md'));
@@ -45,10 +50,14 @@ export class PreBuild {
 
       this.ensureDirectoryExists(dstPath);
 
-      if (!fs.existsSync(dstPath)) {
+      const fileExists = fs.existsSync(dstPath);
+
+      if (!fileExists || OVERWRITE_EXISTING_FILES) {
         fs.copyFileSync(srcPath, dstPath);
 
-        console.log(`✅ Copied ${file} --> src/pages/${destFile}`);
+        const action = fileExists ? 'Overwritten' : 'Copied';
+
+        console.log(`✅ ${action} ${file} --> src/pages/${destFile}`);
       } else {
         console.log(`ℹ️ Skipped ${file} --> src/pages/${destFile}`);
       }
@@ -108,24 +117,9 @@ export const navbarLinks = ${JSON.stringify(links, null, 2)} as const;
 
     console.log('🚀 Pre Build Process Completed');
   }
-
-  public static getVersion(): string {
-    try {
-      const now = new Date();
-      const year = now.getFullYear();
-      const month = String(now.getMonth() + 1).padStart(2, '0');
-      const day = String(now.getDate()).padStart(2, '0');
-
-      return `${year}.${month}.${day}`;
-    } catch (error) {
-      console.error('Error Generating Version:', error);
-
-      return 'unknown';
-    }
-  }
 }
 
-// Execute when run directly
-if (require.main === module) {
+// Only run if invoked directly, not imported
+if (process.argv[1] && process.argv[1].endsWith('pre-build.ts')) {
   new PreBuild().process();
 }

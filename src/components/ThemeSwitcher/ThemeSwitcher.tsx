@@ -10,31 +10,36 @@ interface Theme {
 }
 
 const themes: Theme[] = [
-  { name: 'default', displayName: 'Default Green', cssFile: '' }, // Empty string means use built-in CSS
-  { name: 'blue', displayName: 'Ocean Blue', cssFile: '/themes/custom.blue.css' },
-  { name: 'sunset', displayName: 'Sunset', cssFile: '/themes/custom.sunset.css' },
-  { name: 'purple', displayName: 'Purple Night', cssFile: '/themes/custom.purple.css' },
-  { name: 'forest', displayName: 'Forest', cssFile: '/themes/custom.forest.css' },
-  { name: 'material-red', displayName: 'Material Red', cssFile: '/themes/custom.material-red.css' },
+  { name: 'default', displayName: 'Elegant Green', cssFile: '/themes/default.css' },
+  { name: 'blue', displayName: 'Ocean Blue', cssFile: '/themes/blue.css' },
+  { name: 'sunset', displayName: 'Sunset', cssFile: '/themes/sunset.css' },
+  { name: 'purple', displayName: 'Purple Night', cssFile: '/themes/purple.css' },
+  { name: 'forest', displayName: 'Forest', cssFile: '/themes/forest.css' },
+  { name: 'material-red', displayName: 'Material Red', cssFile: '/themes/material-red.css' },
   {
     name: 'material-indigo',
     displayName: 'Material Indigo',
-    cssFile: '/themes/custom.material-indigo.css',
+    cssFile: '/themes/material-indigo.css',
   },
   {
     name: 'material-teal',
     displayName: 'Material Teal',
-    cssFile: '/themes/custom.material-teal.css',
+    cssFile: '/themes/material-teal.css',
   },
   {
     name: 'material-amber',
     displayName: 'Material Amber',
-    cssFile: '/themes/custom.material-amber.css',
+    cssFile: '/themes/material-amber.css',
   },
   {
     name: 'material-pink',
     displayName: 'Material Pink',
-    cssFile: '/themes/custom.material-pink.css',
+    cssFile: '/themes/material-pink.css',
+  },
+  {
+    name: 'nuke',
+    displayName: 'Nuke Dark',
+    cssFile: '/themes/nuke.css',
   },
 ];
 
@@ -45,6 +50,7 @@ const ThemeSwitcher: React.FC = () => {
   useEffect(() => {
     // Load saved theme from localStorage
     const savedTheme = localStorage.getItem('docusaurus-theme-color') || 'default';
+
     setCurrentTheme(savedTheme);
     applyTheme(savedTheme);
   }, []);
@@ -56,24 +62,23 @@ const ThemeSwitcher: React.FC = () => {
 
     // Find the theme
     const theme = themes.find((t) => t.name === themeName);
-    if (!theme) return;
 
-    // If it's the default theme, don't add any additional CSS (use built-in)
-    if (theme.cssFile === '') {
-      localStorage.setItem('docusaurus-theme-color', themeName);
-      setCurrentTheme(themeName);
-      return;
-    }
+    if (!theme) return;
 
     // Add new theme link
     const link = document.createElement('link');
     link.rel = 'stylesheet';
     link.href = theme.cssFile;
     link.setAttribute('data-theme-switcher', 'true');
+
+    document.head.appendChild(link);
+    link.setAttribute('data-theme-switcher', 'true');
+
     document.head.appendChild(link);
 
     // Save to localStorage
     localStorage.setItem('docusaurus-theme-color', themeName);
+
     setCurrentTheme(themeName);
   };
 
@@ -90,15 +95,15 @@ const ThemeSwitcher: React.FC = () => {
       <button
         className="theme-switcher__button"
         onClick={() => setIsOpen(!isOpen)}
-        aria-label="Switch color theme"
-        title={`Current theme: ${currentThemeDisplayName}`}
+        aria-label="Switch Theme"
+        title={`Current: ${currentThemeDisplayName}`}
       >
         <FontAwesomeIcon icon={faPalette} />
       </button>
 
       {isOpen && (
         <div className="theme-switcher__dropdown">
-          <div className="theme-switcher__header">Color Themes</div>
+          <div className="theme-switcher__header">Themes</div>
           {themes.map((theme) => (
             <button
               key={theme.name}

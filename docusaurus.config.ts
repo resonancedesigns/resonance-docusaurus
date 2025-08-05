@@ -6,7 +6,6 @@ import { navbarLinks } from './src/navbarLinks';
 import type { Config } from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
-const version = PreBuild.getVersion();
 const config: Config = {
   title: 'Your Docs Site',
   tagline: 'Reusable Docusaurus Template',
@@ -34,9 +33,10 @@ const config: Config = {
           sidebarPath: './sidebars.ts',
           path: 'docs',
           id: 'default',
+          routeBasePath: '/',
         },
         theme: {
-          customCss: './src/css/custom.css',
+          customCss: './static/themes/default.css',
         },
       } satisfies Preset.Options,
     ],
@@ -53,16 +53,23 @@ const config: Config = {
       items: [
         {
           type: 'doc',
-          docId: 'index',
+          docId: 'template/template-overview',
           position: 'left',
           label: 'Docs',
         },
         {
-          label: `v${version}`,
+          type: 'custom-gitHubLinks',
           position: 'right',
-          href: '#',
         },
-        // ...other links,
+        {
+          type: 'custom-versionDisplay',
+          position: 'right',
+        },
+        {
+          type: 'custom-themeSwitcher',
+          position: 'right',
+        },
+        // ...auto generated links,
         ...navbarLinks,
       ],
     },
