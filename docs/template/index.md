@@ -69,8 +69,6 @@ Docusaurus Template is a complete, ready-to-use template that includes:
 
 ### Reference
 
-- **[Requirements](/template/reference/requirements)** - System requirements and browser support
-- **[License](/template/reference/license)** - Usage terms and conditions
 - **[Status](/status)** - Live badge system demonstration
 
 ## Need Help?
@@ -78,7 +76,6 @@ Docusaurus Template is a complete, ready-to-use template that includes:
 - 📖 **[Full Documentation](/template)** - Complete template guide
 - 🚀 **[Quick Start](/template/getting-started/quick-start)** - Get started immediately
 - 💡 **[Features](/template/getting-started/features)** - Explore all capabilities
-- 🔧 **[Requirements](/template/reference/requirements)** - System requirements and browser support
 
 ---
 
