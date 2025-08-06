@@ -2,10 +2,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 
 // Configuration options
-let PROJECT_ROOT_LEVELS_UP: number = 2; // 1 = '../', 2 = '../../', etc.
 let OVERWRITE_EXISTING_FILES: boolean = true;
-
-// Directory containing theme CSS files
 const PROJECT_ROOT = path.join(__dirname, '../');
 const THEMES_DIR = path.join(__dirname, '../static/themes');
 const PAGES_DIR = path.join(__dirname, '../src/pages');
