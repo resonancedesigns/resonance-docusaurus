@@ -33,23 +33,23 @@ export class GitHubLinksConfig {
       href: 'https://github.com/The-Running-Dev/Docusaurus-Template',
       label: 'GitHub',
       position: 'right',
-      title: 'View source code on GitHub',
+      title: 'Source code on GitHub',
       icon: faGithub
     },
     {
       href: 'https://github.com/The-Running-Dev/Docusaurus-Template/releases',
       label: 'Releases',
       position: 'right',
-      title: 'View releases and changelog',
+      title: 'Releases and changelog',
       icon: faTag
+    },
+    {
+      href: 'https://ghcr.io/the-running-dev/docusaurus-template',
+      label: 'Container Registry',
+      position: 'right',
+      title: 'Containers',
+      icon: faDocker
     }
-    // {
-    //   href: 'https://ghcr.io/the-running-dev/docusaurus-template',
-    //   label: 'Container Registry',
-    //   position: 'right',
-    //   title: 'View container packages',
-    //   icon: faDocker,
-    // },
   ];
 
   /** Whether to show as dropdown menu */
