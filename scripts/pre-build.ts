@@ -42,8 +42,8 @@ export class PreBuild {
 
       if (themeIdMatch) {
         const extractedId = themeIdMatch[1].trim();
-
-        // Validate theme ID (alphanumeric, hyphens, underscores only)
+if (/^[a-zA-Z0-9-]+$/.test(extractedId)) {
+  themeId = extractedId;
         if (/^[a-zA-Z0-9_-]+$/.test(extractedId)) {
           themeId = extractedId;
         } else {
@@ -105,7 +105,7 @@ export class PreBuild {
     const tsOutput = `// AUTO-GENERATED FILE. DO NOT EDIT.
 export interface Theme {
   name: string;
-  displayName: string;
+  export const defaultTheme: Theme = themes.find((t) => t.name === 'default') || (themes.length > 0 ? themes[0] : { name: 'fallback', displayName: 'Fallback', cssFile: '/themes/default.css' });
   cssFile: string;
 }
 
