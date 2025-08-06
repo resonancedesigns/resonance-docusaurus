@@ -4,8 +4,14 @@ FROM node:alpine
 # Install pnpm tsx globally
 RUN npm install -g pnpm tsx
 
-# Create and change to the app directory.
-WORKDIR /workspace
+# Create and change to the template directory.
+WORKDIR /template
+
+# Copy package files first for better Docker layer caching
+COPY package.json pnpm-lock.yaml ./
+
+# Install dependencies
+RUN pnpm install --frozen-lockfile
 
 # Copy the source code into the container.
 COPY . ./
@@ -14,4 +20,5 @@ COPY . ./
 EXPOSE 3000
 
 # Run the web service on container startup.
-CMD ["sh", "-c", "pnpm install && pnpm start"]
+# Use start:docker which binds to 0.0.0.0, making it accessible from outside the container
+CMD ["sh", "-c", "pnpm run start:docker"]
