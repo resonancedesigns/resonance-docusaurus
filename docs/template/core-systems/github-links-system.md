@@ -51,8 +51,8 @@ GitHubLinksConfig.links = [
     label: 'GitHub',
     position: 'right',
     title: 'View source code',
-    icon: faGithub,
-  },
+    icon: faGithub
+  }
   // Add more links...
 ];
 ```
@@ -110,20 +110,20 @@ GitHubLinksConfig.links = [
     href: 'https://github.com/The-Running-Dev/Docker-BuildAgent',
     label: 'GitHub',
     icon: faGithub,
-    title: 'View source code on GitHub',
+    title: 'View source code on GitHub'
   },
   {
     href: 'https://github.com/The-Running-Dev/Docker-BuildAgent/releases',
     label: 'Releases',
     icon: faTag,
-    title: 'View releases and changelog',
+    title: 'View releases and changelog'
   },
   {
     href: 'https://ghcr.io/the-running-dev/build-agent',
     label: 'Container Registry',
     icon: faDocker,
-    title: 'View container packages',
-  },
+    title: 'View container packages'
+  }
 ];
 ```
 
@@ -137,7 +137,11 @@ GitHubLinksConfig.dropdownLabel = 'Project Links';
 GitHubLinksConfig.links = [
   { href: 'https://github.com/org/repo', label: 'Source', icon: faGithub },
   { href: 'https://github.com/org/repo/issues', label: 'Issues', icon: faBug },
-  { href: 'https://github.com/org/repo/discussions', label: 'Discussions', icon: faComments },
+  {
+    href: 'https://github.com/org/repo/discussions',
+    label: 'Discussions',
+    icon: faComments
+  }
 ];
 ```
 
@@ -151,14 +155,14 @@ GitHubLinksConfig.links = [
     href: 'https://github.com/your-org/your-repo',
     label: 'GitHub',
     icon: faGithub,
-    title: 'Star us on GitHub!',
+    title: 'Star us on GitHub!'
   },
   {
     href: 'https://github.com/your-org/your-repo/blob/main/CONTRIBUTING.md',
     label: 'Contribute',
     icon: faHeart,
-    title: 'How to contribute',
-  },
+    title: 'How to contribute'
+  }
 ];
 ```
 
@@ -170,13 +174,13 @@ GitHubLinksConfig.links = [
   {
     href: 'https://github.com/your-org/your-repo',
     label: 'GitHub',
-    className: 'github-links__link--badge',
+    className: 'github-links__link--badge'
   },
   {
     href: 'https://github.com/your-org/your-repo/releases',
     label: 'Releases',
-    className: 'github-links__link--badge',
-  },
+    className: 'github-links__link--badge'
+  }
 ];
 ```
 
@@ -190,10 +194,18 @@ import { faBook, faTag } from '@fortawesome/free-solid-svg-icons';
 
 GitHubLinksConfig.links = [
   { href: 'https://github.com/org/repo', label: 'GitHub', icon: faGithub },
-  { href: 'https://github.com/org/repo/releases', label: 'Releases', icon: faTag },
-  { href: 'https://hub.docker.com/r/org/repo', label: 'Docker Hub', icon: faDocker },
+  {
+    href: 'https://github.com/org/repo/releases',
+    label: 'Releases',
+    icon: faTag
+  },
+  {
+    href: 'https://hub.docker.com/r/org/repo',
+    label: 'Docker Hub',
+    icon: faDocker
+  },
   { href: 'https://www.npmjs.com/package/pkg', label: 'npm', icon: faNpm },
-  { href: 'https://github.com/org/repo/wiki', label: 'Wiki', icon: faBook },
+  { href: 'https://github.com/org/repo/wiki', label: 'Wiki', icon: faBook }
 ];
 ```
 
@@ -208,20 +220,20 @@ GitHubLinksConfig.links = [
     href: 'https://github.com/YourOrg',
     label: 'Organization',
     icon: faUsers,
-    title: 'View organization profile',
+    title: 'View organization profile'
   },
   {
     href: 'https://github.com/YourOrg/main-repo',
     label: 'Main Repository',
     icon: faGithub,
-    title: 'Main project repository',
+    title: 'Main project repository'
   },
   {
     href: 'https://github.com/orgs/YourOrg/projects',
     label: 'Projects',
     icon: faProjectDiagram,
-    title: 'Organization projects',
-  },
+    title: 'Organization projects'
+  }
 ];
 ```
 
@@ -265,7 +277,9 @@ The component includes mobile-friendly styles:
 
 ```css
 @media (max-width: 768px) {
-  .github-links--mobile-icons-only .github-links__link span:not(.github-links__icon) {
+  .github-links--mobile-icons-only
+    .github-links__link
+    span:not(.github-links__icon) {
     display: none; /* Show only icons on mobile */
   }
 }
@@ -299,7 +313,12 @@ import { faGithub } from '@fortawesome/free-brands-svg-icons';
 Each link includes an external link SVG icon:
 
 ```tsx
-<svg width="13.5" height="13.5" aria-hidden="true" className="iconExternalLink_qCNR">
+<svg
+  width="13.5"
+  height="13.5"
+  aria-hidden="true"
+  className="iconExternalLink_qCNR"
+>
   <use href="#theme-svg-external-link"></use>
 </svg>
 ```

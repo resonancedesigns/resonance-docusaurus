@@ -14,7 +14,7 @@ const config: Config = {
   tagline: 'Your tagline here',
   url: 'https://your-site.com',
   organizationName: 'your-org',
-  projectName: 'your-docs',
+  projectName: 'your-docs'
   // ... other settings
 };
 ```

@@ -230,7 +230,9 @@ VersionConfig.title = 'View changelog and release notes';
 const isProduction = process.env.NODE_ENV === 'production';
 
 VersionConfig.enabled = isProduction; // Only show in production
-VersionConfig.href = isProduction ? 'https://github.com/your-org/your-repo/releases' : undefined;
+VersionConfig.href = isProduction
+  ? 'https://github.com/your-org/your-repo/releases'
+  : undefined;
 ```
 
 ## TypeScript Support

@@ -20,21 +20,21 @@ Docusaurus Template is a complete, ready-to-use template that includes:
 
 ## Latest Updates
 
-🎯 **Code Quality & Development Workflow**: The template now includes comprehensive code quality tooling and enhanced development workflow:
+🎯 **Enhanced Development Workflow (v1.0.1)**: The template now includes comprehensive development tooling and quality assurance:
 
-- **ESLint Integration**: Modern ESLint v9 with TypeScript support and flat config format
-- **Prettier Formatting**: Automated code formatting with configurable rules
-- **Quality Gates**: CI/CD workflows now include formatting and linting checks
-- **Developer Scripts**: New scripts for `lint`, `format`, and `check-all` operations
-- **Type Safety**: Enhanced TypeScript configuration and error resolution for Docusaurus runtime aliases
+- **Modern ESLint v9**: Flat config format with TypeScript support and optimized rules for Docusaurus
+- **Prettier Integration**: Automated code formatting with consistent style across all components
+- **Quality Gates**: Pre-commit hooks and CI/CD integration for `format:check`, `lint`, and `typecheck`
+- **Enhanced Scripts**: New developer commands including `check-all` for comprehensive quality validation
+- **Artifacts Build**: Production builds now output to configurable `./artifacts` directory
 
-🏗️ **Modernized Architecture**: The template uses static TypeScript classes for configuration, eliminating JSON config files and providing better type safety:
+🏗️ **Code Quality & Architecture**: Significant improvements to maintainability and developer experience:
 
-- **Badge System**: `BadgeConfig` static class replaces `badge-config.json`
-- **GitHub Links**: `GitHubLinksConfig` static class for navbar link management
-- **Comments**: `GiscusConfig` static class with consolidated component architecture
-- **Pre-Build**: Unified `PreBuild` class handles content preparation, navbar generation, and versioning
-- **Hooks**: Simplified hooks using static configuration (`useConfig` for badges, direct class access for Giscus)
+- **Static Configuration Classes**: Replaced JSON configs with TypeScript classes (`BadgeConfig`, `GitHubLinksConfig`) for better type safety
+- **Enhanced TypeScript**: Improved type definitions and Docusaurus runtime compatibility
+- **Consolidated Components**: Streamlined component architecture with better error handling
+- **Pre-Build Automation**: Enhanced content preparation with theme scanning and navbar generation
+- **Developer Tools**: Comprehensive linting, formatting, and type checking integration
 
 ## Quick Navigation
 

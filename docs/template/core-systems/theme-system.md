@@ -88,8 +88,8 @@ const themes: Theme[] = [
   {
     name: 'mytheme',
     displayName: 'My Custom Theme',
-    cssFile: '/themes/mytheme.css',
-  },
+    cssFile: '/themes/mytheme.css'
+  }
 ];
 ```
 
@@ -99,7 +99,11 @@ Add corresponding color preview styles in `src/components/ThemeSwitcher/ThemeSwi
 
 ```css
 .theme-switcher__color-preview--mytheme {
-  background: linear-gradient(135deg, #your-primary-color, #your-secondary-color);
+  background: linear-gradient(
+    135deg,
+    #your-primary-color,
+    #your-secondary-color
+  );
 }
 ```
 

@@ -10,14 +10,39 @@ export const themes: Theme[] = [
   { name: 'blue', displayName: 'Ocean Blue', cssFile: '/themes/blue.css' },
   { name: 'default', displayName: 'Elegant', cssFile: '/themes/default.css' },
   { name: 'forest', displayName: 'Forest', cssFile: '/themes/forest.css' },
-  { name: 'material-amber', displayName: 'Material Amber', cssFile: '/themes/material-amber.css' },
-  { name: 'material-indigo', displayName: 'Material Indigo', cssFile: '/themes/material-indigo.css' },
-  { name: 'material-pink', displayName: 'Material Pink', cssFile: '/themes/material-pink.css' },
-  { name: 'material-red', displayName: 'Material Red', cssFile: '/themes/material-red.css' },
-  { name: 'material-teal', displayName: 'Material Teal', cssFile: '/themes/material-teal.css' },
+  {
+    name: 'material-amber',
+    displayName: 'Material Amber',
+    cssFile: '/themes/material-amber.css'
+  },
+  {
+    name: 'material-indigo',
+    displayName: 'Material Indigo',
+    cssFile: '/themes/material-indigo.css'
+  },
+  {
+    name: 'material-pink',
+    displayName: 'Material Pink',
+    cssFile: '/themes/material-pink.css'
+  },
+  {
+    name: 'material-red',
+    displayName: 'Material Red',
+    cssFile: '/themes/material-red.css'
+  },
+  {
+    name: 'material-teal',
+    displayName: 'Material Teal',
+    cssFile: '/themes/material-teal.css'
+  },
   { name: 'nuke', displayName: 'Nuke Dark', cssFile: '/themes/nuke.css' },
-  { name: 'purple', displayName: 'Purple Night', cssFile: '/themes/purple.css' },
+  {
+    name: 'purple',
+    displayName: 'Purple Night',
+    cssFile: '/themes/purple.css'
+  },
   { name: 'sunset', displayName: 'Sunset', cssFile: '/themes/sunset.css' }
 ];
 
-export const defaultTheme: Theme = themes.find((t) => t.name === 'default') || themes[0];
+export const defaultTheme: Theme =
+  themes.find((t) => t.name === 'default') || themes[0];
