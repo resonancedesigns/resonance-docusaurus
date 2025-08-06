@@ -42,8 +42,8 @@ export class PreBuild {
 
       if (themeIdMatch) {
         const extractedId = themeIdMatch[1].trim();
-
-        // Validate theme ID (alphanumeric, hyphens, underscores only)
+if (/^[a-zA-Z0-9-]+$/.test(extractedId)) {
+  themeId = extractedId;
         if (/^[a-zA-Z0-9_-]+$/.test(extractedId)) {
           themeId = extractedId;
         } else {
