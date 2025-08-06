@@ -25,7 +25,6 @@ interface NavbarLink {
 
 export class PreBuild {
   private themes: Theme[] = [];
-  private themeCounter: number = 1;
 
   private getThemeMetadata(file: string): Theme {
     const filePath = path.join(THEMES_DIR, file);
@@ -34,14 +33,35 @@ export class PreBuild {
     try {
       const content = fs.readFileSync(filePath, 'utf-8');
 
-      // Extract theme-id and theme-name from CSS header comments
-      const themeIdMatch = content.match(/@theme-id:\s*(\S+)/);
-      const themeNameMatch = content.match(/@theme-name:\s*(.+)/);
+      // Extract theme-id and theme-name from CSS header comments with improved regex
+      // Handle both single-line and multi-line comments, with better whitespace handling
+      const themeIdMatch = content.match(/@theme-id\s*:\s*([^\s\r\n*\/]+)/i);
+      const themeNameMatch = content.match(/@theme-name\s*:\s*([^\r\n*]+?)(?=\r?\n|\*\/|$)/i);
 
-      const themeId = themeIdMatch ? themeIdMatch[1].trim() : name;
-      const themeName = themeNameMatch
-        ? themeNameMatch[1].trim()
-        : name.charAt(0).toUpperCase() + name.slice(1);
+      // Extract and validate theme ID
+      let themeId = name; // Default fallback
+
+      if (themeIdMatch) {
+        const extractedId = themeIdMatch[1].trim();
+
+        // Validate theme ID (alphanumeric, hyphens, underscores only)
+        if (/^[a-zA-Z0-9_-]+$/.test(extractedId)) {
+          themeId = extractedId;
+        } else {
+          console.warn(`Warning: Invalid theme-id "${extractedId}" in ${file}, using filename`);
+        }
+      }
+
+      // Extract and clean theme name
+      let themeName = name.charAt(0).toUpperCase() + name.slice(1); // Default fallback
+
+      if (themeNameMatch) {
+        const extractedName = themeNameMatch[1].trim();
+
+        if (extractedName.length > 0) {
+          themeName = extractedName;
+        }
+      }
 
       return {
         name: themeId,
@@ -49,16 +69,12 @@ export class PreBuild {
         cssFile: `/themes/${file}`,
       };
     } catch (error) {
-      console.warn(`Warning: Could not Parse Theme Metadata from ${file}, Using Fallback`);
+      console.warn(`Warning: Could not Read Theme File ${file}, Using Fallback`);
 
-      // Use incremental fallback naming
-      const fallbackId = `theme-id-${this.themeCounter}`;
-      const fallbackName = `Theme ${this.themeCounter}`;
-      this.themeCounter++;
-
+      // Use filename-based fallback (no counter needed)
       return {
-        name: fallbackId,
-        displayName: fallbackName,
+        name: name,
+        displayName: name.charAt(0).toUpperCase() + name.slice(1),
         cssFile: `/themes/${file}`,
       };
     }
