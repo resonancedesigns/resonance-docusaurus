@@ -33,7 +33,9 @@ export class PreBuild {
       // Extract theme-id and theme-name from CSS header comments with improved regex
       // Handle both single-line and multi-line comments, with better whitespace handling
       const themeIdMatch = content.match(/@theme-id\s*:\s*([^\s\r\n*\/]+)/i);
-      const themeNameMatch = content.match(/@theme-name\s*:\s*([^\r\n*]+?)(?=\r?\n|\*\/|$)/i);
+      const themeNameMatch = content.match(
+        /@theme-name\s*:\s*([^\r\n*]+?)(?=\r?\n|\*\/|$)/i
+      );
 
       // Extract and validate theme ID
       let themeId = name; // Default fallback
@@ -45,7 +47,9 @@ export class PreBuild {
         if (/^[a-zA-Z0-9_-]+$/.test(extractedId)) {
           themeId = extractedId;
         } else {
-          console.warn(`Warning: Invalid theme-id "${extractedId}" in ${file}, using filename`);
+          console.warn(
+            `Warning: Invalid theme-id "${extractedId}" in ${file}, using filename`
+          );
         }
       }
 
@@ -63,18 +67,18 @@ export class PreBuild {
       return {
         name: themeId,
         displayName: themeName,
-        cssFile: `/themes/${file}`,
+        cssFile: `/themes/${file}`
       };
     } catch (error) {
       console.warn(
-        `Warning: Could not Read Theme File ${file}, Using Fallback. Error: ${error.message}`,
+        `Warning: Could not Read Theme File ${file}, Using Fallback. Error: ${error.message}`
       );
 
       // Use filename-based fallback (no counter needed)
       return {
         name: name,
         displayName: name.charAt(0).toUpperCase() + name.slice(1),
-        cssFile: `/themes/${file}`,
+        cssFile: `/themes/${file}`
       };
     }
   }
@@ -86,7 +90,9 @@ export class PreBuild {
       return;
     }
 
-    const cssFiles = fs.readdirSync(THEMES_DIR).filter((f) => f.endsWith('.css'));
+    const cssFiles = fs
+      .readdirSync(THEMES_DIR)
+      .filter((f) => f.endsWith('.css'));
     const themes: Theme[] = cssFiles.map((f) => this.getThemeMetadata(f));
 
     const themeEntries = themes
@@ -121,7 +127,9 @@ export const defaultTheme: Theme = themes.find((t) => t.name === 'default') || t
       fs.mkdirSync(PAGES_DIR, { recursive: true });
     }
 
-    const mdFiles = fs.readdirSync(PROJECT_ROOT).filter((f) => f.endsWith('.md'));
+    const mdFiles = fs
+      .readdirSync(PROJECT_ROOT)
+      .filter((f) => f.endsWith('.md'));
 
     mdFiles.forEach((file) => {
       const srcPath = path.join(PROJECT_ROOT, file);
@@ -161,7 +169,7 @@ export const defaultTheme: Theme = themes.find((t) => t.name === 'default') || t
             .replace(/\.(md|mdx)$/, '')
             .replace(/[-_]/g, ' ')
             .replace(/\b\w/g, (c) => c.toUpperCase()),
-          to: toPath,
+          to: toPath
         };
       });
 

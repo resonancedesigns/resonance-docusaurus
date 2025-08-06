@@ -11,15 +11,15 @@ export default [
       parser: tsParser,
       parserOptions: {
         project: './tsconfig.json',
-        sourceType: 'module',
+        sourceType: 'module'
       },
       globals: {
         ...globals.browser,
-        ...globals.node,
-      },
+        ...globals.node
+      }
     },
     plugins: {
-      '@typescript-eslint': tseslint,
+      '@typescript-eslint': tseslint
     },
     rules: {
       ...tseslint.configs.recommended.rules,
@@ -27,8 +27,8 @@ export default [
       '@typescript-eslint/no-unused-vars': 'warn',
       '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/explicit-function-return-type': 'off',
-      '@typescript-eslint/ban-ts-comment': 'off',
-    },
+      '@typescript-eslint/ban-ts-comment': 'off'
+    }
   },
   {
     ignores: [
@@ -39,7 +39,7 @@ export default [
       'docusaurus.config.ts',
       'sidebars.ts',
       'scripts/',
-      '**/*.d.ts',
-    ],
-  },
+      '**/*.d.ts'
+    ]
+  }
 ];

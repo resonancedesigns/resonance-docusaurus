@@ -7,7 +7,7 @@
     "prestart": "tsx ./scripts/pre-build.ts",
     "start": "docusaurus start",
     "prebuild:prod": "tsx ./scripts/pre-build.ts",
-    "build:prod": "docusaurus build",
+    "build:prod": "docusaurus build --out-dir ./artifacts",
     "swizzle": "docusaurus swizzle",
     "deploy": "docusaurus deploy",
     "clear": "docusaurus clear",

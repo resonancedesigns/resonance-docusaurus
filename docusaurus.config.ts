@@ -18,12 +18,12 @@ const config: Config = {
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
   markdown: {
-    mermaid: true,
+    mermaid: true
   },
   themes: ['@docusaurus/theme-mermaid'],
   i18n: {
     defaultLocale: 'en',
-    locales: ['en'],
+    locales: ['en']
   },
   presets: [
     [
@@ -33,13 +33,13 @@ const config: Config = {
           sidebarPath: './sidebars.ts',
           path: 'docs',
           id: 'default',
-          routeBasePath: '/',
+          routeBasePath: '/'
         },
         theme: {
-          customCss: './static/themes/default.css',
-        },
-      } satisfies Preset.Options,
-    ],
+          customCss: './static/themes/default.css'
+        }
+      } satisfies Preset.Options
+    ]
   ],
   themeConfig: {
     image: 'img/docusaurus-social-card.jpg',
@@ -47,7 +47,7 @@ const config: Config = {
       title: 'Project',
       logo: {
         alt: 'Project Logo',
-        src: 'img/logo.svg',
+        src: 'img/logo.svg'
       },
       hideOnScroll: false,
       items: [
@@ -55,29 +55,29 @@ const config: Config = {
           type: 'doc',
           docId: 'template/template-overview',
           position: 'left',
-          label: 'Docs',
+          label: 'Docs'
         },
         {
           type: 'custom-gitHubLinks',
-          position: 'right',
+          position: 'right'
         },
         {
           type: 'custom-versionDisplay',
-          position: 'right',
+          position: 'right'
         },
         {
           type: 'custom-themeSwitcher',
-          position: 'right',
+          position: 'right'
         },
         // ...auto generated links,
-        ...navbarLinks,
-      ],
+        ...navbarLinks
+      ]
     },
     prism: {
       theme: prismThemes.github,
-      darkTheme: prismThemes.dracula,
-    },
-  } satisfies Preset.ThemeConfig,
+      darkTheme: prismThemes.dracula
+    }
+  } satisfies Preset.ThemeConfig
 };
 
 export default config;

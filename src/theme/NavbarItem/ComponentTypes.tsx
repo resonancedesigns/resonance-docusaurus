@@ -26,7 +26,7 @@ const ComponentTypes: typeof ComponentTypesObject = {
   docsVersionDropdown: DocsVersionDropdownNavbarItem,
   'custom-themeSwitcher': ThemeSwitcherNavbarItem,
   'custom-versionDisplay': VersionDisplayNavbarItem,
-  'custom-gitHubLinks': GitHubLinksNavbarItem,
+  'custom-gitHubLinks': GitHubLinksNavbarItem
 };
 
 export default ComponentTypes;

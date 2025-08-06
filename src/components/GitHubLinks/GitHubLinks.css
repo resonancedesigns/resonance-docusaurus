@@ -188,7 +188,9 @@
   }
 
   /* Hide labels on small screens, show only icons */
-  .github-links--mobile-icons-only .github-links__link span:not(.github-links__icon) {
+  .github-links--mobile-icons-only
+    .github-links__link
+    span:not(.github-links__icon) {
     display: none;
   }
 }

@@ -10,7 +10,8 @@ const ThemeSwitcher: React.FC = () => {
 
   useEffect(() => {
     // Load saved theme from localStorage
-    const savedTheme = localStorage.getItem('docusaurus-theme-color') || 'default';
+    const savedTheme =
+      localStorage.getItem('docusaurus-theme-color') || 'default';
 
     setCurrentTheme(savedTheme);
     applyTheme(savedTheme);
@@ -18,7 +19,9 @@ const ThemeSwitcher: React.FC = () => {
 
   const applyTheme = (themeName: string) => {
     // Remove existing theme links
-    const existingLinks = document.querySelectorAll('link[data-theme-switcher]');
+    const existingLinks = document.querySelectorAll(
+      'link[data-theme-switcher]'
+    );
     existingLinks.forEach((link) => link.remove());
 
     // Find the theme
@@ -69,7 +72,9 @@ const ThemeSwitcher: React.FC = () => {
             <button
               key={theme.name}
               className={`theme-switcher__option ${
-                currentTheme === theme.name ? 'theme-switcher__option--active' : ''
+                currentTheme === theme.name
+                  ? 'theme-switcher__option--active'
+                  : ''
               }`}
               onClick={() => handleThemeChange(theme.name)}
             >
@@ -82,7 +87,12 @@ const ThemeSwitcher: React.FC = () => {
         </div>
       )}
 
-      {isOpen && <div className="theme-switcher__backdrop" onClick={() => setIsOpen(false)} />}
+      {isOpen && (
+        <div
+          className="theme-switcher__backdrop"
+          onClick={() => setIsOpen(false)}
+        />
+      )}
     </div>
   );
 };

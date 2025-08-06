@@ -34,15 +34,15 @@ export class GitHubLinksConfig {
       label: 'GitHub',
       position: 'right',
       title: 'View source code on GitHub',
-      icon: faGithub,
+      icon: faGithub
     },
     {
       href: 'https://github.com/The-Running-Dev/Docusaurus-Template/releases',
       label: 'Releases',
       position: 'right',
       title: 'View releases and changelog',
-      icon: faTag,
-    },
+      icon: faTag
+    }
     // {
     //   href: 'https://ghcr.io/the-running-dev/docusaurus-template',
     //   label: 'Container Registry',

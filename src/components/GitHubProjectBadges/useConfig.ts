@@ -6,7 +6,7 @@ import {
   faBook,
   faShieldAlt,
   faUsers,
-  faChartLine,
+  faChartLine
 } from '@fortawesome/free-solid-svg-icons';
 import { BadgeConfig } from '../../config/badge-config';
 import { UseBadgeConfigProps, UseBadgeConfigResult } from './models';
@@ -14,7 +14,7 @@ import { UseBadgeConfigProps, UseBadgeConfigResult } from './models';
 export default function useConfig({
   user,
   repository,
-  groups,
+  groups
 }: UseBadgeConfigProps): UseBadgeConfigResult {
   const iconMap: Record<string, IconDefinition> = {
     faCogs,
@@ -22,7 +22,7 @@ export default function useConfig({
     faBook,
     faShieldAlt,
     faUsers,
-    faChartLine,
+    faChartLine
   };
 
   // Compute badge sections based on config and props
@@ -30,7 +30,7 @@ export default function useConfig({
     const replacements: Record<string, string> = {
       ...BadgeConfig.templateVariables,
       user: user || BadgeConfig.templateVariables.user,
-      repository: repository || BadgeConfig.templateVariables.repository,
+      repository: repository || BadgeConfig.templateVariables.repository
     };
     return BadgeConfig.badgeCategories
       .filter((category) => !groups || groups.includes(category.key))
@@ -41,8 +41,11 @@ export default function useConfig({
         badges: category.badges.map((badge) => ({
           name: badge.name,
           url: badge.url.replace(/\{(\w+)\}/g, (_, k) => replacements[k] || ''),
-          link: badge.link.replace(/\{(\w+)\}/g, (_, k) => replacements[k] || ''),
-        })),
+          link: badge.link.replace(
+            /\{(\w+)\}/g,
+            (_, k) => replacements[k] || ''
+          )
+        }))
       }));
   }, [user, repository, groups]);
 
