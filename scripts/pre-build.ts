@@ -105,7 +105,7 @@ export class PreBuild {
     const tsOutput = `// AUTO-GENERATED FILE. DO NOT EDIT.
 export interface Theme {
   name: string;
-  displayName: string;
+  export const defaultTheme: Theme = themes.find((t) => t.name === 'default') || (themes.length > 0 ? themes[0] : { name: 'fallback', displayName: 'Fallback', cssFile: '/themes/default.css' });
   cssFile: string;
 }
 
