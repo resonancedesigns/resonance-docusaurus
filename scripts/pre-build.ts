@@ -42,9 +42,8 @@ export class PreBuild {
 
       if (themeIdMatch) {
         const extractedId = themeIdMatch[1].trim();
-if (/^[a-zA-Z0-9-]+$/.test(extractedId)) {
-  themeId = extractedId;
-        if (/^[a-zA-Z0-9_-]+$/.test(extractedId)) {
+
+        if (/^[a-zA-Z0-9-]+$/.test(extractedId)) {
           themeId = extractedId;
         } else {
           console.warn(
@@ -105,7 +104,7 @@ if (/^[a-zA-Z0-9-]+$/.test(extractedId)) {
     const tsOutput = `// AUTO-GENERATED FILE. DO NOT EDIT.
 export interface Theme {
   name: string;
-  export const defaultTheme: Theme = themes.find((t) => t.name === 'default') || (themes.length > 0 ? themes[0] : { name: 'fallback', displayName: 'Fallback', cssFile: '/themes/default.css' });
+  displayName: string;
   cssFile: string;
 }
 
@@ -113,7 +112,7 @@ export const themes: Theme[] = [
 ${themeEntries}
 ];
 
-export const defaultTheme: Theme = themes.find((t) => t.name === 'default') || themes[0];
+export const defaultTheme: Theme = themes.find((t) => t.name === 'default') || (themes.length > 0 ? themes[0] : { name: 'fallback', displayName: 'Default', cssFile: '/themes/default.css' });
 `;
 
     fs.writeFileSync(THEMES_CONFIG, tsOutput, 'utf-8');

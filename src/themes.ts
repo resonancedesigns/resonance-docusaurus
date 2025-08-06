@@ -20,4 +20,4 @@ export const themes: Theme[] = [
   { name: 'sunset', displayName: 'Sunset', cssFile: '/themes/sunset.css' }
 ];
 
-export const defaultTheme: Theme = themes.find((t) => t.name === 'default') || themes[0];
+export const defaultTheme: Theme = themes.find((t) => t.name === 'default') || (themes.length > 0 ? themes[0] : { name: 'fallback', displayName: 'Default', cssFile: '/themes/default.css' });
