@@ -270,9 +270,19 @@ export class GitHubLinksConfig {
 
 The template enforces quality standards through automated checks:
 
-### Pre-commit Checks
+### Pre-commit Hooks (Husky)
 
-Consider adding these to your CI/CD pipeline:
+The project uses Husky to automatically run quality checks before commits:
+
+- **Auto-formatting**: Prettier automatically formats code before commit
+- **Linting**: ESLint checks are run to catch issues
+- **Commit message validation**: Basic validation of commit message format
+
+These hooks are configured in `.husky/pre-commit` and run automatically when you commit.
+
+### Manual Quality Checks
+
+You can also run these checks manually or in your CI/CD pipeline:
 
 ```bash
 # Format check (fails if code is not formatted)
