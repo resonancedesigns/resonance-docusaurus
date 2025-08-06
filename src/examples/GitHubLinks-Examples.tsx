@@ -14,7 +14,7 @@ import {
   faBook,
   faUsers,
   faHeart,
-  faProjectDiagram,
+  faProjectDiagram
 } from '@fortawesome/free-solid-svg-icons';
 
 // Example 1: Use default configuration (already enabled with basic GitHub and Releases links)
@@ -31,22 +31,22 @@ export const dockerBuildAgentExample = () => {
       label: 'GitHub',
       position: 'right',
       title: 'View source code on GitHub',
-      icon: faGithub,
+      icon: faGithub
     },
     {
       href: 'https://github.com/The-Running-Dev/Docker-BuildAgent/releases',
       label: 'Releases',
       position: 'right',
       title: 'View releases and changelog',
-      icon: faTag,
+      icon: faTag
     },
     {
       href: 'https://ghcr.io/the-running-dev/build-agent',
       label: 'Container Registry',
       position: 'right',
       title: 'View container packages',
-      icon: faDocker,
-    },
+      icon: faDocker
+    }
   ];
 };
 
@@ -58,23 +58,23 @@ export const dropdownMenuExample = () => {
     {
       href: 'https://github.com/your-org/your-repo',
       label: 'Source Code',
-      icon: faGithub,
+      icon: faGithub
     },
     {
       href: 'https://github.com/your-org/your-repo/releases',
       label: 'Releases',
-      icon: faTag,
+      icon: faTag
     },
     {
       href: 'https://github.com/your-org/your-repo/issues',
       label: 'Issues',
-      icon: faBug,
+      icon: faBug
     },
     {
       href: 'https://github.com/your-org/your-repo/discussions',
       label: 'Discussions',
-      icon: faComments,
-    },
+      icon: faComments
+    }
   ];
 };
 
@@ -85,32 +85,32 @@ export const extendedLinksExample = () => {
       href: 'https://github.com/your-org/your-repo',
       label: 'GitHub',
       icon: faGithub,
-      title: 'View source code',
+      title: 'View source code'
     },
     {
       href: 'https://github.com/your-org/your-repo/releases',
       label: 'Releases',
       icon: faTag,
-      title: 'Download releases',
+      title: 'Download releases'
     },
     {
       href: 'https://hub.docker.com/r/yourorg/yourrepo',
       label: 'Docker Hub',
       icon: faDocker,
-      title: 'Container images',
+      title: 'Container images'
     },
     {
       href: 'https://www.npmjs.com/package/yourpackage',
       label: 'npm',
       icon: faNpm,
-      title: 'npm package',
+      title: 'npm package'
     },
     {
       href: 'https://github.com/your-org/your-repo/wiki',
       label: 'Wiki',
       icon: faBook,
-      title: 'Documentation wiki',
-    },
+      title: 'Documentation wiki'
+    }
   ];
 };
 
@@ -121,13 +121,13 @@ export const minimalLinksExample = () => {
     {
       href: 'https://github.com/your-org/your-repo',
       label: 'GitHub',
-      className: 'github-links__link--badge',
+      className: 'github-links__link--badge'
     },
     {
       href: 'https://github.com/your-org/your-repo/releases',
       label: 'Releases',
-      className: 'github-links__link--badge',
-    },
+      className: 'github-links__link--badge'
+    }
   ];
 };
 
@@ -139,20 +139,20 @@ export const organizationLinksExample = () => {
       href: 'https://github.com/YourOrg',
       label: 'Organization',
       icon: faUsers,
-      title: 'View organization profile',
+      title: 'View organization profile'
     },
     {
       href: 'https://github.com/YourOrg/your-main-repo',
       label: 'Main Repository',
       icon: faGithub,
-      title: 'Main project repository',
+      title: 'Main project repository'
     },
     {
       href: 'https://github.com/orgs/YourOrg/projects',
       label: 'Projects',
       icon: faProjectDiagram,
-      title: 'Organization projects',
-    },
+      title: 'Organization projects'
+    }
   ];
 };
 
@@ -172,20 +172,20 @@ export const openSourceProjectConfig = () => {
       href: 'https://github.com/your-org/your-repo',
       label: 'GitHub',
       icon: faGithub,
-      title: 'Star us on GitHub!',
+      title: 'Star us on GitHub!'
     },
     {
       href: 'https://github.com/your-org/your-repo/releases',
       label: 'Releases',
       icon: faTag,
-      title: 'Latest releases',
+      title: 'Latest releases'
     },
     {
       href: 'https://github.com/your-org/your-repo/blob/main/CONTRIBUTING.md',
       label: 'Contribute',
       icon: faHeart,
-      title: 'How to contribute',
-    },
+      title: 'How to contribute'
+    }
   ];
 };
 
@@ -195,17 +195,17 @@ export const containerProjectConfig = () => {
     {
       href: 'https://github.com/your-org/your-container',
       label: 'Source',
-      icon: faGithub,
+      icon: faGithub
     },
     {
       href: 'https://hub.docker.com/r/yourorg/yourcontainer',
       label: 'Docker Hub',
-      icon: faDocker,
+      icon: faDocker
     },
     {
       href: 'https://github.com/your-org/your-container/releases',
       label: 'Tags',
-      icon: faTag,
-    },
+      icon: faTag
+    }
   ];
 };

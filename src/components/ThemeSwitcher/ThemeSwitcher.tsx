@@ -2,46 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPalette } from '@fortawesome/free-solid-svg-icons';
 import './ThemeSwitcher.css';
-
-interface Theme {
-  name: string;
-  displayName: string;
-  cssFile: string;
-}
-
-const themes: Theme[] = [
-  { name: 'default', displayName: 'Elegant Green', cssFile: '/themes/default.css' },
-  { name: 'blue', displayName: 'Ocean Blue', cssFile: '/themes/blue.css' },
-  { name: 'sunset', displayName: 'Sunset', cssFile: '/themes/sunset.css' },
-  { name: 'purple', displayName: 'Purple Night', cssFile: '/themes/purple.css' },
-  { name: 'forest', displayName: 'Forest', cssFile: '/themes/forest.css' },
-  { name: 'material-red', displayName: 'Material Red', cssFile: '/themes/material-red.css' },
-  {
-    name: 'material-indigo',
-    displayName: 'Material Indigo',
-    cssFile: '/themes/material-indigo.css',
-  },
-  {
-    name: 'material-teal',
-    displayName: 'Material Teal',
-    cssFile: '/themes/material-teal.css',
-  },
-  {
-    name: 'material-amber',
-    displayName: 'Material Amber',
-    cssFile: '/themes/material-amber.css',
-  },
-  {
-    name: 'material-pink',
-    displayName: 'Material Pink',
-    cssFile: '/themes/material-pink.css',
-  },
-  {
-    name: 'nuke',
-    displayName: 'Nuke Dark',
-    cssFile: '/themes/nuke.css',
-  },
-];
+import { themes } from '../../themes';
 
 const ThemeSwitcher: React.FC = () => {
   const [currentTheme, setCurrentTheme] = useState<string>('default');
@@ -49,7 +10,8 @@ const ThemeSwitcher: React.FC = () => {
 
   useEffect(() => {
     // Load saved theme from localStorage
-    const savedTheme = localStorage.getItem('docusaurus-theme-color') || 'default';
+    const savedTheme =
+      localStorage.getItem('docusaurus-theme-color') || 'default';
 
     setCurrentTheme(savedTheme);
     applyTheme(savedTheme);
@@ -57,7 +19,9 @@ const ThemeSwitcher: React.FC = () => {
 
   const applyTheme = (themeName: string) => {
     // Remove existing theme links
-    const existingLinks = document.querySelectorAll('link[data-theme-switcher]');
+    const existingLinks = document.querySelectorAll(
+      'link[data-theme-switcher]'
+    );
     existingLinks.forEach((link) => link.remove());
 
     // Find the theme
@@ -108,7 +72,9 @@ const ThemeSwitcher: React.FC = () => {
             <button
               key={theme.name}
               className={`theme-switcher__option ${
-                currentTheme === theme.name ? 'theme-switcher__option--active' : ''
+                currentTheme === theme.name
+                  ? 'theme-switcher__option--active'
+                  : ''
               }`}
               onClick={() => handleThemeChange(theme.name)}
             >
@@ -121,7 +87,12 @@ const ThemeSwitcher: React.FC = () => {
         </div>
       )}
 
-      {isOpen && <div className="theme-switcher__backdrop" onClick={() => setIsOpen(false)} />}
+      {isOpen && (
+        <div
+          className="theme-switcher__backdrop"
+          onClick={() => setIsOpen(false)}
+        />
+      )}
     </div>
   );
 };

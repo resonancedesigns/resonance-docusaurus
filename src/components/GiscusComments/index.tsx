@@ -34,7 +34,7 @@ const GiscusComments: React.FC<GiscusCommentsProps> = ({
   emitMetadata = GiscusConfig.emitMetadata,
   inputPosition = GiscusConfig.inputPosition as 'top' | 'bottom',
   lang = GiscusConfig.lang,
-  loading = GiscusConfig.loading as 'lazy' | 'eager',
+  loading = GiscusConfig.loading as 'lazy' | 'eager'
 }) => {
   const { colorMode } = useColorMode();
 
@@ -44,7 +44,8 @@ const GiscusComments: React.FC<GiscusCommentsProps> = ({
       <div style={{ padding: '20px', textAlign: 'center', color: '#666' }}>
         <p>💬 Comments are not configured yet.</p>
         <p>
-          Configure Giscus settings in <code>src/config/giscus-config.ts</code> to enable comments.
+          Configure Giscus settings in <code>src/config/giscus-config.ts</code>{' '}
+          to enable comments.
         </p>
         <p>
           <a

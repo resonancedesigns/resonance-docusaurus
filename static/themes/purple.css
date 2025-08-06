@@ -1,4 +1,6 @@
 /**
+ * @theme-id: purple
+ * @theme-name: Purple Night
  * Purple Night Theme - Custom CSS for Docusaurus
  * A modern purple color palette with deep purples and bright accents
  * Features rich purples for light mode and vibrant violets for dark mode
@@ -84,18 +86,34 @@
 
 /* Add mystical gradient background */
 .hero {
-  background: linear-gradient(135deg, rgba(103, 58, 183, 0.05) 0%, rgba(156, 39, 176, 0.05) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(103, 58, 183, 0.05) 0%,
+    rgba(156, 39, 176, 0.05) 100%
+  );
 }
 
 [data-theme='dark'] .hero {
-  background: linear-gradient(135deg, rgba(179, 157, 219, 0.1) 0%, rgba(186, 104, 200, 0.1) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(179, 157, 219, 0.1) 0%,
+    rgba(186, 104, 200, 0.1) 100%
+  );
 }
 
 /* Custom button styles for purple theme */
 .button--primary {
-  background: linear-gradient(45deg, var(--ifm-color-primary), var(--ifm-color-primary-light));
+  background: linear-gradient(
+    45deg,
+    var(--ifm-color-primary),
+    var(--ifm-color-primary-light)
+  );
 }
 
 .button--primary:hover {
-  background: linear-gradient(45deg, var(--ifm-color-primary-dark), var(--ifm-color-primary));
+  background: linear-gradient(
+    45deg,
+    var(--ifm-color-primary-dark),
+    var(--ifm-color-primary)
+  );
 }

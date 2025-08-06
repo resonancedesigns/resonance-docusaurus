@@ -7,7 +7,7 @@ import useConfig from './useConfig';
 const GitHubProjectBadges: React.FC<GitHubProjectBadgesProps> = ({
   user,
   repository,
-  groups, // Array of group IDs to display
+  groups // Array of group IDs to display
 }) => {
   // Use custom hook to load badge configuration
   const { badgeSections, loading } = useConfig({ user, repository, groups });
@@ -31,10 +31,13 @@ const GitHubProjectBadges: React.FC<GitHubProjectBadgesProps> = ({
           paddingBottom: '0.5rem',
           display: 'flex',
           alignItems: 'center',
-          gap: '0.5rem',
+          gap: '0.5rem'
         }}
       >
-        <FontAwesomeIcon icon={icon} style={{ color: 'var(--ifm-color-primary)' }} />
+        <FontAwesomeIcon
+          icon={icon}
+          style={{ color: 'var(--ifm-color-primary)' }}
+        />
         {title}
       </h3>
       <div
@@ -42,7 +45,7 @@ const GitHubProjectBadges: React.FC<GitHubProjectBadgesProps> = ({
           display: 'flex',
           flexWrap: 'wrap',
           gap: '0.5rem',
-          alignItems: 'center',
+          alignItems: 'center'
         }}
       >
         {badges.map((badge: Badge, index: number) => (
@@ -59,7 +62,7 @@ const GitHubProjectBadges: React.FC<GitHubProjectBadgesProps> = ({
               style={{
                 height: '20px',
                 transition: 'transform 0.2s ease',
-                cursor: 'pointer',
+                cursor: 'pointer'
               }}
               onMouseOver={(e: React.MouseEvent<HTMLImageElement>) => {
                 (e.target as HTMLImageElement).style.transform = 'scale(1.05)';

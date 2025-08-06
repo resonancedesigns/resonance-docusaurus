@@ -4,7 +4,9 @@ import React from 'react';
 import GitHubProjectBadges from '../components/GitHubProjectBadges';
 
 // Example 1: Show all badge groups (default behavior)
-const AllBadgesExample = () => <GitHubProjectBadges user="facebook" repository="docusaurus" />;
+const AllBadgesExample = () => (
+  <GitHubProjectBadges user="facebook" repository="docusaurus" />
+);
 
 // Example 2: Show only Build & Release and Quality groups
 const BuildAndQualityExample = () => (
@@ -17,7 +19,11 @@ const BuildAndQualityExample = () => (
 
 // Example 3: Show only Documentation group
 const DocumentationOnlyExample = () => (
-  <GitHubProjectBadges user="facebook" repository="docusaurus" groups={['documentation']} />
+  <GitHubProjectBadges
+    user="facebook"
+    repository="docusaurus"
+    groups={['documentation']}
+  />
 );
 
 // Example 4: Show Build, Distribution, and Community groups
@@ -41,5 +47,5 @@ export {
   AllBadgesExample,
   BuildAndQualityExample,
   DocumentationOnlyExample,
-  SelectiveGroupsExample,
+  SelectiveGroupsExample
 };

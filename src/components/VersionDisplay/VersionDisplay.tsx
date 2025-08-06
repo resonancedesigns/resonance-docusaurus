@@ -28,9 +28,10 @@ const VersionDisplay: React.FC = () => {
   const version = config.version || getDefaultVersion();
   const prefix = config.prefix || 'v';
   const displayText = `${prefix}${version}`;
-  const className = `version-display ${config.badge ? 'version-display--badge' : ''} ${
-    config.className || ''
-  }`.trim();
+  const className =
+    `version-display ${config.badge ? 'version-display--badge' : ''} ${
+      config.className || ''
+    }`.trim();
 
   // Render as link if href is provided
   if (config.href) {

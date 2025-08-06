@@ -1,4 +1,6 @@
 /**
+ * @theme-id: sunset
+ * @theme-name: Sunset
  * Sunset Theme - Custom CSS for Docusaurus
  * A warm sunset color palette with vibrant oranges and deep reds
  * Features rich sunset colors for light mode and warm amber tones for dark mode
@@ -18,7 +20,8 @@
   /* Typography enhancements */
   --ifm-font-family-base:
     'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --ifm-font-family-monospace: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', Consolas, monospace;
+  --ifm-font-family-monospace:
+    'JetBrains Mono', 'Fira Code', 'Cascadia Code', Consolas, monospace;
   --ifm-code-font-size: 0.875rem;
   --ifm-font-size-base: 16px;
   --ifm-line-height-base: 1.6;
@@ -30,10 +33,14 @@
   --ifm-global-spacing: 1rem;
 
   /* Professional shadows with sunset tones */
-  --ifm-global-shadow-lw: 0 2px 6px rgba(255, 87, 34, 0.15), 0 1px 3px rgba(255, 87, 34, 0.08);
-  --ifm-global-shadow-md: 0 6px 16px rgba(255, 87, 34, 0.18), 0 3px 8px rgba(255, 87, 34, 0.12);
-  --ifm-global-shadow-tl: 0 12px 32px rgba(255, 87, 34, 0.22), 0 6px 16px rgba(255, 87, 34, 0.16);
-  --ifm-global-shadow-xl: 0 20px 48px rgba(255, 87, 34, 0.25), 0 8px 20px rgba(255, 87, 34, 0.18);
+  --ifm-global-shadow-lw:
+    0 2px 6px rgba(255, 87, 34, 0.15), 0 1px 3px rgba(255, 87, 34, 0.08);
+  --ifm-global-shadow-md:
+    0 6px 16px rgba(255, 87, 34, 0.18), 0 3px 8px rgba(255, 87, 34, 0.12);
+  --ifm-global-shadow-tl:
+    0 12px 32px rgba(255, 87, 34, 0.22), 0 6px 16px rgba(255, 87, 34, 0.16);
+  --ifm-global-shadow-xl:
+    0 20px 48px rgba(255, 87, 34, 0.25), 0 8px 20px rgba(255, 87, 34, 0.18);
 
   /* Enhanced background colors */
   --ifm-background-color: #fff8f5;
@@ -91,10 +98,14 @@
   --ifm-code-background: rgba(255, 171, 145, 0.1);
 
   /* Enhanced dark mode shadows */
-  --ifm-global-shadow-lw: 0 2px 6px rgba(0, 0, 0, 0.3), 0 1px 3px rgba(0, 0, 0, 0.2);
-  --ifm-global-shadow-md: 0 6px 16px rgba(0, 0, 0, 0.4), 0 3px 8px rgba(0, 0, 0, 0.25);
-  --ifm-global-shadow-tl: 0 12px 32px rgba(0, 0, 0, 0.5), 0 6px 16px rgba(0, 0, 0, 0.3);
-  --ifm-global-shadow-xl: 0 20px 48px rgba(0, 0, 0, 0.6), 0 8px 20px rgba(0, 0, 0, 0.35);
+  --ifm-global-shadow-lw:
+    0 2px 6px rgba(0, 0, 0, 0.3), 0 1px 3px rgba(0, 0, 0, 0.2);
+  --ifm-global-shadow-md:
+    0 6px 16px rgba(0, 0, 0, 0.4), 0 3px 8px rgba(0, 0, 0, 0.25);
+  --ifm-global-shadow-tl:
+    0 12px 32px rgba(0, 0, 0, 0.5), 0 6px 16px rgba(0, 0, 0, 0.3);
+  --ifm-global-shadow-xl:
+    0 20px 48px rgba(0, 0, 0, 0.6), 0 8px 20px rgba(0, 0, 0, 0.35);
 
   /* Dark mode text colors */
   --ifm-font-color-base: #fed7d7;
@@ -238,13 +249,21 @@
 
 /* Enhanced footer */
 .footer {
-  background: linear-gradient(135deg, rgba(255, 87, 34, 0.04) 0%, rgba(255, 87, 34, 0.08) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(255, 87, 34, 0.04) 0%,
+    rgba(255, 87, 34, 0.08) 100%
+  );
   border-top: 1px solid rgba(255, 87, 34, 0.15);
   position: relative;
 }
 
 [data-theme='dark'] .footer {
-  background: linear-gradient(135deg, rgba(255, 171, 145, 0.06) 0%, rgba(255, 171, 145, 0.12) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(255, 171, 145, 0.06) 0%,
+    rgba(255, 171, 145, 0.12) 100%
+  );
   border-top: 1px solid rgba(255, 171, 145, 0.2);
 }
 
@@ -298,9 +317,17 @@ a:hover {
 
 /* Add warm gradient background for hero section */
 .hero {
-  background: linear-gradient(135deg, rgba(255, 87, 34, 0.05) 0%, rgba(255, 183, 77, 0.05) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(255, 87, 34, 0.05) 0%,
+    rgba(255, 183, 77, 0.05) 100%
+  );
 }
 
 [data-theme='dark'] .hero {
-  background: linear-gradient(135deg, rgba(255, 138, 101, 0.1) 0%, rgba(255, 183, 77, 0.1) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(255, 138, 101, 0.1) 0%,
+    rgba(255, 183, 77, 0.1) 100%
+  );
 }

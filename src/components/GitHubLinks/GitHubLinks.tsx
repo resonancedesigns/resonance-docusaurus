@@ -2,7 +2,10 @@ import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
-import { GitHubLinksConfig, GitHubLink } from '../../config/github-links-config';
+import {
+  GitHubLinksConfig,
+  GitHubLink
+} from '../../config/github-links-config';
 import './GitHubLinks.css';
 
 interface GitHubLinksProps {
@@ -20,7 +23,7 @@ const GitHubLinks: React.FC<GitHubLinksProps> = ({
   links = GitHubLinksConfig.links,
   dropdown = GitHubLinksConfig.dropdown,
   className = GitHubLinksConfig.className,
-  showIcons = GitHubLinksConfig.showIcons,
+  showIcons = GitHubLinksConfig.showIcons
 }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
@@ -29,9 +32,10 @@ const GitHubLinks: React.FC<GitHubLinksProps> = ({
     return null;
   }
 
-  const containerClass = `github-links ${dropdown ? 'github-links--dropdown' : ''} ${
-    className || ''
-  }`.trim();
+  const containerClass =
+    `github-links ${dropdown ? 'github-links--dropdown' : ''} ${
+      className || ''
+    }`.trim();
 
   const renderIcon = (icon?: any) => {
     if (!showIcons || !icon) return null;
@@ -55,7 +59,12 @@ const GitHubLinks: React.FC<GitHubLinksProps> = ({
       >
         {renderIcon(link.icon)}
         <span>{link.label}</span>
-        <svg width="13.5" height="13.5" aria-hidden="true" className="iconExternalLink_qCNR">
+        <svg
+          width="13.5"
+          height="13.5"
+          aria-hidden="true"
+          className="iconExternalLink_qCNR"
+        >
           <use href="#theme-svg-external-link"></use>
         </svg>
       </a>
@@ -77,7 +86,10 @@ const GitHubLinks: React.FC<GitHubLinksProps> = ({
         >
           <FontAwesomeIcon icon={faGithub} className="github-links__icon" />
           <span>{GitHubLinksConfig.dropdownLabel || 'GitHub'}</span>
-          <FontAwesomeIcon icon={faChevronDown} className="github-links__icon" />
+          <FontAwesomeIcon
+            icon={faChevronDown}
+            className="github-links__icon"
+          />
         </button>
         <div className="github-links__dropdown-menu">
           {links.map((link) => renderLink(link, true))}
@@ -86,7 +98,11 @@ const GitHubLinks: React.FC<GitHubLinksProps> = ({
     );
   }
 
-  return <div className={containerClass}>{links.map((link) => renderLink(link))}</div>;
+  return (
+    <div className={containerClass}>
+      {links.map((link) => renderLink(link))}
+    </div>
+  );
 };
 
 export default GitHubLinks;
