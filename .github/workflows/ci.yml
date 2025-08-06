@@ -94,6 +94,15 @@ permissions:
   contents: read  # Read repository contents
 
 # ====================================================================
+# CONCURRENCY CONTROL
+# ====================================================================
+# Prevent multiple CI runs from executing simultaneously to avoid conflicts
+# and reduce resource usage. Cancel in-progress runs when new commits are pushed.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+# ====================================================================
 # JOBS CONFIGURATION
 # ====================================================================
 jobs:
