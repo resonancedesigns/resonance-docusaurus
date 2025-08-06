@@ -66,7 +66,9 @@ export class PreBuild {
         cssFile: `/themes/${file}`,
       };
     } catch (error) {
-      console.warn(`Warning: Could not Read Theme File ${file}, Using Fallback. Error: ${error.message}`);
+      console.warn(
+        `Warning: Could not Read Theme File ${file}, Using Fallback. Error: ${error.message}`,
+      );
 
       // Use filename-based fallback (no counter needed)
       return {
