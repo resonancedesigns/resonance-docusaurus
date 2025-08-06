@@ -40,6 +40,7 @@ build/Release
 # Dependency directories
 node_modules/
 jspm_packages/
+.pnpm-store/
 
 # Snowpack dependency directory (https://snowpack.dev/)
 web_modules/
@@ -150,3 +151,6 @@ src/navbarLinks.ts
 src/pages/
 
 artifacts/
+.build/.build.env
+
+set-environment.ps1

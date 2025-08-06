@@ -2,46 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPalette } from '@fortawesome/free-solid-svg-icons';
 import './ThemeSwitcher.css';
-
-interface Theme {
-  name: string;
-  displayName: string;
-  cssFile: string;
-}
-
-const themes: Theme[] = [
-  { name: 'default', displayName: 'Elegant Green', cssFile: '/themes/default.css' },
-  { name: 'blue', displayName: 'Ocean Blue', cssFile: '/themes/blue.css' },
-  { name: 'sunset', displayName: 'Sunset', cssFile: '/themes/sunset.css' },
-  { name: 'purple', displayName: 'Purple Night', cssFile: '/themes/purple.css' },
-  { name: 'forest', displayName: 'Forest', cssFile: '/themes/forest.css' },
-  { name: 'material-red', displayName: 'Material Red', cssFile: '/themes/material-red.css' },
-  {
-    name: 'material-indigo',
-    displayName: 'Material Indigo',
-    cssFile: '/themes/material-indigo.css',
-  },
-  {
-    name: 'material-teal',
-    displayName: 'Material Teal',
-    cssFile: '/themes/material-teal.css',
-  },
-  {
-    name: 'material-amber',
-    displayName: 'Material Amber',
-    cssFile: '/themes/material-amber.css',
-  },
-  {
-    name: 'material-pink',
-    displayName: 'Material Pink',
-    cssFile: '/themes/material-pink.css',
-  },
-  {
-    name: 'nuke',
-    displayName: 'Nuke Dark',
-    cssFile: '/themes/nuke.css',
-  },
-];
+import { themes } from '../../themes';
 
 const ThemeSwitcher: React.FC = () => {
   const [currentTheme, setCurrentTheme] = useState<string>('default');
