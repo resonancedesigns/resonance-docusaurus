@@ -354,7 +354,7 @@ jobs:
 
 ### Getting Help
 
-1. Check the [troubleshooting documentation](/template/getting-started/troubleshooting)
+1. Check the [troubleshooting documentation](#troubleshooting) section above
 2. Review example configurations in `src/examples/`
 3. Consult the component-specific documentation
 4. Check GitHub issues for similar problems

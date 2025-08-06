@@ -285,7 +285,7 @@ If you encounter migration issues:
 
 1. **Check the [Development Workflow Guide](/template/advanced/development-workflow)** for detailed setup instructions
 2. **Review [Examples](/template/getting-started/examples)** for current usage patterns
-3. **Consult [Troubleshooting](/template/getting-started/troubleshooting)** for common solutions
+3. **Consult [Development Workflow Troubleshooting](/template/advanced/development-workflow#troubleshooting)** for common solutions
 4. **Open an issue** on GitHub with your specific migration problem
 
 ## Post-Migration Benefits
