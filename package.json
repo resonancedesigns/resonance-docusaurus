@@ -19,7 +19,8 @@
     "lint:fix": "eslint \"src/**/*.{ts,tsx}\" --fix",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "check-all": "pnpm run format:check && pnpm run lint && pnpm run typecheck"
+    "check-all": "pnpm run format:check && pnpm run lint && pnpm run typecheck",
+    "prepare": "husky"
   },
   "dependencies": {
     "@docusaurus/core": "3.8.1",
@@ -57,6 +58,7 @@
     "eslint-plugin-react": "^7.0.0",
     "eslint-plugin-react-hooks": "^4.0.0",
     "globals": "^16.3.0",
+    "husky": "^9.1.7",
     "prettier": "^3.0.0",
     "ts-node": "^10.9.2",
     "tsx": "^4.20.3",
