@@ -111,7 +111,7 @@ import {
 export const PreBuildConfig = {
   ProjectRoot: path.join(__dirname, '../'),
   OverwriteExistingFiles: true,
-  DefaultTheme: 'sunset' // Sets default theme for themes.json
+  DefaultTheme: 'default' // Sets default theme for themes.json
 };
 
 // Used by the pre-build system to determine behavior
@@ -157,7 +157,7 @@ The pre-build system creates two JSON files:
 // config/site-config.ts
 export const PreBuildConfig = {
   OverwriteExistingFiles: true,
-  DefaultTheme: 'sunset'
+  DefaultTheme: 'default'
 };
 ````
 

@@ -13,7 +13,7 @@ The template now uses a centralized configuration system in `config/site-config.
 export const PreBuildConfig = {
   ProjectRoot: path.join(__dirname, '../'),
   OverwriteExistingFiles: true,
-  DefaultTheme: 'sunset' // Set your preferred default theme
+  DefaultTheme: 'default' // Set your preferred default theme
 };
 
 export const SiteConfig = {

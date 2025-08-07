@@ -52,14 +52,14 @@ const themes: Theme[] = [
 // Centralized configuration
 // config/site-config.ts
 export const PreBuildConfig = {
-  DefaultTheme: 'sunset'
+  DefaultTheme: 'default'
 };
 
 // Auto-generated from CSS files
 // src/themes.json (auto-generated)
 {
   "themes": [...],
-  "defaultTheme": "sunset"
+  "defaultTheme": "default"
 }
 ```
 
@@ -122,7 +122,7 @@ Ensure you have the latest version with `useBaseUrl` support:
 // config/site-config.ts (new file)
 export const PreBuildConfig = {
   OverwriteExistingFiles: true,
-  DefaultTheme: 'sunset' // Set your preferred default
+  DefaultTheme: 'default' // Set your preferred default
 };
 ```
 

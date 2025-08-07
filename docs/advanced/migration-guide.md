@@ -111,7 +111,7 @@ import path from 'path';
 export const PreBuildConfig = {
   ProjectRoot: path.join(__dirname, '../'),
   OverwriteExistingFiles: true,
-  DefaultTheme: 'sunset' // Your preferred default theme
+  DefaultTheme: 'default' // Your preferred default theme
 };
 
 export const SiteConfig = {

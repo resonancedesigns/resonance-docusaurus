@@ -104,7 +104,7 @@ Configure the default theme in `config/site-config.ts`:
 ```typescript
 export const PreBuildConfig = {
   OverwriteExistingFiles: true,
-  DefaultTheme: 'sunset' // ← Set default theme here
+  DefaultTheme: 'default' // ← Set default theme here
 };
 ```
 
