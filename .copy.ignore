@@ -1,11 +1,11 @@
-LICENSE
-README.md
-CHANGELOG.md
-custom.nuke.css
-vscode.code-workspace
 .copy.ignore
 .copy.ignore.example
 .gitignore
-Dockerfile
 build-image.ps1
+CHANGELOG.md
+custom.nuke.css
+Dockerfile
+LICENSE
+README.md
+vscode.code-workspace
 docs/template/**

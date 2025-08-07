@@ -1,17 +1,24 @@
 import React, { useState, useEffect } from 'react';
+import useBaseUrl from '@docusaurus/useBaseUrl';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPalette } from '@fortawesome/free-solid-svg-icons';
 import './ThemeSwitcher.css';
-import { themes } from '../../themes';
+import { themes, defaultTheme } from '../../themes';
 
 const ThemeSwitcher: React.FC = () => {
-  const [currentTheme, setCurrentTheme] = useState<string>('default');
+  const [currentTheme, setCurrentTheme] = useState<string>(defaultTheme.name);
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
+  // Pre-compute resolved URLs for all themes
+  const themesWithResolvedUrls = themes.map((theme) => ({
+    ...theme,
+    resolvedCssUrl: useBaseUrl(theme.cssFile)
+  }));
+
   useEffect(() => {
-    // Load saved theme from localStorage
+    // Load saved theme from localStorage, fallback to defaultTheme
     const savedTheme =
-      localStorage.getItem('docusaurus-theme-color') || 'default';
+      localStorage.getItem('docusaurus-theme-color') || defaultTheme.name;
 
     setCurrentTheme(savedTheme);
     applyTheme(savedTheme);
@@ -24,18 +31,15 @@ const ThemeSwitcher: React.FC = () => {
     );
     existingLinks.forEach((link) => link.remove());
 
-    // Find the theme
-    const theme = themes.find((t) => t.name === themeName);
+    // Find the theme with resolved URL
+    const theme = themesWithResolvedUrls.find((t) => t.name === themeName);
 
     if (!theme) return;
 
     // Add new theme link
     const link = document.createElement('link');
     link.rel = 'stylesheet';
-    link.href = theme.cssFile;
-    link.setAttribute('data-theme-switcher', 'true');
-
-    document.head.appendChild(link);
+    link.href = theme.resolvedCssUrl;
     link.setAttribute('data-theme-switcher', 'true');
 
     document.head.appendChild(link);
@@ -52,7 +56,8 @@ const ThemeSwitcher: React.FC = () => {
   };
 
   const currentThemeDisplayName =
-    themes.find((t) => t.name === currentTheme)?.displayName || 'Default';
+    themesWithResolvedUrls.find((t) => t.name === currentTheme)?.displayName ||
+    defaultTheme.displayName;
 
   return (
     <div className="theme-switcher">
@@ -68,7 +73,7 @@ const ThemeSwitcher: React.FC = () => {
       {isOpen && (
         <div className="theme-switcher__dropdown">
           <div className="theme-switcher__header">Themes</div>
-          {themes.map((theme) => (
+          {themesWithResolvedUrls.map((theme) => (
             <button
               key={theme.name}
               className={`theme-switcher__option ${

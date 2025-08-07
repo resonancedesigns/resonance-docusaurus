@@ -1,7 +1,7 @@
 import React from 'react';
 import Giscus from '@giscus/react';
 import { useColorMode } from '@docusaurus/theme-common';
-import { GiscusConfig } from '../../config/giscus-config';
+import { GiscusConfig } from '../../../config/giscus-config';
 
 export interface GiscusCommentsProps {
   repo?: `${string}/${string}`;

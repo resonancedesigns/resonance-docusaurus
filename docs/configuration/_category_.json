@@ -1,7 +1,7 @@
 {
   "label": "Configuration",
   "position": 4,
-  "collapsed": false,
+  "collapsed": true,
   "collapsible": true,
   "className": "green",
   "description": "Configuration options and setup guides"

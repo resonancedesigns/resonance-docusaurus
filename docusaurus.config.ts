@@ -2,17 +2,18 @@ import { themes as prismThemes } from 'prism-react-renderer';
 import type { Config } from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
-import { navbarLinks } from './src/navbarLinks';
+import { SiteConfig, SiteThemeConfig } from './config/site-config';
+import type { NavbarLink } from './src/entities';
+import navbarData from './src/navbarLinks.json';
+
+const navbarLinks: NavbarLink[] = (navbarData?.links || []) as NavbarLink[];
 
 const config: Config = {
-  title: 'Your Docs Site',
-  tagline: 'Reusable Docusaurus Template',
-  url: 'https://your-site.com',
-  baseUrl: '/',
+  // Use base defaults
+  ...SiteConfig,
+  // Add additional configuration
   trailingSlash: false,
   favicon: 'img/favicon.ico',
-  projectName: 'your-docs',
-  organizationName: 'your-org',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
   markdown: {
@@ -30,8 +31,7 @@ const config: Config = {
         docs: {
           sidebarPath: './sidebars.ts',
           path: 'docs',
-          id: 'default',
-          routeBasePath: '/'
+          id: 'default'
         },
         theme: {
           customCss: './static/themes/default.css'
@@ -40,18 +40,17 @@ const config: Config = {
     ]
   ],
   themeConfig: {
+    // Merge base theme config
+    ...SiteThemeConfig,
+    // Add additional theme configuration
     image: 'img/docusaurus-social-card.jpg',
     navbar: {
-      title: 'Project',
-      logo: {
-        alt: 'Project Logo',
-        src: 'img/logo.svg'
-      },
+      ...SiteThemeConfig.navbar,
       hideOnScroll: false,
       items: [
         {
           type: 'doc',
-          docId: 'template/template-overview',
+          docId: 'template-overview',
           position: 'left',
           label: 'Docs'
         },

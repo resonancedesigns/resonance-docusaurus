@@ -1,28 +1,14 @@
 import * as fs from 'fs';
 import * as path from 'path';
+import type { NavbarLink, Theme } from '../src/entities';
+import { PreBuildConfig } from '../config/site-config';
 
-// Configuration options
-const OVERWRITE_EXISTING_FILES: boolean = true;
-const PROJECT_ROOT = path.join(__dirname, '../');
 const THEMES_DIR = path.join(__dirname, '../static/themes');
 const PAGES_DIR = path.join(__dirname, '../src/pages');
-const THEMES_CONFIG: string = path.join(__dirname, '../src/themes.ts');
-const NAVBAR_CONFIG: string = path.join(__dirname, '../src/navbarLinks.ts');
-
-interface Theme {
-  name: string;
-  displayName: string;
-  cssFile: string;
-}
-
-interface NavbarLink {
-  label: string;
-  to: string;
-}
+const THEMES_CONFIG: string = path.join(__dirname, '../src/themes.json');
+const NAVBAR_CONFIG: string = path.join(__dirname, '../src/navbarLinks.json');
 
 export class PreBuild {
-  private themes: Theme[] = [];
-
   private getThemeMetadata(file: string): Theme {
     const filePath = path.join(THEMES_DIR, file);
     const name = file.replace(/\.css$/, '');
@@ -66,18 +52,18 @@ export class PreBuild {
       return {
         name: themeId,
         displayName: themeName,
-        cssFile: `/themes/${file}`
+        cssFile: `themes/${file}` // Use relative path instead of absolute
       };
     } catch (error) {
       console.warn(
-        `Warning: Could not Read Theme File ${file}, Using Fallback. Error: ${error.message}`
+        `Warning: Could not Read Theme File ${file}, Using Fallback. Error: ${error instanceof Error ? error.message : String(error)}`
       );
 
       // Use filename-based fallback (no counter needed)
       return {
         name: name,
         displayName: name.charAt(0).toUpperCase() + name.slice(1),
-        cssFile: `/themes/${file}`
+        cssFile: `themes/${file}` // Use relative path
       };
     }
   }
@@ -85,7 +71,6 @@ export class PreBuild {
   public generateThemeConfig(): void {
     if (!fs.existsSync(THEMES_DIR)) {
       console.warn(`Themes Directory not Found: ${THEMES_DIR}`);
-
       return;
     }
 
@@ -94,28 +79,22 @@ export class PreBuild {
       .filter((f) => f.endsWith('.css'));
     const themes: Theme[] = cssFiles.map((f) => this.getThemeMetadata(f));
 
-    const themeEntries = themes
-      .map((theme) => {
-        const { name, displayName, cssFile } = theme;
-        return `  { name: '${name}', displayName: '${displayName}', cssFile: '${cssFile}' }`;
-      })
-      .join(',\n');
+    // Find the default theme
+    const defaultTheme =
+      themes.find((t) => t.name === PreBuildConfig.DefaultTheme) || themes[0];
 
-    const tsOutput = `// AUTO-GENERATED FILE. DO NOT EDIT.
-export interface Theme {
-  name: string;
-  displayName: string;
-  cssFile: string;
-}
+    // Create the JSON data structure
+    const themeData = {
+      themes: themes,
+      defaultTheme: defaultTheme?.name || 'agent'
+    };
 
-export const themes: Theme[] = [
-${themeEntries}
-];
-
-export const defaultTheme: Theme = themes.find((t) => t.name === 'default') || (themes.length > 0 ? themes[0] : { name: 'fallback', displayName: 'Default', cssFile: '/themes/default.css' });
-`;
-
-    fs.writeFileSync(THEMES_CONFIG, tsOutput, 'utf-8');
+    // Write the JSON file
+    fs.writeFileSync(
+      THEMES_CONFIG,
+      JSON.stringify(themeData, null, 2),
+      'utf-8'
+    );
 
     console.log(`✅ Theme Config Created with ${themes.length} Theme(s)`);
   }
@@ -127,18 +106,18 @@ export const defaultTheme: Theme = themes.find((t) => t.name === 'default') || (
     }
 
     const mdFiles = fs
-      .readdirSync(PROJECT_ROOT)
+      .readdirSync(PreBuildConfig.ProjectRoot)
       .filter((f) => f.endsWith('.md'));
 
     mdFiles.forEach((file) => {
-      const srcPath = path.join(PROJECT_ROOT, file);
+      const srcPath = path.join(PreBuildConfig.ProjectRoot, file);
       // Rename README.md to index.md in destination directory
       const destFile = file.toLowerCase() === 'readme.md' ? 'index.md' : file;
       const dstPath = path.join(PAGES_DIR, destFile);
 
       const fileExists = fs.existsSync(dstPath);
 
-      if (!fileExists || OVERWRITE_EXISTING_FILES) {
+      if (!fileExists || PreBuildConfig.OverwriteExistingFiles) {
         fs.copyFileSync(srcPath, dstPath);
 
         const action = fileExists ? 'Overwrote' : 'Copied';
@@ -168,17 +147,24 @@ export const defaultTheme: Theme = themes.find((t) => t.name === 'default') || (
             .replace(/\.(md|mdx)$/, '')
             .replace(/[-_]/g, ' ')
             .replace(/\b\w/g, (c) => c.toUpperCase()),
-          to: toPath
+          to: toPath,
+          position: 'left' as const
         };
       });
 
-    const tsOutput = `// AUTO-GENERATED FILE. DO NOT EDIT.
-export const navbarLinks = ${JSON.stringify(links, null, 2)} as const;
-`;
+    // Create the JSON data structure
+    const navbarData = {
+      links: links
+    };
 
-    fs.writeFileSync(NAVBAR_CONFIG, tsOutput, 'utf-8');
+    // Write the JSON file
+    fs.writeFileSync(
+      NAVBAR_CONFIG,
+      JSON.stringify(navbarData, null, 2),
+      'utf-8'
+    );
 
-    console.log(`✅ Navbar Created with ${numberOfLinks} Entry(s)`);
+    console.log(`✅ Navbar Config Created with ${numberOfLinks} Entry(s)`);
   }
 
   public process(): void {

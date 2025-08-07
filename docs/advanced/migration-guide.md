@@ -4,47 +4,196 @@ title: Migration Guide
 sidebar_position: 3
 ---
 
-This guide helps you migrate from previous versions of the Docusaurus Template to the latest version with enhanced development workflow and code quality tools.
+This guide helps you migrate from previous versions of the Docusaurus Template to the latest version with enhanced development workflow, centralized configuration, and advanced pre-build features.
 
-## Version 1.0.1 Migration
+## Version 2.0 Migration (Latest)
 
 ### Overview of Changes
 
-Version 1.0.1 introduces significant improvements to development workflow, code quality tooling, and build process:
+Version 2.0 introduces major architectural improvements:
 
-- **Modern ESLint v9** with flat configuration
-- **Enhanced Prettier** integration
-- **Quality Gates** and development scripts
-- **Artifacts Build** directory changes
-- **Static Configuration Classes** (no breaking changes)
+- **Centralized Configuration System** (`config/site-config.ts`)
+- **Enhanced Pre-Build System** with theme auto-detection
+- **JSON-Based Configuration** generation
+- **Theme Management** improvements
+- **Cross-Platform** compatibility enhancements
+- **Modern ESLint v9** with flat configuration (from v1.0.1)
 
 ### Breaking Changes
 
-**None.** This is a backward-compatible release. All existing configurations and components continue to work without modification.
+**Minimal Breaking Changes.** Most existing configurations remain compatible with fallback support.
+
+#### Configuration Changes
+
+**Old Way (still supported):**
+
+```typescript
+// docusaurus.config.ts - direct configuration
+const config: Config = {
+  title: 'My Site',
+  url: 'https://mysite.com'
+};
+```
+
+**New Way (recommended):**
+
+```typescript
+// config/site-config.ts - centralized configuration
+export const SiteConfig = {
+  title: 'My Site',
+  url: 'https://mysite.com'
+} as const;
+
+// docusaurus.config.ts - uses centralized config
+import { SiteConfig } from './config/site-config';
+const config: Config = {
+  ...SiteConfig
+  // ... rest of config
+};
+```
 
 ### New Features You Get
 
-#### Development Tooling
+#### Centralized Configuration
 
 ```bash
-# New scripts available after upgrade
-pnpm run lint          # ESLint checking
-pnpm run lint:fix       # Auto-fix ESLint issues
-pnpm run format         # Format code with Prettier
-pnpm run format:check   # Check formatting
-pnpm run check-all      # Run all quality checks
+# New configuration files
+config/site-config.ts      # Main configuration
+config/badge-config.ts     # Badge system
+config/giscus-config.ts    # Comments system
+config/github-links-config.ts # GitHub links
+config/version-config.ts   # Version display
 ```
 
-#### Enhanced Build Process
+#### Enhanced Pre-Build System
 
 ```bash
-# Production builds now use artifacts directory
-pnpm run build:prod     # Outputs to ./artifacts instead of ./build
+# Auto-generated configurations
+src/themes.json         # Theme metadata from static/themes/
+src/navbarLinks.json    # Navigation from markdown files
+src/themes.ts           # TypeScript theme definitions
+src/navbarLinks.ts      # TypeScript navbar definitions
+```
+
+#### Theme Auto-Detection
+
+Themes are now automatically detected from `static/themes/` with metadata extraction:
+
+```css
+/* static/themes/mytheme.css */
+/* @theme-id: professional-blue */
+/* @theme-name: Professional Blue Theme */
+:root {
+  --ifm-color-primary: #1976d2;
+}
 ```
 
 ## Migration Steps
 
 ### Step 1: Update Dependencies
+
+```bash
+# Update to v2.0
+pnpm install
+
+# Verify new features are available
+ls config/           # Should show new config files
+npm run prestart     # Should generate JSON files
+```
+
+### Step 2: Migrate to Centralized Configuration (Recommended)
+
+Create `config/site-config.ts`:
+
+```typescript
+import path from 'path';
+
+export const PreBuildConfig = {
+  ProjectRoot: path.join(__dirname, '../'),
+  OverwriteExistingFiles: true,
+  DefaultTheme: 'sunset' // Your preferred default theme
+};
+
+export const SiteConfig = {
+  title: 'Your Site Title',
+  tagline: 'Your Site Tagline',
+  url: 'https://your-site.com',
+  baseUrl: '/',
+  organizationName: 'your-org',
+  projectName: 'your-project'
+} as const;
+
+export const SiteThemeConfig = {
+  navbar: {
+    title: 'Your Site',
+    logo: {
+      alt: 'Your Logo Alt',
+      src: 'img/logo.svg'
+    }
+  }
+} as const;
+```
+
+Update `docusaurus.config.ts`:
+
+```typescript
+import { SiteConfig, SiteThemeConfig } from './config/site-config';
+
+const config: Config = {
+  ...SiteConfig,
+  themeConfig: {
+    ...SiteThemeConfig
+    // ... rest of your theme config
+  }
+};
+```
+
+### Step 3: Configure Theme Auto-Detection
+
+Add metadata to your custom themes in `static/themes/`:
+
+```css
+/* static/themes/custom.css */
+/* @theme-id: custom-theme */
+/* @theme-name: My Custom Theme */
+
+:root {
+  --ifm-color-primary: #your-color;
+}
+```
+
+Update `PreBuildConfig.DefaultTheme` in `config/site-config.ts` to your preferred theme.
+
+### Step 4: Update Build Scripts
+
+Verify your `package.json` includes the enhanced scripts:
+
+```json
+{
+  "scripts": {
+    "prestart": "tsx ./scripts/pre-build.ts",
+    "prebuild:prod": "cross-env NODE_ENV=production tsx ./scripts/pre-build.ts",
+    "build:prod": "docusaurus build --out-dir artifacts"
+  }
+}
+```
+
+## Version 1.0.1 Migration (Previous Release)
+
+### Changes Overview
+
+Version 1.0.1 introduced development workflow improvements:
+
+- **Modern ESLint v9** with flat configuration
+- **Enhanced Prettier** integration
+- **Quality Gates** and development scripts
+- **Artifacts Build** directory changes
+
+## Legacy Migration Steps
+
+### Update Dependencies (v1.0.1)
+
+If you're upgrading from a pre-1.0.1 version:
 
 If you're using an older version, update your `package.json` dependencies:
 
@@ -283,9 +432,9 @@ sed -i 's/--out-dir \.\/artifacts//g' package.json
 
 If you encounter migration issues:
 
-1. **Check the [Development Workflow Guide](/template/advanced/development-workflow)** for detailed setup instructions
-2. **Review [Examples](/template/getting-started/examples)** for current usage patterns
-3. **Consult [Development Workflow Troubleshooting](/template/advanced/development-workflow#troubleshooting)** for common solutions
+1. **Check the [Development Workflow Guide](/docs/advanced/development-workflow)** for detailed setup instructions
+2. **Review [Examples](/docs/getting-started/examples)** for current usage patterns
+3. **Consult [Development Workflow Troubleshooting](/docs/advanced/development-workflow#troubleshooting)** for common solutions
 4. **Open an issue** on GitHub with your specific migration problem
 
 ## Post-Migration Benefits

@@ -1,7 +1,7 @@
 {
   "label": "Advanced",
   "position": 5,
-  "collapsed": false,
+  "collapsed": true,
   "collapsible": true,
   "className": "purple",
   "description": "Advanced topics and deployment guides"
