@@ -1,10 +1,8 @@
 import { themes as prismThemes } from 'prism-react-renderer';
-
-import { PreBuild } from './scripts/pre-build';
-import { navbarLinks } from './src/navbarLinks';
-
 import type { Config } from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
+
+import { navbarLinks } from './src/navbarLinks';
 
 const config: Config = {
   title: 'Your Docs Site',
