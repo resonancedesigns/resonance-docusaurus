@@ -8,4 +8,4 @@ Dockerfile
 LICENSE
 README.md
 vscode.code-workspace
-docs/template/**
+docs/**
