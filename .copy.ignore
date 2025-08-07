@@ -8,4 +8,4 @@ vscode.code-workspace
 .gitignore
 Dockerfile
 build-image.ps1
-docs/template
+docs/template/**
