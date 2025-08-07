@@ -67,7 +67,7 @@ pnpm run serve          # Serve production build
 
 ## 📖 Documentation
 
-**👉 [Visit the Full Documentation](https://docs-template.subzerodev.com/template)**
+**👉 [Visit the Documentation](https://docs-template.subzerodev.com/docs)**
 
 For detailed setup guides, configuration options, theme customization, and examples, visit the complete documentation site.
 
