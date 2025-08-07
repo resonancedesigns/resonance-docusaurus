@@ -5,7 +5,7 @@ import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import {
   GitHubLinksConfig,
   GitHubLink
-} from '../../config/github-links-config';
+} from '../../../config/github-links-config';
 import './GitHubLinks.css';
 
 interface GitHubLinksProps {

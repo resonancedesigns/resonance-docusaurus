@@ -10,37 +10,37 @@ The Docusaurus Template includes several integrated core systems that work toget
 
 ### 🏷️ Badge System
 
-**[View Badge System →](/template/core-systems/badge-system)**
+**[View Badge System →](/docs/core-systems/badge-system)**
 
 Dynamic GitHub project badges with configurable categories and template variables for automated project status display.
 
 ### 🔗 GitHub Links System
 
-**[View GitHub Links System →](/template/core-systems/github-links-system)**
+**[View GitHub Links System →](/docs/core-systems/github-links-system)**
 
 Professional navbar integration with FontAwesome icons, external link indicators, and flexible dropdown or inline layouts.
 
 ### 🎨 Theme System
 
-**[View Theme System →](/template/core-systems/theme-system)**
+**[View Theme System →](/docs/core-systems/theme-system)**
 
 10 professional color themes with dynamic switching, localStorage persistence, and seamless Docusaurus integration.
 
 ### 💬 Comment System
 
-**[View Comment System →](/template/core-systems/comment-system)**
+**[View Comment System →](/docs/core-systems/comment-system)**
 
 Consolidated Giscus-powered GitHub Discussions integration with automatic theme adaptation and error handling.
 
 ### ⚙️ Pre-Build System
 
-**[View Pre-Build System →](/template/core-systems/prebuild-system)**
+**[View Pre-Build System →](/docs/core-systems/prebuild-system)**
 
 Automated content preparation pipeline that generates navbar links, copies markdown files, and maintains build consistency.
 
 ### 📊 Version Display System
 
-**[View Version Display System →](/template/core-systems/version-display-system)**
+**[View Version Display System →](/docs/core-systems/version-display-system)**
 
 Automated version display with date-based versioning, GitHub integration, and customizable badge styling.
 

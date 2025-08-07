@@ -6,7 +6,7 @@
  * You can override the defaults by directly setting static properties at any time.
  */
 
-import { VersionConfig } from '../config/version-config';
+import { VersionConfig } from '../../config/version-config';
 
 // Example 1: Use default configuration (already enabled with badge style)
 export const useDefaultConfiguration = () => {

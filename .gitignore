@@ -154,3 +154,7 @@ artifacts/
 .build/.build.env
 
 set-environment.ps1
+
+src/navbarLinks.json
+
+src/themes.json

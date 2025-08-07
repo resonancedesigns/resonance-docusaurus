@@ -1,55 +1,14 @@
-// AUTO-GENERATED FILE. DO NOT EDIT.
-export interface Theme {
-  name: string;
-  displayName: string;
-  cssFile: string;
-}
+import type { Theme } from './entities';
+import themeData from './themes.json';
 
-export const themes: Theme[] = [
-  { name: 'agent', displayName: 'Agent', cssFile: '/themes/agent.css' },
-  { name: 'blue', displayName: 'Ocean Blue', cssFile: '/themes/blue.css' },
-  { name: 'default', displayName: 'Elegant', cssFile: '/themes/default.css' },
-  { name: 'forest', displayName: 'Forest', cssFile: '/themes/forest.css' },
-  {
-    name: 'material-amber',
-    displayName: 'Material Amber',
-    cssFile: '/themes/material-amber.css'
-  },
-  {
-    name: 'material-indigo',
-    displayName: 'Material Indigo',
-    cssFile: '/themes/material-indigo.css'
-  },
-  {
-    name: 'material-pink',
-    displayName: 'Material Pink',
-    cssFile: '/themes/material-pink.css'
-  },
-  {
-    name: 'material-red',
-    displayName: 'Material Red',
-    cssFile: '/themes/material-red.css'
-  },
-  {
-    name: 'material-teal',
-    displayName: 'Material Teal',
-    cssFile: '/themes/material-teal.css'
-  },
-  { name: 'nuke', displayName: 'Nuke Dark', cssFile: '/themes/nuke.css' },
-  {
-    name: 'purple',
-    displayName: 'Purple Night',
-    cssFile: '/themes/purple.css'
-  },
-  { name: 'sunset', displayName: 'Sunset', cssFile: '/themes/sunset.css' }
-];
+export const themes: Theme[] = themeData.themes;
 
 export const defaultTheme: Theme =
-  themes.find((t) => t.name === 'default') ||
+  themes.find((t) => t.name === themeData.defaultTheme) ||
   (themes.length > 0
     ? themes[0]
     : {
         name: 'fallback',
         displayName: 'Default',
-        cssFile: '/themes/default.css'
+        cssFile: 'themes/default.css'
       });

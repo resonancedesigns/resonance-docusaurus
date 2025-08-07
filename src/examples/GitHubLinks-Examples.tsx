@@ -5,7 +5,7 @@
  * Note: Configuration is consolidated in github-links-config.ts with defaults already set.
  * You can override the defaults by directly setting static properties at any time.
  */
-import { GitHubLinksConfig } from '../config/github-links-config';
+import { GitHubLinksConfig } from '../../config/github-links-config';
 import { faGithub, faDocker, faNpm } from '@fortawesome/free-brands-svg-icons';
 import {
   faTag,

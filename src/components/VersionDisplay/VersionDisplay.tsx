@@ -1,5 +1,5 @@
 import React from 'react';
-import { VersionConfig } from '../../config/version-config';
+import { VersionConfig } from '../../../config/version-config';
 import './VersionDisplay.css';
 
 const VersionDisplay: React.FC = () => {

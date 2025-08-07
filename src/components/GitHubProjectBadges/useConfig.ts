@@ -8,7 +8,7 @@ import {
   faUsers,
   faChartLine
 } from '@fortawesome/free-solid-svg-icons';
-import { BadgeConfig } from '../../config/badge-config';
+import { BadgeConfig } from '../../../config/badge-config';
 import { UseBadgeConfigProps, UseBadgeConfigResult } from './models';
 
 export default function useConfig({

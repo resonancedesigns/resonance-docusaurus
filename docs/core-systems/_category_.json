@@ -1,7 +1,7 @@
 {
   "label": "Components",
   "position": 3,
-  "collapsed": false,
+  "collapsed": true,
   "collapsible": true,
   "className": "blue",
   "description": "Core functionality and components of the template"
