@@ -195,25 +195,13 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       # ================================================================
-      # STEP 3: CODE FORMATTING CHECK (PRETTIER)
+      # STEP 3: CODE CHECK
       # ================================================================
       - name: Check Code Formatting
-        run: pnpm run format:check
+        run: pnpm run check-all
 
       # ================================================================
-      # STEP 4: LINT CODE (ESLINT)
-      # ================================================================
-      - name: Lint Code
-        run: pnpm run lint
-
-      # ================================================================
-      # STEP 5: TYPESCRIPT TYPE CHECKING
-      # ================================================================
-      - name: TypeScript Type Check
-        run: pnpm run typecheck
-
-      # ================================================================
-      # STEP 6: BUILD DOCUSAURUS SITE
+      # STEP 4: BUILD DOCUSAURUS SITE
       # ================================================================
       - name: Build Docusaurus Site
         run: pnpm run build:prod
@@ -222,12 +210,12 @@ jobs:
           NODE_ENV: production
 
       # ================================================================
-      # STEP 4: UPLOAD PAGES ARTIFACT
+      # STEP 5: UPLOAD PAGES ARTIFACT
       # ================================================================
       - name: Upload Pages Artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: build/
+          path: artifacts/
 
   # Deploy Job: Deploys built documentation to GitHub Pages
   # This job depends on successful completion of the Build job
