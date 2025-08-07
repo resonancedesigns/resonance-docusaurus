@@ -77,15 +77,6 @@ on:
     paths-ignore:
       - '.github/**'
 
-  # Trigger on pushes to any branch except main
-  push:
-    branches:
-      - '**'      # Match all branches
-      - '!main'   # Exclude main branch (handled by Release workflow)
-    # Skip CI if only workflow files changed
-    paths-ignore:
-      - '.github/**'
-
 # ====================================================================
 # SECURITY PERMISSIONS
 # ====================================================================
@@ -124,6 +115,17 @@ jobs:
 
     steps:
       # ================================================================
+      # STEP 0: DUPLICATE RUN PREVENTION
+      # ================================================================
+      # Ensures only one CI run completes for each commit, cancelling duplicates
+      # This is a safety net in case multiple triggers fire simultaneously
+      - name: Skip Duplicate Actions
+        uses: fkirc/skip-duplicate-actions@v5
+        with:
+          cancel_others: true
+          skip_after_successful_duplicate: true
+
+      # ================================================================
       # STEP 1: REPOSITORY CHECKOUT
       # ================================================================
       - name: Checkout Repository
@@ -139,25 +141,13 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       # ================================================================
-      # STEP 3: CODE FORMATTING CHECK (PRETTIER)
+      # STEP 3: CODE CHECK
       # ================================================================
       - name: Check Code Formatting
-        run: pnpm run format:check
+        run: pnpm run check-all
 
       # ================================================================
-      # STEP 4: LINT CODE (ESLINT)
-      # ================================================================
-      - name: Lint Code
-        run: pnpm run lint
-
-      # ================================================================
-      # STEP 5: TYPESCRIPT TYPE CHECKING
-      # ================================================================
-      - name: TypeScript Type Check
-        run: pnpm run typecheck
-
-      # ================================================================
-      # STEP 6: BUILD DOCUSAURUS SITE
+      # STEP 4: BUILD DOCUSAURUS SITE
       # ================================================================
       - name: Build Docusaurus Site
         run: pnpm run build:prod
