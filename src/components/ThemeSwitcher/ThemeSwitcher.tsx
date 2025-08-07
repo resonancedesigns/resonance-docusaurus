@@ -22,7 +22,7 @@ const ThemeSwitcher: React.FC = () => {
 
     setCurrentTheme(savedTheme);
     applyTheme(savedTheme);
-  }, []);
+  }, [themesWithResolvedUrls]);
 
   const applyTheme = (themeName: string) => {
     // Remove existing theme links

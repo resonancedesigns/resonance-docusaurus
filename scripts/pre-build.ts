@@ -56,7 +56,7 @@ export class PreBuild {
       };
     } catch (error) {
       console.warn(
-        `Warning: Could not Read Theme File ${file}, Using Fallback. Error: ${error instanceof Error ? error.message : String(error)}`
+        `Warning: Could not Read Theme File ${file}, Using Fallback. Error: ${error instanceof Error ? `${error.message}\nStack Trace: ${error.stack}` : String(error)}`
       );
 
       // Use filename-based fallback (no counter needed)
@@ -86,7 +86,7 @@ export class PreBuild {
     // Create the JSON data structure
     const themeData = {
       themes: themes,
-      defaultTheme: defaultTheme?.name || 'agent'
+      defaultTheme: defaultTheme?.name || PreBuildConfig.DefaultTheme
     };
 
     // Write the JSON file
