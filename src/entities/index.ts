@@ -1,2 +1,1 @@
-export * from './theme';
-export * from './navbarLink';
+export * from './globalConfig';

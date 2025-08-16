@@ -1,18 +1,301 @@
 ---
 id: api-reference
 title: API Reference
-sidebar_position: 1
+sidebar_position: 2
 ---
 
-This document provides comprehensive API reference for all components, configuration classes, and interfaces in the Docusaurus Template.
+This document provides comprehensive API reference for all components, configuration schemas, and interfaces in the Docusaurus Template v1.0.
 
-## Configuration Classes
+## Configuration Management System (v1.0)
 
-The template uses static TypeScript classes for type-safe configuration management.
+The template now includes a comprehensive configuration management system with the following new components:
 
-### BadgeConfig
+### ConfigurationManager
 
-Manages GitHub project badge configuration with template variables and category grouping.
+Thread-safe configuration management with persistence and event notifications.
+
+```typescript
+class ConfigurationManager {
+  constructor(options: ConfigurationManagerOptions = {});
+
+  // Core methods
+  async initialize(): Promise<void>;
+  async registerSchema<T>(schema: ConfigurationSchema<T>): Promise<void>;
+  async getValue<T>(key: string): Promise<T | null>;
+  async setValue<T>(
+    key: string,
+    value: T,
+    source?: 'user' | 'system' | 'external'
+  ): Promise<boolean>;
+
+  // Subscription methods
+  subscribe<T>(key: string, callback: ConfigurationSubscription<T>): () => void;
+
+  // Utility methods
+  async getAllValues(): Promise<Record<string, ConfigValue>>;
+  async reset(): Promise<void>;
+  async reload(): Promise<void>;
+}
+```
+
+#### ConfigurationManagerOptions
+
+```typescript
+interface ConfigurationManagerOptions {
+  storage?: ConfigurationStorage;
+  enablePersistence?: boolean;
+  enableLogging?: boolean;
+  validationMode?: 'strict' | 'lenient';
+  namespace?: string;
+}
+```
+
+### FeatureFlagManager
+
+Advanced feature flag management extending the configuration system.
+
+```typescript
+class FeatureFlagManager {
+  constructor(configManager: ConfigurationManager);
+
+  // Initialization
+  async initializeFromFeaturesConfig(
+    featuresConfig: FeaturesConfig
+  ): Promise<void>;
+
+  // Feature flag operations
+  async defineFlag(
+    key: string,
+    defaultEnabled: boolean,
+    options?: Partial<FeatureFlag>
+  ): Promise<void>;
+  async isFeatureEnabled(key: string): Promise<boolean>;
+  async setFeatureEnabled(key: string, enabled: boolean): Promise<boolean>;
+
+  // State management
+  async getFeatureFlagsState(): Promise<FeatureFlagState>;
+  setEvaluationContext(key: string, value: ConfigValue): void;
+  subscribeToFeature(
+    key: string,
+    callback: (enabled: boolean, flag?: FeatureFlag) => void
+  ): () => void;
+}
+```
+
+#### FeatureFlag Interface
+
+```typescript
+interface FeatureFlag {
+  key: string;
+  enabled: boolean;
+  description?: string;
+  rolloutPercentage?: number;
+  conditions?: Record<string, ConfigValue>;
+}
+```
+
+### Configuration Storage
+
+Flexible storage backend support:
+
+```typescript
+interface ConfigurationStorage {
+  getItem(key: string): Promise<string | null>;
+  setItem(key: string, value: string): Promise<void>;
+  removeItem(key: string): Promise<void>;
+  clear(): Promise<void>;
+}
+```
+
+#### Built-in Storage Implementations
+
+- **LocalStorageConfigurationStorage**: Browser localStorage with namespace support
+- **MemoryConfigurationStorage**: In-memory storage for testing
+
+## Breaking Changes from Previous Versions
+
+- **Configuration System**: TypeScript configuration classes replaced with YAML files and Zod schemas
+- **Component Data Loading**: Static imports replaced with validated YAML data loading
+- **API Interfaces**: Component interfaces now use validated data types from schemas
+
+## Schema Validation System
+
+The template uses Zod schemas for automatic validation of YAML configuration data.
+
+### Component Schemas
+
+All components export standardized schemas for configuration validation:
+
+```typescript
+// Component schema pattern
+export const ComponentSchema = z.object({
+  // Schema definition
+});
+
+export const componentSchema = ComponentSchema;
+export const schemaKey = 'componentName';
+```
+
+### Portfolio Component Schema
+
+**Configuration File:** `config/portfolioData.yml`
+
+```typescript
+export const PortfolioDataSchema = z.object({
+  header: z.object({
+    title: z.string(),
+    subtitle: z.string()
+  }),
+  technologies: z.array(
+    z.object({
+      name: z.string(),
+      category: z.string()
+    })
+  ),
+  projects: z.array(
+    z.object({
+      title: z.string(),
+      description: z.string(),
+      link: z.string(),
+      icon: z.string()
+    })
+  ),
+  stats: z.array(
+    z.object({
+      number: z.string(),
+      label: z.string()
+    })
+  ),
+  seo: z.object({
+    title: z.string(),
+    description: z.string()
+  })
+});
+```
+
+### Projects Component Schema
+
+**Configuration File:** `config/projects.yml`
+
+```typescript
+export const ProjectSchema = z.object({
+  title: z.string(),
+  summary: z.string(),
+  lastModified: z.string().optional(),
+  link: z.string().optional(),
+  tags: z.array(z.string()).optional()
+});
+
+export const ProjectConfigSchema = z.object({
+  categories: z.array(
+    z.object({
+      category: z.string(),
+      subCategories: z.array(
+        z.object({
+          name: z.string(),
+          projects: z.array(ProjectSchema)
+        })
+      )
+    })
+  )
+});
+```
+
+### CV Component Schema
+
+**Configuration File:** `config/cvData.yml`
+
+```typescript
+export const CVDataSchema = z.object({
+  header: z.object({
+    title: z.string(),
+    email: z.string().optional(),
+    phone: z.string().optional(),
+    links: z
+      .array(
+        z.object({
+          label: z.string(),
+          href: z.string()
+        })
+      )
+      .optional()
+  }),
+  about: z.object({
+    title: z.string(),
+    body: z.string()
+  }),
+  roles: z.array(
+    z.object({
+      icon: z.string().optional(),
+      company: z.string(),
+      title: z.string(),
+      location: z.string().optional(),
+      period: z.string(),
+      website: z.string().optional(),
+      summary: z.string().optional(),
+      achievements: z.array(z.string()).optional(),
+      tech: z.string().optional()
+    })
+  )
+});
+```
+
+### NavBar Links Component Schema
+
+**Configuration File:** `config/navBarLinks.yml`
+
+The NavBar Links component provides configurable navigation links with dropdown support and automatic positioning.
+
+```typescript
+export const NavBarLinksSchema = z.object({
+  dropdown: z.boolean().optional(),
+  dropdownLabel: z.string().optional(),
+  className: z.string().optional(),
+  showIcons: z.boolean().optional(),
+  links: z
+    .array(
+      z.object({
+        href: z.string(),
+        label: z.string(),
+        position: z.enum(['left', 'right']).optional(), // Defaults to 'left'
+        target: z.enum(['_blank', '_self']).optional(),
+        title: z.string().optional(),
+        className: z.string().optional(),
+        icon: z.union([z.string(), z.any()]).optional() // FontAwesome icon
+      })
+    )
+    .optional()
+});
+```
+
+#### Interface Definition
+
+```typescript
+export interface CustomNavBarLink {
+  href: string;
+  label: string;
+  position?: 'left' | 'right'; // Defaults to 'left' when not provided
+  target?: '_blank' | '_self';
+  title?: string;
+  className?: string;
+  icon?: IconDefinition | string;
+}
+
+// Utility function to ensure position defaults to 'left'
+export const withDefaultPosition = (
+  link: CustomNavBarLink
+): CustomNavBarLink => ({
+  ...link,
+  position: link.position || 'left'
+});
+```
+
+**Key Features:**
+
+- **Position Default**: All links default to `position: 'left'` when not specified
+- **External Link Detection**: Automatic handling of internal vs external URLs
+- **Icon Support**: FontAwesome icons via string names or IconDefinition objects
+- **Type Safety**: Full TypeScript interface validation
 
 ```typescript
 export class BadgeConfig {
