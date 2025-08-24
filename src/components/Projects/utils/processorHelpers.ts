@@ -1,276 +1,9 @@
-import { useMemo } from 'react';
-import { getData } from '../../data';
-import {
-  ProjectsProps,
-  ProjectsData,
-  ProcessedProjectData,
-  ProcessedCategory,
-  FilterOption,
-  ProjectStats
-} from './models';
+import { ProcessedCategory, FilterOption, ProjectStats } from '../models';
 
-// @ts-ignore
-import { projects as configData } from '../../../data';
-
-export default function useConfig({
-  selectedCategory,
-  selectedDateRange,
-  searchTerm
-}: ProjectsProps = {}): ProjectsData {
-  // Process raw data using getData with processor
-  const { processedCategories, stats, categoryText } = getData(configData, {
-    processor: (data) => {
-      return processData(data);
-    }
-  });
-
-  // Apply filtering based on props
-  const filteredData = useMemo(() => {
-    let filteredCategories = processedCategories;
-
-    // Apply search filter first - search across ALL projects regardless of category
-    if (searchTerm) {
-      const lowerSearchTerm = searchTerm.toLowerCase();
-      filteredCategories = processedCategories
-        .map((category) => ({
-          ...category,
-          subCategories: category.subCategories
-            .map((subCategory) => ({
-              ...subCategory,
-              projects: subCategory.projects.filter(
-                (project) =>
-                  project.title.toLowerCase().includes(lowerSearchTerm) ||
-                  project.summary.toLowerCase().includes(lowerSearchTerm) ||
-                  (project.tags &&
-                    project.tags.some((tag) =>
-                      tag.toLowerCase().includes(lowerSearchTerm)
-                    ))
-              )
-            }))
-            .filter((subCategory) => subCategory.projects.length > 0)
-        }))
-        .filter((category) => category.subCategories.length > 0);
-
-      // Apply date filtering to search results using consistent logic
-      let finalDateRange = selectedDateRange; // Prioritize explicitly selected date range
-
-      // Handle special cases
-      if (selectedCategory && selectedCategory.startsWith('tag-')) {
-        finalDateRange = 'all-dates'; // Skip date filtering for tag filters
-      } else if (!finalDateRange && selectedCategory === 'most-recent') {
-        finalDateRange = 'most-recent'; // Default for most-recent category
-      } else if (!finalDateRange) {
-        finalDateRange = 'all-dates'; // Default fallback
-      }
-
-      filteredCategories = applyDateFiltering(
-        filteredCategories,
-        finalDateRange
-      );
-
-      return filteredCategories;
-    }
-
-    // Apply category filter if no search term is active
-    if (
-      selectedCategory &&
-      selectedCategory !== 'all' &&
-      selectedCategory !== 'most-recent'
-    ) {
-      if (selectedCategory === 'all-tags') {
-        // Show all projects that have any tags
-        filteredCategories = processedCategories
-          .map((cat) => ({
-            ...cat,
-            subCategories: cat.subCategories
-              .map((sub) => ({
-                ...sub,
-                projects: sub.projects.filter(
-                  (project) => project.tags && project.tags.length > 0
-                )
-              }))
-              .filter((sub) => sub.projects.length > 0)
-          }))
-          .filter((cat) => cat.subCategories.length > 0);
-      } else if (selectedCategory.startsWith('tag-')) {
-        // Tag filter
-        const tagKey = selectedCategory.substring(4); // Remove 'tag-' prefix
-
-        filteredCategories = processedCategories
-          .map((cat) => ({
-            ...cat,
-            subCategories: cat.subCategories
-              .map((sub) => ({
-                ...sub,
-                projects: sub.projects.filter((project) => {
-                  if (!project.tags || project.tags.length === 0) {
-                    return false;
-                  }
-
-                  return project.tags.some((tag) => {
-                    const normalizedTag = tag
-                      .toLowerCase()
-                      .replace(/\s+/g, '-');
-                    return normalizedTag === tagKey;
-                  });
-                })
-              }))
-              .filter((sub) => sub.projects.length > 0)
-          }))
-          .filter((cat) => cat.subCategories.length > 0);
-      } else if (selectedCategory.includes('-')) {
-        // Specific subcategory
-        const [categoryName, subCategoryName] = selectedCategory.split('-');
-
-        filteredCategories = processedCategories
-          .filter((cat) => cat.category === categoryName)
-          .map((cat) => ({
-            ...cat,
-            subCategories: cat.subCategories.filter(
-              (sub) => sub.name === subCategoryName
-            )
-          }));
-      } else {
-        // Specific category
-        filteredCategories = processedCategories.filter(
-          (cat) => cat.category === selectedCategory
-        );
-      }
-    } else {
-      // Default case: 'most-recent', 'all', or not set - create flattened view
-      if (
-        !selectedCategory ||
-        selectedCategory === 'all' ||
-        selectedCategory === 'most-recent'
-      ) {
-        // Flatten all projects into a single category for global sorting
-        const allProjects = processedCategories.flatMap((cat) =>
-          cat.subCategories.flatMap((sub) =>
-            sub.projects.map((project) => ({
-              ...project,
-              category: cat.category,
-              subCategory: sub.name
-            }))
-          )
-        );
-
-        // Create a single flattened category containing all projects
-        filteredCategories = [
-          {
-            category: 'All Projects',
-            subCategories: [
-              {
-                name: 'All',
-                projects: allProjects
-              }
-            ]
-          }
-        ];
-      } else {
-        // Keep original structure for other cases
-        filteredCategories = processedCategories;
-      }
-    }
-
-    // Apply date filtering (but skip for tag filters to show all matching projects)
-    let finalDateRange = selectedDateRange; // Prioritize explicitly selected date range
-
-    // Handle special cases
-    if (selectedCategory && selectedCategory.startsWith('tag-')) {
-      finalDateRange = 'all-dates'; // Skip date filtering for tag filters
-    } else if (!finalDateRange && selectedCategory === 'most-recent') {
-      finalDateRange = 'most-recent'; // Default for most-recent category
-    } else if (!finalDateRange) {
-      finalDateRange = 'all-dates'; // Default fallback
-    }
-
-    filteredCategories = applyDateFiltering(filteredCategories, finalDateRange);
-
-    return filteredCategories;
-  }, [processedCategories, selectedCategory, selectedDateRange, searchTerm]);
-
-  // Generate filter options
-  const technologyOptions = useMemo(
-    () => generateTechnologyOptions(processedCategories),
-    [processedCategories]
-  );
-
-  const categoryOptions = useMemo(
-    () => generateCategoryOptions(processedCategories),
-    [processedCategories]
-  );
-
-  const dateOptions = useMemo(
-    () => generateDateOptions(processedCategories),
-    [processedCategories]
-  );
-
-  const tagOptions = useMemo(
-    () => generateTagOptions(processedCategories),
-    [processedCategories]
-  );
-
-  const processedData: ProcessedProjectData = {
-    categories: filteredData,
-    technologyOptions,
-    categoryOptions,
-    dateOptions,
-    tagOptions,
-    stats,
-    categoryText
-  };
-
-  return { processedData, loading: false };
-}
-
-function processData(rawData: any[]) {
-  const categories = Array.isArray(rawData) ? rawData : [];
-
-  // Process categories
-  const processedCategories: ProcessedCategory[] = categories
-    .map((category) => ({
-      category: category.category,
-      subCategories: category.subCategories
-        .map((sub: any) => ({
-          name: sub.name,
-          projects: sub.projects.map((project: any) => ({
-            title: project.title,
-            summary: project.summary,
-            lastModified: project.lastModified,
-            link: project.link,
-            ...project // Include any other properties
-          }))
-        }))
-        // Sort sub-categories by number of projects (descending)
-        .sort((a, b) => b.projects.length - a.projects.length)
-    }))
-    // Sort categories by total number of projects (descending)
-    .sort((a, b) => {
-      const totalProjectsA = a.subCategories.reduce(
-        (sum, sub) => sum + sub.projects.length,
-        0
-      );
-      const totalProjectsB = b.subCategories.reduce(
-        (sum, sub) => sum + sub.projects.length,
-        0
-      );
-      return totalProjectsB - totalProjectsA;
-    });
-
-  // Calculate statistics
-  const stats = calculateStats(processedCategories);
-
-  // Generate category text
-  const categoryText = createCategoryText(processedCategories);
-
-  return {
-    processedCategories,
-    stats,
-    categoryText
-  };
-}
-
-function calculateStats(categories: ProcessedCategory[]): ProjectStats {
+/**
+ * Calculate project statistics
+ */
+export function calculateStats(categories: ProcessedCategory[]): ProjectStats {
   let totalProjects = 0;
   let recentProjects = 0;
   let totalAge = 0;
@@ -290,6 +23,7 @@ function calculateStats(categories: ProcessedCategory[]): ProjectStats {
       subCategory.projects.forEach((project) => {
         if (project.lastModified) {
           const projectDate = new Date(project.lastModified);
+
           if (projectDate >= sixMonthsAgo) {
             recentProjects++;
           }
@@ -316,7 +50,10 @@ function calculateStats(categories: ProcessedCategory[]): ProjectStats {
   };
 }
 
-function createCategoryText(categories: ProcessedCategory[]): string {
+/**
+ * Create category text description
+ */
+export function createCategoryText(categories: ProcessedCategory[]): string {
   const categoryNames = categories.map((cat) => cat.category);
 
   if (categoryNames.length === 0) return 'Development';
@@ -325,7 +62,10 @@ function createCategoryText(categories: ProcessedCategory[]): string {
   return `${categoryNames.slice(0, -1).join(', ')} & ${categoryNames[categoryNames.length - 1]}`;
 }
 
-function generateTechnologyOptions(
+/**
+ * Generate technology filter options
+ */
+export function generateTechnologyOptions(
   categories: ProcessedCategory[]
 ): FilterOption[] {
   // Calculate total projects for "All" option
@@ -357,7 +97,10 @@ function generateTechnologyOptions(
   ];
 }
 
-function generateCategoryOptions(
+/**
+ * Generate category filter options
+ */
+export function generateCategoryOptions(
   categories: ProcessedCategory[]
 ): FilterOption[] {
   // Calculate total projects for "All" option
@@ -386,7 +129,12 @@ function generateCategoryOptions(
   ];
 }
 
-function generateDateOptions(categories: ProcessedCategory[]): FilterOption[] {
+/**
+ * Generate date filter options
+ */
+export function generateDateOptions(
+  categories: ProcessedCategory[]
+): FilterOption[] {
   // Collect all project dates to determine what options to show
   const allDates: Date[] = [];
 
@@ -483,7 +231,10 @@ function generateDateOptions(categories: ProcessedCategory[]): FilterOption[] {
   return options;
 }
 
-function applyDateFiltering(
+/**
+ * Apply date filtering to categories
+ */
+export function applyDateFiltering(
   categories: ProcessedCategory[],
   dateRange?: string
 ): ProcessedCategory[] {
@@ -594,7 +345,12 @@ function applyDateFiltering(
     .filter((category) => category.subCategories.length > 0);
 }
 
-function generateTagOptions(categories: ProcessedCategory[]): FilterOption[] {
+/**
+ * Generate tag filter options
+ */
+export function generateTagOptions(
+  categories: ProcessedCategory[]
+): FilterOption[] {
   // Collect all unique tags from all projects
   const tagCounts = new Map<string, number>();
 

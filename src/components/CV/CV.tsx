@@ -1,23 +1,40 @@
+import DataProvider from '../DataProvider';
+import DebugInfo from '../DebugInfo';
+import Loading from '../Loading';
 import Timeline from './CVTimeline';
 
-import FeatureComponent from '../FeatureComponent';
 import { Features } from '../../config/FeaturesConfig';
-
-// @ts-ignore
-import { cvData as configData } from '../../../data';
+import { CVData } from './models';
+import { DEFAULT_CV_DATA } from './constants';
 
 import './cv.css';
 import './cv-reader.css';
 
 export default function CV() {
   return (
-    <FeatureComponent feature={Features.CVPage} configData={configData}>
-      {(userCVData) => {
+    <DataProvider<CVData>
+      feature={Features.CVPage}
+      defaultData={DEFAULT_CV_DATA}
+    >
+      {(userCVData, loading, error, meta) => {
+        if (loading) {
+          return <Loading message="🔄 Loading CV..." useWrap={true} />;
+        }
+
+        if (error) {
+          return (
+            <div className="cv-wrap">
+              <p className="cv-muted">
+                Failed to Load CV Data. Using Default Data.
+              </p>
+            </div>
+          );
+        }
         if (!userCVData?.header) {
           // last-resort guard to avoid crashing the page
           return (
             <div className="cv-wrap">
-              <p className="cv-muted">No CV data found.</p>
+              <p className="cv-muted">No CV Data Found.</p>
             </div>
           );
         }
@@ -124,9 +141,29 @@ export default function CV() {
                 />
               </section>
             ) : null}
+
+            <DebugInfo
+              loading={loading}
+              error={error}
+              meta={meta}
+              metrics={[
+                {
+                  label: '💼 Roles',
+                  value: roles?.length || 0
+                },
+                {
+                  label: '🎓 Education',
+                  value: education?.length || 0
+                },
+                {
+                  label: '🏆 Badges',
+                  value: badges?.length || 0
+                }
+              ]}
+            />
           </div>
         );
       }}
-    </FeatureComponent>
+    </DataProvider>
   );
 }

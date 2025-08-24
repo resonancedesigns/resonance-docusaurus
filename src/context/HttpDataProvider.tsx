@@ -26,9 +26,6 @@ const DEFAULT_CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
  * API Data Provider configuration
  */
 export interface HttpDataProviderProps extends DataProviderProps {
-  /** API endpoint URL */
-  endpoint?: string;
-
   /** Additional request options */
   options?: RequestInit;
 
@@ -54,7 +51,7 @@ export interface HttpDataProviderProps extends DataProviderProps {
  */
 export function HttpDataProvider({
   children,
-  endpoint,
+  source,
   options,
   autoFetch = true,
   enableCache = true,
@@ -62,10 +59,15 @@ export function HttpDataProvider({
 }: HttpDataProviderProps): ReactNode {
   // Construct API URL with query parameters
   const apiUrl = useMemo(() => {
-    const url = new URL(endpoint);
-
-    return url.toString();
-  }, [endpoint]);
+    try {
+      if (!source) throw new Error('Missing data source URL');
+      const url = new URL(source);
+      return url.toString();
+    } catch (e) {
+      console.error('Invalid HTTP data source:', e);
+      return '';
+    }
+  }, [source]);
 
   // Check cache before making API call
   const getCachedData = useCallback(() => {
@@ -207,7 +209,14 @@ export function HttpDataProvider({
       loadingState,
       refetch: handleRefetch,
       resetError: handleResetError,
-      meta: { endpoint: apiUrl, provider: 'http' }
+      meta: {
+        provider: 'HTTP',
+        source: 'api',
+        endpoint: apiUrl,
+        cached: !!getCachedData(),
+        timestamp: new Date().toISOString(),
+        dataSize: rawData ? JSON.stringify(rawData).length : 0
+      }
     }),
     [rawData, loadingState, handleRefetch, handleResetError, apiUrl]
   );

@@ -9,7 +9,7 @@ import {
   generateDateOptions,
   generateTagOptions,
   applyDateFiltering
-} from './processorHelpers';
+} from '../utils';
 
 /**
  * Processor configuration options
@@ -169,6 +169,7 @@ function processData(rawData: any[]) {
         (sum, sub) => sum + sub.projects.length,
         0
       );
+
       return totalProjectsB - totalProjectsA;
     });
 

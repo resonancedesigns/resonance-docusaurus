@@ -36,11 +36,10 @@ features:
   portfolioPageAsIndex: false
   projectsPage: true
   dataCaching: true
+# projectsPage:
+#   # source: ./data/projects.json
+#   source: https://the-running-dev.github.io/Data/portfolio/projects.json
 
-projects:
-  provider: json
-  location: ./data/projects.json
-# Example of HTTP Provider
-# projects:
-#   provider: http
-#   location: http://localhost:3001/api/v1/projects
+# portfolioPage:
+#   # source: ./data/portfolioData.json
+#   source: https://the-running-dev.github.io/Data/portfolio/portfolioData.json

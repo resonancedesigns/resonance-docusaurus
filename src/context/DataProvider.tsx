@@ -35,8 +35,8 @@ export interface DataContextValue<T = any> {
 
   /** Optional metadata about the data source */
   meta?: {
-    location?: string;
     provider?: string;
+    source?: string;
     [key: string]: any;
   };
 }
@@ -63,6 +63,8 @@ export function useDataContext<T = any>(): DataContextValue<T> {
  * Base data provider props
  */
 export interface DataProviderProps {
+  source?: string;
+
   children: ReactNode;
 }
 

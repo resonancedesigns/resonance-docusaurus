@@ -1,123 +1,118 @@
-import type { ReactNode } from 'react';
+import { type ReactNode } from 'react';
 import clsx from 'clsx';
 import useDocusaurusContext from '@docusaurus/core/lib/client/exports/useDocusaurusContext';
 import Heading from '@theme/Heading';
 
-import FeatureComponent from '../FeatureComponent';
-import { Features } from '../../config/FeaturesConfig';
+import DebugInfo from '../DebugInfo';
+import Loading from '../Loading';
+import PortfolioStats from './components/PortfolioStats';
+import PortfolioCategories from './components/Categories';
+import PortfolioRecentProjects from './components/RecentProjects';
+import PortfolioTechStack from './components/TechStack';
 
-// @ts-ignore
-import { portfolioData as configData } from '../../../data';
+import { useFeaturesConfig } from '../../config';
+import { usePortfolio } from '../../hooks/usePortfolio';
+import { useProjects } from '../../hooks/useProjects';
 
 import './portfolio.css';
 import './portfolio-reader.css';
 
 export default function Portfolio(): ReactNode {
-  return (
-    <FeatureComponent feature={Features.PortfolioPage} configData={configData}>
-      {(data) => {
-        if (!data?.header) {
-          // last-resort guard to avoid crashing the page
-          return (
-            <div className="portfolio-wrap">
-              <p className="portfolio-muted">No Portfolio Data Found.</p>
-            </div>
-          );
-        }
-
-        return (
-          <>
-            <HomepageHeader />
-            <main>
-              <Stats />
-              <ProjectShowcase />
-              <TechStack />
-            </main>
-          </>
-        );
-      }}
-    </FeatureComponent>
-  );
-}
-
-function HomepageHeader() {
+  const features = useFeaturesConfig();
   const { siteConfig } = useDocusaurusContext();
-  const { header } = configData;
+  const { data, loading, error, getStats, getFlattenedTechnologies } =
+    usePortfolio();
+  const { getAllProjects, getRecentProjects } = useProjects();
 
-  return (
-    <header className={clsx('hero hero--primary', 'heroBanner')}>
-      <div className="container">
-        <Heading as="h1" className="hero__title">
-          {header.title || siteConfig.title}
-        </Heading>
-        <p className="heroSubtitle">{header.subtitle}</p>
+  if (!features.portfolioPage) {
+    return null;
+  }
+
+  if (loading) {
+    return <Loading message="🔄 Loading Portfolio..." useWrap={true} />;
+  }
+
+  if (error) {
+    return (
+      <div className="portfolio-wrap">
+        <p>Error Loading Portfolio: {error.message}</p>
       </div>
-    </header>
-  );
-}
+    );
+  }
 
-function TechStack() {
-  const { technologies } = configData;
+  if (!data?.header) {
+    return (
+      <div className="portfolio-wrap">
+        <p className="portfolio-muted">No Portfolio Data Found.</p>
+      </div>
+    );
+  }
+
+  // Cross-component data access
+  const allProjects = getAllProjects();
+  const recentProjects = getRecentProjects();
+  const portfolioStats = getStats();
+  const flattenedTechs = getFlattenedTechnologies();
+  const { header } = data;
 
   return (
-    <section className="techStack">
-      <div className="container">
-        <Heading as="h2" className="sectionTitle">
-          Technologies & Skills
-        </Heading>
-        <div className="techGrid">
-          {technologies.map((tech, idx) => (
-            <div key={idx} className="techItem">
-              <span className="techName">{tech.name}</span>
-              <span className="techCategory">{tech.category}</span>
-            </div>
-          ))}
+    <>
+      {/* Header */}
+      <header className={clsx('hero hero--primary', 'heroBanner')}>
+        <div className="container">
+          <Heading as="h1" className="hero__title">
+            {header.title || siteConfig.title}
+          </Heading>
+          <p className="heroSubtitle">{header.subtitle}</p>
         </div>
-      </div>
-    </section>
-  );
-}
+      </header>
 
-function ProjectShowcase() {
-  const { projects } = configData;
+      <main>
+        <PortfolioStats stats={data.stats} />
 
-  return (
-    <section className="projectShowcase">
-      <div className="container">
-        <Heading as="h2" className="sectionTitle">
-          Categories
-        </Heading>
-        <div className="projectGrid">
-          {projects.map((project, idx) => (
-            <a key={idx} href={project.link} className="projectCard">
-              <div className="projectIcon">{project.icon}</div>
-              <Heading as="h3" className="projectTitle">
-                {project.title}
-              </Heading>
-              <p className="projectDescription">{project.description}</p>
-            </a>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
+        <PortfolioCategories categories={data.projects} />
 
-function Stats() {
-  const { stats } = configData;
+        <PortfolioRecentProjects projects={recentProjects} />
 
-  return (
-    <section className="stats">
-      <div className="container">
-        <div className="statsGrid">
-          {stats.map((stat, idx) => (
-            <div key={idx} className="statItem">
-              <div className="statNumber">{stat.number}</div>
-              <div className="statLabel">{stat.label}</div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
+        <PortfolioTechStack technologies={flattenedTechs} />
+      </main>
+
+      <DebugInfo
+        loading={loading}
+        error={error}
+        meta={{
+          provider: 'DataStore',
+          source: 'global',
+          timestamp: new Date().toISOString(),
+          dataSize: data ? JSON.stringify(data).length : 0
+        }}
+        metrics={[
+          {
+            label: '🧬 Technologies',
+            value: data?.technologies?.length || 0
+          },
+          {
+            label: '🔧 Sub-Categories',
+            value: portfolioStats?.totalSubCategories || 0
+          },
+          {
+            label: '📁 Portfolio Projects',
+            value: data?.projects?.length || 0
+          },
+          {
+            label: '🎯 All Projects',
+            value: allProjects.length
+          },
+          {
+            label: '⚡ Recent Projects',
+            value: recentProjects.length
+          },
+          {
+            label: '🏆 Stats',
+            value: data?.stats?.length || 0
+          }
+        ]}
+      />
+    </>
   );
 }
