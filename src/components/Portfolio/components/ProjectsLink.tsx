@@ -1,5 +1,6 @@
 import { type ReactNode } from 'react';
 import Link from '@docusaurus/Link';
+
 import { useProjectFiltering } from '../hooks/useProjectFiltering';
 
 interface ProjectsLinkProps {

@@ -10,19 +10,23 @@ interface SectionProps {
   children: ReactNode;
 }
 
-export default function Section({ 
-  title, 
-  className, 
-  titleLevel = 'h2', 
+export default function Section({
+  title,
+  className,
+  titleLevel = 'h2',
   titleClassName = 'sectionTitle',
   titleStyle,
-  children 
+  children
 }: SectionProps): ReactNode {
   return (
     <section className={className}>
       <div className="container">
         {title && (
-          <Heading as={titleLevel} className={titleClassName} style={titleStyle}>
+          <Heading
+            as={titleLevel}
+            className={titleClassName}
+            style={titleStyle}
+          >
             {title}
           </Heading>
         )}

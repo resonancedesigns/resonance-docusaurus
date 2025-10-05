@@ -1,6 +1,9 @@
 import { useMemo, useState } from 'react';
 import { getData } from '../../../data';
-import { ProcessedProjectData, ProcessedCategory } from '../models';
+import {
+  ProcessedProjectData,
+  ProcessedCategory
+} from '../../../../shared/types/project-types';
 import {
   calculateStats,
   createCategoryText,
@@ -8,6 +11,7 @@ import {
   generateCategoryOptions,
   generateDateOptions,
   generateTagOptions,
+  generateTagTiers,
   applyDateFiltering
 } from '../utils';
 
@@ -74,6 +78,7 @@ export function useProcessor(
       const categoryOptions = generateCategoryOptions(processedCategories);
       const dateOptions = generateDateOptions(processedCategories);
       const tagOptions = generateTagOptions(processedCategories);
+      const tagTiers = generateTagTiers(processedCategories);
 
       const result: ProcessedProjectData = {
         categories: filteredData,
@@ -81,6 +86,7 @@ export function useProcessor(
         categoryOptions,
         dateOptions,
         tagOptions,
+        tagTiers,
         stats,
         categoryText
       };
@@ -88,8 +94,10 @@ export function useProcessor(
       return result;
     } catch (err) {
       const processingError =
-        err instanceof Error ? err : new Error('Unknown processing error');
+        err instanceof Error ? err : new Error('Unknown Processing Error');
+
       setError(processingError);
+
       return getEmptyProcessedData();
     } finally {
       setProcessing(false);
@@ -114,6 +122,17 @@ function getEmptyProcessedData(): ProcessedProjectData {
     tagOptions: [
       { key: 'all-tags', label: 'All (0)', category: 'tag', count: 0 }
     ],
+    tagTiers: {
+      popular: [],
+      common: [],
+      rare: [],
+      allTagsOption: {
+        key: 'all-tags',
+        label: 'All (0)',
+        category: 'tag',
+        count: 0
+      }
+    },
     stats: {
       totalProjects: 0,
       recentProjects: 0,
@@ -149,7 +168,7 @@ function processData(rawData: any[]) {
               .filter((project: any) => project && typeof project === 'object') // Filter out invalid projects
               .map((project: any) => ({
                 title: project.title || 'Untitled',
-                summary: project.summary || 'No summary available',
+                summary: project.summary || 'No Summary Available',
                 lastModified: project.lastModified || null,
                 link: project.link || null,
                 ...project // Include any other properties
@@ -286,7 +305,7 @@ function applyFiltering(
     } else if (selectedCategory.startsWith('category-')) {
       // Handle Portfolio component's category- prefix format
       const categoryName = selectedCategory.replace('category-', '');
-      
+
       filteredCategories = processedCategories.filter(
         (cat) => cat.category.toLowerCase() === categoryName.toLowerCase()
       );
@@ -362,8 +381,5 @@ function applyFiltering(
 
   return filteredCategories;
 }
-
-// I need to continue with the rest of the helper functions...
-// Let me create them in a separate file due to length
 
 export default useProcessor;

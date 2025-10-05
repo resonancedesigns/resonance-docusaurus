@@ -60,15 +60,19 @@ export function HttpDataProvider({
   // Construct API URL with query parameters
   const apiUrl = useMemo(() => {
     try {
-      if (!source) throw new Error('Missing data source URL');
+      if (!source) {
+        throw new Error('Missing Data Source URL');
+      }
+
       const url = new URL(source);
+
       return url.toString();
     } catch (e) {
-      console.error('Invalid HTTP data source:', e);
+      console.error('Invalid HTTP Data Source:', e);
+
       return '';
     }
   }, [source]);
-
   // Check cache before making API call
   const getCachedData = useCallback(() => {
     if (!enableCache) return null;
@@ -218,7 +222,7 @@ export function HttpDataProvider({
         dataSize: rawData ? JSON.stringify(rawData).length : 0
       }
     }),
-    [rawData, loadingState, handleRefetch, handleResetError, apiUrl]
+    [rawData, loadingState, handleRefetch, handleResetError, apiUrl, getCachedData]
   );
 
   return <DataProvider value={contextValue}>{children}</DataProvider>;

@@ -5,10 +5,9 @@ interface CardGridProps {
   children: ReactNode;
 }
 
-export default function CardGrid({ className = 'projectGrid', children }: CardGridProps): ReactNode {
-  return (
-    <div className={className}>
-      {children}
-    </div>
-  );
+export default function CardGrid({
+  className = 'projectGrid',
+  children
+}: CardGridProps): ReactNode {
+  return <div className={className}>{children}</div>;
 }

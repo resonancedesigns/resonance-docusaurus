@@ -37,6 +37,8 @@ param(
     [string]$Mode = 'watch'
 )
 
+Clear-Host
+
 Write-Host "🚀 Starting Development Server" -ForegroundColor Cyan
 Write-Host "Mode: $Mode" -ForegroundColor Yellow
 
@@ -49,7 +51,7 @@ switch ($Mode) {
     'watch' {
         Write-Host "Starting Development Server with Config Watching..." -ForegroundColor Green
         
-        & pnpm run dev
+        & pnpm run dev:with-api
     }
     'docker' {
         Write-Host "Starting Development Server for Docker..." -ForegroundColor Green

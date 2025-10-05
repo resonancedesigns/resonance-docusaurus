@@ -1,4 +1,5 @@
 import { type ReactNode } from 'react';
+
 import Section from './Section';
 import CardGrid from './CardGrid';
 import CategoryCard from './CategoryCard';
@@ -9,9 +10,7 @@ interface CategoriesProps {
   categories: ProjectCategory[];
 }
 
-export default function Categories({
-  categories
-}: CategoriesProps): ReactNode {
+export default function Categories({ categories }: CategoriesProps): ReactNode {
   return (
     <Section title="Categories" className="projectShowcase">
       <CardGrid>

@@ -1,5 +1,6 @@
 import { type ReactNode } from 'react';
 import Heading from '@theme/Heading';
+
 import { ProjectCategory } from '../models';
 
 interface CategoryCardProps {

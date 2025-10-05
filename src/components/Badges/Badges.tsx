@@ -45,8 +45,12 @@ const Badges: React.FC<BadgesProps> = ({ user, repository, groups }) => {
           badges: category.badges?.map((badge: any) => {
             const process = (val: unknown) =>
               typeof val === 'string'
-                ? val.replace(/\{(\w+)\}/g, (_: string, key: string) => replacements[key] || '')
+                ? val.replace(
+                    /\{(\w+)\}/g,
+                    (_: string, key: string) => replacements[key] || ''
+                  )
                 : val;
+
             return {
               ...badge,
               url: process(badge?.url),
