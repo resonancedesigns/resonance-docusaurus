@@ -4,7 +4,7 @@ import {
   Droppable,
   Draggable,
   DropResult
-} from 'react-beautiful-dnd';
+} from '@hello-pangea/dnd';
 
 export interface ReorderProps {
   projects: any[];

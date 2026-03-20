@@ -8,12 +8,12 @@ import RelatedResources from '../../components/RelatedResources';
  * Provides links and information about the custom 404 error page
  */
 export default function NotFoundDemo(): React.JSX.Element {
-  const brokenLinks = [
-    '/this-page-does-not-exist',
-    '/random-broken-link',
-    '/missing-page-example',
-    '/broken-demo-link',
-    '/non-existent-documentation'
+  const demoLinks = [
+    '/demos',
+    '/docs/intro',
+    '/docs/commands',
+    '/demos/projects',
+    '/demos/portfolio'
   ];
 
   return (
@@ -41,18 +41,18 @@ export default function NotFoundDemo(): React.JSX.Element {
                   </div>
                   <div className="card__body">
                     <p>
-                      Click any of these broken links to experience our custom
-                      404 page:
+                      Use these links to navigate valid routes related to the
+                      404 experience and demo system:
                     </p>
 
                     <div className="button-group button-group--block margin-top--lg">
-                      {brokenLinks.map((link, index) => (
+                      {demoLinks.map((link, index) => (
                         <Link
                           key={index}
                           to={link}
                           className="button button--outline"
                         >
-                          🔗 Broken Link #{index + 1}
+                          🔗 Route #{index + 1}
                         </Link>
                       ))}
                     </div>
